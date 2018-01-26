@@ -26,7 +26,7 @@ registrationModule.factory('userFactory', function(localStorageService, alertFac
                     $rootScope.userData = result.data[0];
                     localStorageService.set('userData', $rootScope.userData);
                     $rootScope.mostrarMenu = 1;
-                    location.href = '/unidadesIngresadas';
+                    location.href = '/cotizaciones';
                 } else {
                     alertFactory.info('Inicie sesión desde el panel de aplicaciones o desde el login.');
                 }

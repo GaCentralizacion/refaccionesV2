@@ -16,7 +16,9 @@ var filtros = function(conf) {
 filtros.prototype.get_empresas = function(req, res, next) {
     var self = this;
 
-    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }
+                  ,{ name: 'role', value: req.query.rol, type: self.model.types.STRING }];
+    console.log('soy los parametros', params)
     self.model.query('SEL_EMPRESA_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,

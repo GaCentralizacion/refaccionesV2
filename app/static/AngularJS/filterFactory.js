@@ -1,17 +1,20 @@
 var filtrosURL = global_settings.urlCORS + 'api/filtros/';
-registrationModule.factory('filterFactory', function ($http, $timeout) {
+registrationModule.factory('filterFactory', function($http, $timeout) {
     return {
-        getEmpresas: function (idUsuario) {
+        getEmpresas: function(idUsuario, rol) {
             return $http({
                 url: filtrosURL + 'empresas/',
                 method: "GET",
-                params: { idUsuario: idUsuario },
+                params: {
+                    idUsuario: idUsuario,
+                    rol: rol
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        getSucursales: function (idUsuario, idEmpresa) {
+        getSucursales: function(idUsuario, idEmpresa) {
             return $http({
                 url: filtrosURL + 'sucursales/',
                 method: "GET",
@@ -24,9 +27,9 @@ registrationModule.factory('filterFactory', function ($http, $timeout) {
                 }
             });
         },
-        styleFiltros: function () {
-            $timeout(function () {
-                $('.selectpicker').selectpicker('refresh',);
+        styleFiltros: function() {
+            $timeout(function() {
+                $('.selectpicker').selectpicker('refresh', );
             });
         }
     }

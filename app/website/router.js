@@ -1,5 +1,5 @@
  module.exports = {
      login: require('./controllers/login'),
-     unidadesIngresadas: require('./controllers/unidadesIngresadas'),
+     cotizaciones: require('./controllers/cotizaciones'),
      filtros: require('./controllers/filtros')
  }

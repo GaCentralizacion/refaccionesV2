@@ -1,4 +1,4 @@
-registrationModule.controller('unidadesIngresadasController', function($scope, $rootScope, $location, $timeout, alertFactory, unidadesIngresadasRepository, filterFactory, userFactory, globalFactory) {
+registrationModule.controller('cotizacionesController', function($scope, $rootScope, $location, $timeout, alertFactory, cotizacionesRepository, filterFactory, userFactory, globalFactory) {
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
@@ -6,7 +6,7 @@ registrationModule.controller('unidadesIngresadasController', function($scope, $
         $scope.tablaUnidaddes = false;
     };
     $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario).then(function(result) {
+        filterFactory.getEmpresas($scope.Usuario.idUsuario,'admin').then(function(result) {
             if (result.data.length > 0) {
                 console.log(result.data, 'Soy las empresas ')
                 $scope.empresas = result.data;
