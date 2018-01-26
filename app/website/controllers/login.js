@@ -27,7 +27,7 @@ Login.prototype.get_usuario = function(req, res, next) {
 
     var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
 
-    self.model.query('SEL_USUARIO_SP', params, function(error, result) {
+    self.model.query('SEL_USUARIO_REFACCIONES_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
@@ -43,7 +43,7 @@ Login.prototype.get_idUsuario = function(req, res, next) {
         { name: 'contrasena', value: req.query.contrasena, type: self.model.types.STRING }
     ];
 
-    self.model.query('SEL_LOGIN_SP', params, function(error, result) {
+    self.model.query('SEL_LOGIN_REFACCIONES_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
