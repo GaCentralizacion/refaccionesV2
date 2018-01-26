@@ -1,0 +1,61 @@
+<div ng-init="init()">
+    <!--Page Title-->
+    <div id="page-title">
+        <h1 class="page-header text-overflow">Pedido</h1>
+    </div>
+    <!--End page title-->
+    <!--Page content-->
+    <div id="page-content">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Realizar busqueda</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="form-horizontal">
+                            <div class="form-group" >
+                                <label class="col-sm-1 control-label">Empresa:</label>
+                                <div class="col-sm-3">
+                                    <select class="selectpicker" data-live-search="false" data-width="100%" ng-model="empresa" ng-change="getSucursales()">
+                                        <option value="">Seleccione Empresa</option>
+                                        <option ng-repeat="empresa in empresas" value="{{empresa.idEmpresa}}">{{empresa.nombre}}</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 control-label" ng-show='paut'>Agencia:</label>
+                                <div class="col-sm-3" ng-show='paut'>
+                                    <select class="selectpicker" data-live-search="false" data-width="100%" ng-model="sucursal" ng-change="getDepartamento()">
+                                        <option value="">Seleccione la Agencia</option>
+                                        <option ng-repeat="agencia in agencias" value="{{agencia.idSucursal}}">{{agencia.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                           <div class="form-group">                               
+                                <label class="col-sm-1 control-label">De:</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group input-daterange" calendar>
+                                        <input type="text" class="form-control" name="start" ng-model="fechaInicio" />
+                                        <span class="input-group-addon">a</span>
+                                        <input type="text" class="form-control" name="end" ng-model="fechaFin" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button ng-disabled="(empresa == '' || empresa == null || empresa == undefined)" class="btn btn-info pull-right" type="submit" ng-click="buscar()"><i class="ti-search"></i> Buscar</button>
+                        </form>
+                    </div>
+                
+        </div>
+    </div>
+    <!--End page content-->
+
+
+
+
+        </div>
+    </div>
+</div>
+<!--Modal para colocar pdf-->
+<!--===================================================-->
+
+<!--===================================================-->
+<!--End Modal para colocar el numero del punteo-->
