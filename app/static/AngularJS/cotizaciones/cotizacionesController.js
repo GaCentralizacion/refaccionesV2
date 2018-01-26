@@ -19,11 +19,11 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     };
     $scope.getSucursales = function() {
         $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresa).then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresa.emp_idempresa, 'admin').then(function(result) {
             if (result.data.length > 0) {
                 $scope.muestraAgencia = true;
                 console.log(result.data, 'Soy las sucursales ')
-                $scope.agencias = result.data;
+                $scope.sucursales = result.data;
                 filterFactory.styleFiltros();
             } else {
                 $scope.muestraAgencia = false;

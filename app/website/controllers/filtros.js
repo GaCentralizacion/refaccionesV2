@@ -30,9 +30,10 @@ filtros.prototype.get_sucursales = function(req, res, next) {
     var self = this;
 
     var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
-        { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }
+        { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'role', value: req.query.rol, type: self.model.types.STRING }
     ];
-    self.model.query('SEL_SUCURSALES_SP', params, function(error, result) {
+    self.model.query('SEL_SUCURSAL_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
