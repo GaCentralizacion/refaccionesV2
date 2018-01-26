@@ -14,13 +14,14 @@ registrationModule.factory('filterFactory', function($http, $timeout) {
                 }
             });
         },
-        getSucursales: function(idUsuario, idEmpresa) {
+        getSucursales: function(idUsuario, idEmpresa, rol) {
             return $http({
                 url: filtrosURL + 'sucursales/',
                 method: "GET",
                 params: {
                     idUsuario: idUsuario,
-                    idEmpresa: idEmpresa
+                    idEmpresa: idEmpresa,
+                    rol: rol
                 },
                 headers: {
                     'Content-Type': 'application/json'
