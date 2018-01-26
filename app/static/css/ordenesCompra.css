@@ -1,0 +1,82 @@
+.datepicker-dropdown.datepicker-orient-bottom:after {
+    bottom: 0;
+    border-bottom: 0;
+    border-top: 6px solid #fff
+}
+
+.datepicker-dropdown.datepicker-orient-bottom:before {
+    bottom: 0;
+    border-bottom: 0;
+    border-top: 7px solid #fff
+}
+
+@media (min-width: 768px) {
+    div.dataTables_wrapper div.dataTables_filter {
+        text-align: right;
+        position: absolute;
+        right: 11px;
+    }
+    div.dataTables_wrapper div.dataTables_length label {
+        position: absolute;
+        left: 17px;
+        float: none;
+        margin-top: -35px;
+    }
+    .html5buttons {
+        text-align: right;
+        position: absolute;
+        right: 17px;
+        float: none;
+        margin-top: -35px;
+    }
+    .table-responsive {
+        margin-top: 50px;
+        padding-bottom: 50px;
+    }
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+        text-align: right;
+        position: absolute;
+        right: 17px;
+        float: none;
+        margin-top: 0px;
+    }
+}
+
+@media screen and (max-width: 767px) {}
+
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > th,
+.table > caption + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > td,
+.table > thead:first-child > tr:first-child > td {
+    background-color: whitesmoke;
+}
+
+
+/*
+.filtro-tabla {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    font-size: 14px;
+}*/
+
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 1100px;
+    }
+}
+
+.text-top {
+    vertical-align: text-top !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
