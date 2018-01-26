@@ -1,11 +1,11 @@
-var unidadesIngresadasURL = global_settings.urlCORS + 'api/unidadesIngresadas/';
+var cotizacionesURL = global_settings.urlCORS + 'api/cotizaciones/';
 
 
-registrationModule.factory('unidadesIngresadasRepository', function($http) {
+registrationModule.factory('cotizacionesRepository', function($http) {
     return {
         getUnidadesIngresadas: function(idEmpresa, idSucursal) {
             return $http({
-                url: unidadesIngresadasURL + 'unidadesIngresadas/',
+                url: cotizacionesURL + 'unidadesIngresadas/',
                 method: "GET",
                 params: {
                     idEmpresa: idEmpresa,
@@ -18,7 +18,7 @@ registrationModule.factory('unidadesIngresadasRepository', function($http) {
         },
         insertNotificacion: function(notificacion) {
             return $http({
-                url: unidadesIngresadasURL + 'insertNotificacion/',
+                url: cotizacionesURL + 'insertNotificacion/',
                 method: "GET",
                 params: notificacion[0],
                 headers: {

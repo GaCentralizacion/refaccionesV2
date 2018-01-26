@@ -1,0 +1,128 @@
+<div id="page-content" ng-init="init()">
+    <div class="row ">
+        <div class="col-sm-10 col-sm-push-1 mar-top">
+            <div id="">
+                <h1 class="page-header text-overflow">Cotizaciones</h1>
+                </h1>
+            </div>
+        </div>
+        <div class="col-sm-10 col-sm-push-1 mar-top ">
+            <div class="panel ">
+                <div class="panel-body pad-top mar-top">
+                    <div class="">
+                        <div class="col-sm-6  col-xs-12">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 ">Empresa: </label>
+                                    <div class="col-sm-8">
+                                        <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-sm-3 ">Sucursal: </label>
+                                    <div class="col-sm-8">
+                                        <select id="selSucursales" ng-change="cambioSucursal()" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                    </div>
+                                </div>
+                                <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0" class="form-group">
+                                    <div class="col-sm-11 control-label">
+                                        <a href="cotizacion/nueva/busqueda/" class="form-control btn btn-block btn-primary">Nueva cotización</a>
+                                    </div>
+                                    <div class="col-sm-11">
+                                        <p class="text-lg texto-centrado text-bold"><i class="demo-pli-check icon-fw"></i>Datos Sucursal</p>
+                                        <p>RFC: <span class="texto-izquierda text-semibold">{{sucursalActual.rfcSuc }}</span></p>
+                                        <p>Dirección: <span class="texto-izquierda text-semibold">{{sucursalActual.dirSuc }}</span></p>
+                                        <p>Teléfono: <span class="texto-izquierda  text-semibold">{{sucursalActual.telSuc }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0 " class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="list-group">
+                                            <div class="panel panel-default panel-colorful">
+                                                <div class="row" style="padding: 9.5px;">
+                                                    <div class="col-xs-6">
+                                                        <p class="text-lg text-bold"><i class="demo-pli-check icon-fw"></i>Crédito</p>
+                                                        <p>Crédito Autorizado: <span class="pull-right text-semibold">{{sucursalActual.Con_LimCredito | currency }}</span></p>
+                                                        <p>Pedidos Solicitados: <span class="pull-right  text-semibold"><font color='#D50819'>{{sucursalActual.descuento | currency }}</font></span></p>
+                                                        <p>Cartera: <span class="pull-right  text-semibold"><font color='#D50819'>{{sucursalActual.importe | currency }}</font></span></p>
+                                                        <hr>
+                                                        <p>Disponible: <span class="pull-right  text-semibold"> {{disponible | currency }}</span></p>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <div class="chart"><span>{{((sucursalActual.Con_LimCredito-sucursalActual.descuento)/sucursalActual.Con_LimCredito)*100 | number:2}}%</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p>Vendedor: <span class="texto-izquierda text-semibold">{{sucursalActual.nomVendedor}}</span></p>
+                                            <p>Teléfono: <span class="texto-izquierda text-semibold">{{sucursalActual.telVendedor}}</span> Ext: <span class="texto-izquierda text-semibold">{{sucursalActual.PER_EXT1}}</span></p>
+                                            <p>Correo: <span class="texto-izquierda text-semibold">{{sucursalActual.mailVendedor}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--div class="form-group">
+                  <div style="margin-top: -15px;" class="col-sm-11 ">
+                    <a ng-disabled="!sucursalActual || sucursalActual.AGENCIA == 0" href="cotizacion/nueva/busqueda/" class="form-control btn btn-block btn-primary">Nueva cotizacion</a>
+                  </div>
+                </div-->
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px;" ng-show="listaCotizaciones.length > 0" class=" col-xs-12">
+                        <table st-table="cotizaciones" st-safe-src="listaCotizaciones" id="tblCotizacionFiltros">
+                            <thead>
+                                <tr>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
+                                        Cotización
+                                    </th>
+                                    <th>
+                                        Empresa
+                                    </th>
+                                    <th>
+                                        Sucursal
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                        Descripción
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
+                                        Total
+                                    </th>
+                                    <th width="20%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cotizacion in cotizaciones">
+                                    <td>
+                                        {{cotizacion.folio}}
+                                    </td>
+                                    <td>
+                                        {{empresaActual.emp_nombre}}
+                                    </td>
+                                    <td>
+                                        {{sucursalActual.NOMBRE_AGENCIA}}
+                                    </td>
+                                    <td>
+                                        {{cotizacion.descripcion}}
+                                    </td>
+                                    <td align="right">
+                                        {{cotizacion.total | currency}}
+                                    </td>
+                                    <td width="20%">
+                                        <a href="{{'/cotizacion/'+cotizacion.idCotizacion+'/busqueda/'}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                        <button ng-click="borrarCotizacion(cotizacion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
