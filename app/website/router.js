@@ -3,7 +3,8 @@
      filtros: require('./controllers/filtros'),
      pedido: require('./controllers/pedido'),
      cotizaciones: require('./controllers/cotizaciones'),
-     historial: require('./controllers/historial')
+     historial: require('./controllers/historial'),
+     direccion: require('./controllers/direccion')
 
 
  }
