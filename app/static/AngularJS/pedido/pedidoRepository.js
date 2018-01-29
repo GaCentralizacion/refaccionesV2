@@ -5,7 +5,7 @@ registrationModule.factory('pedidoRepository', function ($http) {
     return {
         busquedaPedido: function (empresa,sucursal,fechaInicio,fechaFin) {
             return $http({
-                url: monitorURL + 'busquedaPedido/',
+                url: pedidoURL + 'busquedaPedido/',
                 method: "GET",
                 params: {
                 

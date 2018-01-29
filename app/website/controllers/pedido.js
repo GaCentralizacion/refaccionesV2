@@ -5,8 +5,8 @@ var pedidoView = require('../views/reference'),
 var pedido = function(conf) {
     this.conf = conf || {};
 
-    this.view = new monitorView();
-    this.model = new monitorModel({
+    this.view = new pedidoView();
+    this.model = new pedidoModel({
         parameters: this.conf.parameters
     });
 
@@ -20,22 +20,21 @@ pedido.prototype.get_busquedaPedido = function(req, res, next) {
 
  
 
-    // var params = [
-    //     { name: 'tipo', value: req.query.tipo, type: self.model.types.INT },
-    //     { name: 'empresa', value: req.query.empresa, type: self.model.types.INT },
-    //     { name: 'sucursal', value: req.query.sucursal, type: self.model.types.INT },
-    //     { name: 'fechaInicio', value: req.query.fechaInicio, type: self.model.types.STRING },
-    //     { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING },
-    //     { name: 'lote', value: req.query.lote, type: self.model.types.INT },
-    //     { name: 'persona', value: req.query.persona, type: self.model.types.INT },
-    // ];
-    //  console.log(params);
-    // self.model.query('SEL_MONITOR_ERROR', params, function(error, result) {
-    //     self.view.expositor(res, {
-    //         error: error,
-    //         result: result
-    //     });
-    // });
+    var params = [
+        { name: 'idUsuario', value: req.query.tipo, type: self.model.types.INT },
+        { name: 'estatus', value: 1, type: self.model.types.INT },
+        { name: 'idEmpresa', value: req.query.empresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.query.sucursal, type: self.model.types.INT },
+        { name: 'fechaInicio', value: req.query.fechaInicio, type: self.model.types.STRING },
+        { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING }
+    ];
+     console.log(params);
+    self.model.query('SEL_PEDIDO_USUARIO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
 }
 
 

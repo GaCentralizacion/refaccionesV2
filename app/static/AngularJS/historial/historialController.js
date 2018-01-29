@@ -1,4 +1,4 @@
-registrationModule.controller('pedidoController', function($scope, $rootScope, $location, $timeout, alertFactory, pedidoRepository, filterFactory, userFactory, globalFactory) {
+registrationModule.controller('historialController', function($scope, $rootScope, $location, $timeout, alertFactory, historialRepository, filterFactory, userFactory, globalFactory) {
     
     $scope.fechaInicio = null;
     $scope.fechaFin = null;
@@ -6,7 +6,7 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
-          $('#tblPedidoFiltros').DataTable().destroy();
+        
     };
     $scope.getEmpresas = function() {
         filterFactory.getEmpresas($scope.Usuario.idUsuario,'admin').then(function(result) {
@@ -36,24 +36,9 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
         });
     };
 
-    $scope.consultaPedidos=function(){
+    // $scope.consultaPedidos=function(){
 
-        $('#tblPedidoFiltros').DataTable().destroy();
-    pedidoRepository.busquedaPedido($scope.empresas[0].emp_idempresa,$scope.sucursal,$scope.fechaInicio,$scope.fechaFin).then(function(result) {
-        if (result.data.length > 0) {
-            alertFactory.info('Si se  encontraron Resultados');
-            $scope.listaPedidos=result.data;
-                    setTimeout(function() {
-                        $scope.setTablePaging('tblPedidoFiltros');
-                        $("#tblPedidoFiltros_length").removeClass("dataTables_info").addClass("hide-div");
-                                $("#tblPedidoFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
-                    }, 100);
-        } else {
-                alertFactory.info('No se encontraron Resultados');
-            }
-           
-         });
-    };
+    // };
 
 
 
