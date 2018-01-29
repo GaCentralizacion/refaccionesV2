@@ -12,12 +12,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
     };
     $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {
-            result.data.unshift({
-                emp_idempresa: 0,
-                emp_nombre: "Selecciona ...",
-                emp_nombrecto: ""
-            })
+        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {           
             if (result.data.length > 0) {
                 console.log(result.data, 'Soy las empresas ')
                 $scope.empresas = result.data;
