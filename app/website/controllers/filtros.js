@@ -16,9 +16,13 @@ var filtros = function(conf) {
 filtros.prototype.get_empresas = function(req, res, next) {
     var self = this;
 
-    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }
-                  ,{ name: 'role', value: req.query.rol, type: self.model.types.STRING }];
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }, { name: 'role', value: req.query.rol, type: self.model.types.STRING }];
     self.model.query('SEL_EMPRESA_SP', params, function(error, result) {
+        result.unshift({
+            emp_idempresa: 0,
+            emp_nombre: "Selecciona Empresa...",
+            emp_nombrecto: ""
+        })
         self.view.expositor(res, {
             error: error,
             result: result
@@ -33,6 +37,10 @@ filtros.prototype.get_sucursales = function(req, res, next) {
         { name: 'role', value: req.query.rol, type: self.model.types.STRING }
     ];
     self.model.query('SEL_SUCURSAL_SP', params, function(error, result) {
+        result.unshift({
+            AGENCIA: 0,
+            NOMBRE_AGENCIA: "Selecciona Sucursal...",
+        });
         self.view.expositor(res, {
             error: error,
             result: result
