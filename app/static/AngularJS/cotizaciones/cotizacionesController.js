@@ -1,4 +1,6 @@
 registrationModule.controller('cotizacionesController', function($scope, $rootScope, $location, $timeout, alertFactory, cotizacionesRepository, filterFactory, userFactory, globalFactory) {
+    $scope.sucursalActual = $scope.empresaActual = null;
+    $scope.listaCotizaciones = [];
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
@@ -7,11 +9,15 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             "lineWidth": 8,
             "size": 115
         });
-        $scope.sucursalActual = $scope.empresaActual = null;
-        $scope.listaCotizaciones = [];
+
     };
     $scope.getEmpresas = function() {
         filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {
+            result.data.unshift({
+                emp_idempresa: 0,
+                emp_nombre: "Selecciona ...",
+                emp_nombrecto: ""
+            })
             if (result.data.length > 0) {
                 console.log(result.data, 'Soy las empresas ')
                 $scope.empresas = result.data;
