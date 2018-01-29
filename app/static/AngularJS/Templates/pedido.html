@@ -1,0 +1,149 @@
+<div ng-init="init()">
+    <!--Page Title-->
+    <div id="page-title">
+        <h1 class="page-header text-overflow">Pedidos</h1>
+    </div>
+    <!--End page title-->
+    <!--Page content-->
+    <div id="page-content">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Realizar busqueda</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="form-horizontal">
+                            <div class="form-group" >
+                                <label class="col-sm-1 control-label">Empresa:</label>
+                                <div class="col-sm-3">
+                                    <select class="selectpicker" data-live-search="false" data-width="100%" ng-model="empresa" ng-change="getSucursales()">
+                                        <option value="">Seleccione Empresa</option>
+                                        <option ng-repeat="empresa in empresas" value="{{empresa.emp_idEmpresa}}">{{empresa.emp_nombre}}</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 control-label" >Agencia:</label>
+                                <div class="col-sm-3" >
+                                    <select class="selectpicker" data-live-search="false" data-width="100%" ng-model="sucursal" >
+                                        <option value="">Seleccione la Agencia</option>
+                                        <option ng-repeat="agencia in sucursales" value="{{agencia.AGENCIA}}">{{agencia.NOMBRE_AGENCIA}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                           <div class="form-group">                               
+                                <label class="col-sm-1 control-label">De:</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group input-daterange" calendar>
+                                        <input type="text" class="form-control" name="start" ng-model="fechaInicio" />
+                                        <span class="input-group-addon">a</span>
+                                        <input type="text" class="form-control" name="end" ng-model="fechaFin" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button  class="btn btn-info pull-right" type="submit" ng-click="consultaPedidos()"><i class="ti-search"></i> Buscar</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="container">
+                         <div class="col-sm-12" >
+                            <div class="tableContent">
+                              <table class="table table-striped table-condensed table-hover" id = "tblCtrlDepositos1">
+                                <thead>
+                                  <tr>
+                                    <th>Folio</th>
+                                    <th>Descripción</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="res in resultadoPedido">
+                                    <td> {{ res.id }} </td>
+                                    <td> {{ res.nombre }} </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div ng-show="listaPedidos.length > 0" class=" col-xs-12">                        
+                                <table id="tblPedidoFiltros" st-table="pedidos" st-safe-src="listaPedidos">
+                                    <thead>
+                                        <tr>
+                                            <th style="display: none;">
+                                                id_pedido  
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio" st-sort="folioPedido">
+                                                No. Pedido
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="empresaNombre">
+                                                Fecha
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="empresaNombre">
+                                                Empresa
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="sucursalNombre">
+                                                Sucursal
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" st-sort="total" style="text-align:center">
+                                                Total
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" st-sort="estatus" width="20%">
+                                                Estatus
+                                            </th>
+                                            <!-- <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="token">
+                                                Token
+                                            </th> -->
+                                            <th>
+                                                Ver Pedido
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="pedido in pedidos">
+                                            <td style="display: none;">
+                                                {{pedido.ID_Pedido}}
+                                            </td>
+                                            <td>
+                                                <span>{{pedido.folioPedido}}</span>
+                                            </td>
+                                            <td>
+                                                {{pedido.PMM_FECHA}}
+                                            </td>
+                                            <td>
+                                                {{pedido.empresaNombre}}
+                                            </td>
+                                            <td>
+                                                {{pedido.sucursalNombre}}
+                                            </td>
+                                            <td style="text-align:right">
+                                                {{pedido.total | currency}}
+                                            </td>
+                                            <td width="20%">
+                                                <!-- ng-style="{ 'background-color':'{{pedido.color}}' }" -->
+                                                <div class="label label-table" ng-style="{ 'background-color':'{{pedido.color}}' }">{{pedido.estatus}}</div>
+                                            </td>
+                                            <td>
+                                                <a href="{{'/pedido/'+pedido.idPedidoRef+'/'+pedido.folioPedido+'/'+pedido.color.replace('#','')+'/'+pedido.estatus}}" class="btn btn-info btn-icon"><i class="fa fa-search"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                         </div>
+                       </div>
+                     </div>
+
+
+
+        </div>
+    </div>
+    <!--End page content-->
+
+
+
+
+        </div>
+    </div>
+</div>
+<!--Modal para colocar pdf-->
+<!--===================================================-->
+
+<!--===================================================-->
+<!--End Modal para colocar el numero del punteo-->

@@ -10,6 +10,15 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/cotizaciones.html',
             controller: 'cotizacionesController'
         });
+        $routeProvider.when('/pedido', {
+            templateUrl: 'AngularJS/Templates/pedido.html',
+            controller: 'pedidoController'
+        });
+        $routeProvider.when('/historial', {
+            templateUrl: 'AngularJS/Templates/historial.html',
+            controller: 'historialController'
+        });
+
 
         $routeProvider.otherwise({ redirectTo: '/' });
 
