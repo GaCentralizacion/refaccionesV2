@@ -15,7 +15,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 ">Empresa: </label>
                                     <div class="col-sm-8">
-                                        <select ng-change="getSucursales()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresa"></select>
+                                        <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">

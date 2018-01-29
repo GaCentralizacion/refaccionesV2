@@ -19,9 +19,9 @@ cotizaciones.prototype.get_index = function(req, res, next) {
     var self = this;
 
     var params = [
-        { name: 'idUsuario', value: req.query.user, type: self.model.types.INT },
-        { name: 'sucursal', value: req.query.sucursal, type: self.model.types.STRING },
-        { name: 'empresa', value: req.query.empresa, type: self.model.types.STRING }
+        { name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
+        { name: 'sucursal', value: req.query.idSucursal, type: self.model.types.STRING },
+        { name: 'empresa', value: req.query.idEmpresa, type: self.model.types.STRING }
     ];
     self.model.query('SEL_COTIZACION_SP', params, function(error, result) {
         self.view.expositor(res, {
