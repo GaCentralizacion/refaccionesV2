@@ -30,7 +30,7 @@
                                         </div>
                                         <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0" class="form-group">
                                             <div class="col-sm-11 control-label">
-                                                <a ng-click="nuevaCotizacion()" class="form-control btn btn-block btn-primary">Nueva cotización</a>
+                                                <a ng-click="nuevaCotizacion(); initModal();" class="form-control btn btn-block btn-primary">Nueva cotización</a>
                                                 <!-- href="cotizacion/nueva/busqueda/" -->
                                             </div>
                                             <div class="col-sm-11">
@@ -258,7 +258,7 @@
                     <form class="form-horizontal">
                         <div style="height: 65vh;" class="panel-body">
                             <div class="tab-content">
-                                <div id="demo-step-tab1" class="tab-pane   active in">
+                                <div id="demo-step-tab1" class="tab-pane   active in" ng-controller="busquedaController">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -266,8 +266,8 @@
                                                 <div class="input-group">
                                                     <input autocomplete="off" ng-change="buscarRefaccion()" ng-model="refaccionBusqueda" placeholder="Buscar" id="inputRefacciones" type="text" class="form-control">
                                                     <span class="input-group-btn">
-              <button ng-click="clearQuery()" class="btn btn-primary btn-small" type="button"><i class="fa fa-angle-double-left"></i></button>
-         </span>
+                                                          <button ng-click="clearQuery()" class="btn btn-primary btn-small" type="button"><i class="fa fa-angle-double-left"></i></button>
+                                                     </span>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,4 +1,4 @@
-registrationModule.controller('cotizacionesController', function($scope, $rootScope, $location, $timeout, alertFactory, cotizacionesRepository, filterFactory, userFactory, globalFactory) {
+registrationModule.controller('cotizacionesController', function($scope, $rootScope, $location, $timeout, alertFactory, cotizacionesRepository, filterFactory, userFactory, globalFactory, datosBusqueda) {
     $scope.sucursalActual = $scope.empresaActual = null;
     $scope.listaCotizaciones = [];
     $scope.init = function() {
@@ -9,6 +9,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             "lineWidth": 8,
             "size": 115
         });
+
 
     };
     $scope.getEmpresas = function() {
@@ -223,12 +224,14 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
         });
     }; //end setTablePaging
     $scope.nuevaCotizacion = function() {
+
         $scope.total = 0;
         $scope.salir = false;
         $scope.guardarModal = false;
         $scope.cotizacionActual = [];
         $scope.direccionActual;
         $scope.page = 1;
+        $scope.folioActual = "nueva" == "nueva" ? "TEMP" : $stateParams.id;
         $('.modal-cotizacion').modal('show')
 
         $('.modal-cotizacion').on('shown.bs.modal', function(e) {
@@ -255,5 +258,6 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             $("#footer").css("position", "absolute");
             $state.go("user.cotizacion")
         })
+        $rootScope.initModal();
     }
 });
