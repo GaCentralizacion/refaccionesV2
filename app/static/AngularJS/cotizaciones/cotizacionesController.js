@@ -12,7 +12,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
     };
     $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {           
+        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'user').then(function(result) {
             if (result.data.length > 0) {
                 console.log(result.data, 'Soy las empresas ')
                 $scope.empresas = result.data;
@@ -44,7 +44,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     };
     $scope.getSucursales = function() {
         $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'admin').then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
             if (result.data.length > 0) {
                 $scope.muestraAgencia = true;
                 console.log(result.data, 'Soy las sucursales ')
@@ -78,7 +78,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     };
     $scope.consultaSucursales = function() {
         $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'admin').then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
             if (result.data.length > 0) {
                 $scope.muestraAgencia = true;
                 console.log(result.data, 'Soy las sucursales ')
@@ -222,4 +222,38 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             }]
         });
     }; //end setTablePaging
+    $scope.nuevaCotizacion = function() {
+        $scope.total = 0;
+        $scope.salir = false;
+        $scope.guardarModal = false;
+        $scope.cotizacionActual = [];
+        $scope.direccionActual;
+        $scope.page = 1;
+        $('.modal-cotizacion').modal('show')
+
+        $('.modal-cotizacion').on('shown.bs.modal', function(e) {
+            //var moveIt = $(".modal-backdrop").remove();
+            //$("#modal-cotizacion-container").append(moveIt);
+            $("#navbar").css("position", "static");
+            $("#footer").css("position", "static");
+        })
+
+        $('.modal-cotizacion').on('hide.bs.modal', function(e) {
+            if ($scope.guardarModal && !$scope.salir) {
+                e.preventDefault()
+                bootbox.confirm("<h4>Se perderan los cambios no guardados en la cotizacion actual, ¿Esta seguro de salir?</h4>", function(result) {
+                    if (result) {
+                        $scope.salir = true;
+                        $('.modal-cotizacion').modal('hide')
+                    }
+                })
+            }
+        })
+
+        $('.modal-cotizacion').on('hidden.bs.modal', function(e) {
+            $("#navbar").css("position", "absolute");
+            $("#footer").css("position", "absolute");
+            $state.go("user.cotizacion")
+        })
+    }
 });

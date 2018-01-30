@@ -1,0 +1,91 @@
+@media (min-width: 768px) {
+   .nav-orders {
+        margin-left: 4px;
+    }
+    .nav-orders .col-sm-4 {
+        padding: 0px 9px 0px 6px;
+    }
+    .nav-orders .col-sm-4:first-child {
+        margin: 0px -16px 0px 8px!important;
+    }
+    .nav-orders .col-sm-4:last-child {
+        margin: 0px 8px 0px -16px!important;
+    }
+}
+.nav-orders button {
+    border-radius: 0px;
+}
+.dropzone {
+    min-height: auto;
+    text-align: center;
+    padding: 1em!important;
+}
+.dropzone .dz-default.dz-message span {
+    text-align: center;
+    display: block;
+    font-size: 18px;
+}
+
+.dropzone .dz-preview .dz-details, .dropzone-previews .dz-preview .dz-details{
+  width: 190px;
+  height: auto;
+}
+
+.dropzone .dz-preview, .dropzone-previews .dz-preview {
+  margin:0 20px 20px 20px;
+}
+
+.dropzone .dz-preview .dz-error-mark span, .dropzone-previews .dz-preview .dz-error-mark span, .dropzone .dz-preview .dz-success-mark span, .dropzone-previews .dz-preview .dz-success-mark span{
+  display: inline;
+}
+
+.social-body img{
+  width: 100%;
+  height: 250px;
+}
+
+.navbar-right{
+    float: right!important;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.nav-orders i{
+  font-size: 20px;
+}
+
+.xmlContent{
+  word-break: break-word;
+  height: 400px;
+  overflow: auto;
+}
+
+.nav-header {
+    background: #2F4043;
+}
+
+.nav-header img {
+    max-width: 140px;
+    max-height:
+     140px;
+}
+
+img.circle-border {
+    border: 2px solid #FFFFFF;
+    border-radius: 10%;
+}

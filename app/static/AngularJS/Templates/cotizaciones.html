@@ -1,126 +1,449 @@
-<div id="page-content" ng-init="init()">
-    <div class="row ">
-        <div class="col-sm-10 col-sm-push-1 mar-top">
-            <div id="">
-                <h1 class="page-header text-overflow">Cotizaciones</h1>
-                </h1>
-            </div>
-        </div>
-        <div class="col-sm-10 col-sm-push-1 mar-top ">
-            <div class="panel ">
-                <div class="panel-body pad-top mar-top">
-                    <div class="">
-                        <div class="col-sm-6  col-xs-12">
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-3 ">Empresa: </label>
-                                    <div class="col-sm-8">
-                                        <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+<link href="css/cotizacion.css" rel="stylesheet">
+<div ng-init="init()">
+    <!--Page content-->
+    <div id="page-content">
+        <div class="panel-body">
+            <div class="row ">
+                <div class="col-sm-10 col-sm-push-1 mar-top">
+                    <div id="">
+                        <h1 class="page-header text-overflow">Cotizaciones</h1>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-sm-10 col-sm-push-1 mar-top ">
+                    <div class="panel ">
+                        <div class="panel-body pad-top mar-top">
+                            <div class="">
+                                <div class="col-sm-6  col-xs-12">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 ">Empresa: </label>
+                                            <div class="col-sm-8">
+                                                <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-sm-3 ">Sucursal: </label>
+                                            <div class="col-sm-8">
+                                                <select id="selSucursales" ng-change="cambioSucursal()" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                            </div>
+                                        </div>
+                                        <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0" class="form-group">
+                                            <div class="col-sm-11 control-label">
+                                                <a ng-click="nuevaCotizacion()" class="form-control btn btn-block btn-primary">Nueva cotización</a>
+                                                <!-- href="cotizacion/nueva/busqueda/" -->
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <p class="text-lg texto-centrado text-bold"><i class="demo-pli-check icon-fw"></i>Datos Sucursal</p>
+                                                <p>RFC: <span class="texto-izquierda text-semibold">{{sucursalActual.rfcSuc }}</span></p>
+                                                <p>Dirección: <span class="texto-izquierda text-semibold">{{sucursalActual.dirSuc }}</span></p>
+                                                <p>Teléfono: <span class="texto-izquierda  text-semibold">{{sucursalActual.telSuc }}</span></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-sm-3 ">Sucursal: </label>
-                                    <div class="col-sm-8">
-                                        <select id="selSucursales" ng-change="cambioSucursal()" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
-                                    </div>
-                                </div>
-                                <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0" class="form-group">
-                                    <div class="col-sm-11 control-label">
-                                        <a href="cotizacion/nueva/busqueda/" class="form-control btn btn-block btn-primary">Nueva cotización</a>
-                                    </div>
-                                    <div class="col-sm-11">
-                                        <p class="text-lg texto-centrado text-bold"><i class="demo-pli-check icon-fw"></i>Datos Sucursal</p>
-                                        <p>RFC: <span class="texto-izquierda text-semibold">{{sucursalActual.rfcSuc }}</span></p>
-                                        <p>Dirección: <span class="texto-izquierda text-semibold">{{sucursalActual.dirSuc }}</span></p>
-                                        <p>Teléfono: <span class="texto-izquierda  text-semibold">{{sucursalActual.telSuc }}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                            <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0 " class="form-horizontal">
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="list-group">
-                                            <div class="panel panel-default panel-colorful">
-                                                <div class="row" style="padding: 9.5px;">
-                                                    <div class="col-xs-6">
-                                                        <p class="text-lg text-bold"><i class="demo-pli-check icon-fw"></i>Crédito</p>
-                                                        <p>Crédito Autorizado: <span class="pull-right text-semibold">{{sucursalActual.Con_LimCredito | currency }}</span></p>
-                                                        <p>Pedidos Solicitados: <span class="pull-right  text-semibold"><font color='#D50819'>{{sucursalActual.descuento | currency }}</font></span></p>
-                                                        <p>Cartera: <span class="pull-right  text-semibold"><font color='#D50819'>{{sucursalActual.importe | currency }}</font></span></p>
-                                                        <hr>
-                                                        <p>Disponible: <span class="pull-right  text-semibold"> {{disponible | currency }}</span></p>
+                                <div class="col-sm-6 col-xs-12">
+                                    <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0 " class="form-horizontal">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <div class="list-group">
+                                                    <div class="panel panel-default panel-colorful">
+                                                        <div class="row" style="padding: 9.5px;">
+                                                            <div class="col-xs-6">
+                                                                <p class="text-lg text-bold"><i class="demo-pli-check icon-fw"></i>Crédito</p>
+                                                                <p>Crédito Autorizado: <span class="pull-right text-semibold">{{sucursalActual.Con_LimCredito | currency }}</span></p>
+                                                                <p>Pedidos Solicitados: <span class="pull-right  text-semibold"><font color='#D50819'>{{sucursalActual.descuento | currency }}</font></span></p>
+                                                                <p>Cartera: <span class="pull-right  text-semibold"><font color='#D50819'>{{sucursalActual.importe | currency }}</font></span></p>
+                                                                <hr>
+                                                                <p>Disponible: <span class="pull-right  text-semibold"> {{disponible | currency }}</span></p>
+                                                            </div>
+                                                            <div class="col-xs-6">
+                                                                <div class="chart"><span>{{((sucursalActual.Con_LimCredito-sucursalActual.descuento)/sucursalActual.Con_LimCredito)*100 | number:2}}%</span></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-xs-6">
-                                                        <div class="chart"><span>{{((sucursalActual.Con_LimCredito-sucursalActual.descuento)/sucursalActual.Con_LimCredito)*100 | number:2}}%</span></div>
-                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p>Vendedor: <span class="texto-izquierda text-semibold">{{sucursalActual.nomVendedor}}</span></p>
+                                                    <p>Teléfono: <span class="texto-izquierda text-semibold">{{sucursalActual.telVendedor}}</span> Ext: <span class="texto-izquierda text-semibold">{{sucursalActual.PER_EXT1}}</span></p>
+                                                    <p>Correo: <span class="texto-izquierda text-semibold">{{sucursalActual.mailVendedor}}</span></p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p>Vendedor: <span class="texto-izquierda text-semibold">{{sucursalActual.nomVendedor}}</span></p>
-                                            <p>Teléfono: <span class="texto-izquierda text-semibold">{{sucursalActual.telVendedor}}</span> Ext: <span class="texto-izquierda text-semibold">{{sucursalActual.PER_EXT1}}</span></p>
-                                            <p>Correo: <span class="texto-izquierda text-semibold">{{sucursalActual.mailVendedor}}</span></p>
-                                        </div>
                                     </div>
                                 </div>
-                                <!--div class="form-group">
-                  <div style="margin-top: -15px;" class="col-sm-11 ">
-                    <a ng-disabled="!sucursalActual || sucursalActual.AGENCIA == 0" href="cotizacion/nueva/busqueda/" class="form-control btn btn-block btn-primary">Nueva cotizacion</a>
-                  </div>
-                </div-->
+                            </div>
+                            <div style="margin-top: 30px;" ng-show="listaCotizaciones.length > 0" class=" col-xs-12">
+                                <table st-table="cotizaciones" st-safe-src="listaCotizaciones" id="tblCotizacionFiltros">
+                                    <thead>
+                                        <tr>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
+                                                Cotización
+                                            </th>
+                                            <th>
+                                                Empresa
+                                            </th>
+                                            <th>
+                                                Sucursal
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                                Descripción
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
+                                                Total
+                                            </th>
+                                            <th width="20%">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="cotizacion in cotizaciones">
+                                            <td>
+                                                {{cotizacion.folio}}
+                                            </td>
+                                            <td>
+                                                {{empresaActual.emp_nombre}}
+                                            </td>
+                                            <td>
+                                                {{sucursalActual.NOMBRE_AGENCIA}}
+                                            </td>
+                                            <td>
+                                                {{cotizacion.descripcion}}
+                                            </td>
+                                            <td align="right">
+                                                {{cotizacion.total | currency}}
+                                            </td>
+                                            <td width="20%">
+                                                <a href="{{'/cotizacion/'+cotizacion.idCotizacion+'/busqueda/'}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                                <button ng-click="borrarCotizacion(cotizacion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 30px;" ng-show="listaCotizaciones.length > 0" class=" col-xs-12">
-                        <table st-table="cotizaciones" st-safe-src="listaCotizaciones" id="tblCotizacionFiltros">
-                            <thead>
-                                <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
-                                        Cotización
-                                    </th>
-                                    <th>
-                                        Empresa
-                                    </th>
-                                    <th>
-                                        Sucursal
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
-                                        Descripción
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
-                                        Total
-                                    </th>
-                                    <th width="20%">
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="cotizacion in cotizaciones">
-                                    <td>
-                                        {{cotizacion.folio}}
-                                    </td>
-                                    <td>
-                                        {{empresaActual.emp_nombre}}
-                                    </td>
-                                    <td>
-                                        {{sucursalActual.NOMBRE_AGENCIA}}
-                                    </td>
-                                    <td>
-                                        {{cotizacion.descripcion}}
-                                    </td>
-                                    <td align="right">
-                                        {{cotizacion.total | currency}}
-                                    </td>
-                                    <td width="20%">
-                                        <a href="{{'/cotizacion/'+cotizacion.idCotizacion+'/busqueda/'}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
-                                        <button ng-click="borrarCotizacion(cotizacion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                </div>
+            </div>
+        </div>
+        <!--End page content-->
+    </div>
+</div>
+<!--Modal -->
+<!--===================================================-->
+<div class="modal fade" id="ordenes" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle text-white"></i></button>
+                <h4 class="modal-title text-white">Ordenes de Compra</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered ordenesCompra" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-top">Operacion</th>
+                                <th class="text-top">VIN</th>
+                                <th class="text-top">Factura</th>
+                                <th class="text-top">Orden de Servicio</th>
+                                <th class="text-top">Tipo <span class="filtrosSelect"></span></th>
+                                <th class="text-top">Fecha</th>
+                                <th class="text-top">Estatus <span class="filtrosSelect"></span></th>
+                                <th class="text-top">Proveedor <span class="filtrosSelect"></span></th>
+                                <th class="text-top">Empresa </th>
+                                <th class="text-top">Sucursal
+                                    <br><span class="filtrosSelect" ng-show="mostrarFitroSucursal"></span></th>
+                                <th class="text-top">Departamento <span class="filtrosSelect"></span></th>
+                                <th class="text-top">Usuario</th>
+                                <th class="text-top">Nodo <span class="filtrosSelect"></span></th>
+                                <th class="text-top">Importe <span class="inputSelect"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="orden in ordenes" ng-click="getDetalleOrden(orden)">
+                                <td>{{orden.Folio_Operacion}}</td>
+                                <td>{{orden.numeroSerie}}</td>
+                                <td>{{orden.factura}}</td>
+                                <td>{{orden.ordenServicio}}</td>
+                                <td>{{orden.tipoorden}}</td>
+                                <td>{{orden.oce_fechaorden | date : "dd/MM/yyyy"}}</td>
+                                <td>{{orden.situacionOrden}}</td>
+                                <td>{{orden.Proveedor}}</td>
+                                <td>{{orden.empNombre}}</td>
+                                <td>{{orden.sucursal}}</td>
+                                <td>{{orden.depto}}</td>
+                                <td>{{orden.usuario}}</td>
+                                <td>{{orden.nodoactual + ' ' + orden.nombreNodo}}</td>
+                                <td>{{orden.oce_importetotal | currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End Modal -->
+<!-- Inicia modal de cotizaciones -->
+<div class="modal fade modal-cotizacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Crédito autorizado: {{sucursalActual.Con_LimCredito | currency}}</span>
+                <div class="progress progress-lg pull-right">
+                    <div class="restante">
+                        Crédito disponible: {{disponible - total | currency }}
                     </div>
+                    <div style="width: {{((disponible - total)/disponible)*100}}%" class="progress-bar progress-bar-success"></div>
+                    <div style="width: {{((total)/disponible)*100}}%" class="progress-bar progress-bar-danger"></div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div style="display:inline-block; margin-top: -30px;">
+                    <!-- background-color: #6359BF;-->
+                    <div style="margin-top: 0px;">
+                        <!--background-color: #BF5959;"-->
+                        <h4>{{folioActual=="TEMP"?"Nueva cotización":"Cotización"}}</h3>
+                        <h5 class="modal-title" id="myModalLabel">Folio: {{empresaActual.emp_nombrecto}}-{{sucursalActual.suc_nombrecto}}-REF-{{folioActual}}</h4>
+                    </div>
+                </div>
+                <div style="display:inline-block; width: 41%; padding-bottom: -1px;">
+                    <div style="padding-top: 0px; padding-bottom: 0px;">
+                        <address>
+                            Sucursal: {{sucursalActual.NOMBRE_AGENCIA}}
+                            <br> Dirección: {{sucursalActual.dirSuc }}
+                            <br> Atención a clientes ó informes: {{sucursalActual.telSuc }}
+                        </address>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:0px" class="modal-body">
+                <div id="demo-step-wz">
+                    <div class="wz-heading wz-w-label bg-info">
+                        <div class="progress progress-sm">
+                            <div style="width: 75%; margin: 0px 12.5%;" class="progress-bar progress-bar-dark"></div>
+                        </div>
+                        <ul class="wz-steps wz-icon-bw wz-nav-off text-lg">
+                            <li class="col-xs-4 active">
+                                <a data-toggle="tab" href="#demo-step-tab1" aria-expanded="false">
+                                    <span class="icon-wrap icon-wrap-xs icon-circle bg-gray ">
+                                                      <span class="wz-icon icon-txt text-bold">1</span>
+                                    <i class="wz-icon-done fa fa-check"></i>
+                                    </span>
+                                    <small class="wz-desc box-block text-semibold">Busqueda de refacciones</small>
+                                </a>
+                            </li>
+                            <li class="col-xs-4">
+                                <a data-toggle="tab" href="#demo-step-tab2" aria-expanded="false">
+                                    <span class="icon-wrap icon-wrap-xs icon-circle bg-gray ">
+                                        <span class="wz-icon icon-txt text-bold">2</span>
+                                    <i class="wz-icon-done fa fa-check"></i>
+                                    </span>
+                                    <small class="wz-desc box-block text-semibold">Datos de entrega</small>
+                                </a>
+                            </li>
+                            <li class="col-xs-4">
+                                <a data-toggle="tab" href="#demo-step-tab3" aria-expanded="false">
+                                    <span class="icon-wrap icon-wrap-xs icon-circle bg-gray ">
+                                                      <span class="wz-icon icon-txt text-bold">3</span>
+                                    <i class="wz-icon-done fa fa-check"></i>
+                                    </span>
+                                    <small class="wz-desc box-block text-semibold">Confirmación de pedido</small>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Form-->
+                    <form class="form-horizontal">
+                        <div style="height: 65vh;" class="panel-body">
+                            <div class="tab-content">
+                                <div id="demo-step-tab1" class="tab-pane   active in">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="inputRefacciones">Introduce número de parte o descripción:</label>
+                                                <div class="input-group">
+                                                    <input autocomplete="off" ng-change="buscarRefaccion()" ng-model="refaccionBusqueda" placeholder="Buscar" id="inputRefacciones" type="text" class="form-control">
+                                                    <span class="input-group-btn">
+              <button ng-click="clearQuery()" class="btn btn-primary btn-small" type="button"><i class="fa fa-angle-double-left"></i></button>
+         </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-push-1 col-sm-5">
+                                            <div class="form-group">
+                                                <label for="inputRefacciones">Plantillas:</label>
+                                                <div style="margin-top:-9px;" class="pull-right">
+                                                    <button ng-show="templateActual.idCotizacionPlantilla == 0  && cotizacionActual.length>0" type="button" class="btn btn-success btn-icon " data-toggle="tooltip" data-placement="top" title="Guardar como plantilla" ng-click="guadarTemplateBack()">
+                                                        <i class="fa fa-save"></i>
+                                                    </button>
+                                                    <button ng-show="templateActual.idCotizacionPlantilla != 0" type="button" class="btn btn-primary btn-icon " data-toggle="tooltip" data-placement="top" title="Actualizar plantilla" ng-click="guadarTemplateBack()"><i class="fa fa-refresh"></i></button>
+                                                    <button ng-show="templateActual.idCotizacionPlantilla != 0" type="button" class="btn btn-danger btn-icon " data-toggle="tooltip" data-placement="top" title="Eliminar plantilla" ng-click="eliminarTemplate()"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                                <select ng-change="cargarTemplate()" class="form-control" ng-options="template as template.descripcion for template in listaTemplates track by template.idCotizacionPlantilla" ng-model="templateActual"></select>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: -15px;" class="col-xs-12">
+                                            <div ng-show="busquedaActual.length > 0" class="form-group query-container  ">
+                                                <table class="table table-hover encabezado">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:23%">
+                                                                No serie
+                                                            </th>
+                                                            <th style="width:32%">
+                                                                Descripción
+                                                            </th>
+                                                            <th style="width:21.5%">
+                                                                Precio
+                                                            </th>
+                                                            <th style="width:15%">
+                                                                Cantidad
+                                                            </th>
+                                                            <th style="width:10%">
+                                                                Agregar
+                                                            </th </tr>
+                                                    </thead>
+                                                </table>
+                                                <table style="margin-top:35px;" class="table table-hover ">
+                                                    <tbody>
+                                                        <tr class="list-group-item-custom" ng-repeat="refaccion in busquedaActual">
+                                                            <td style="width:20%">
+                                                                {{refaccion.PTS_IDPARTE}}
+                                                            </td>
+                                                            <td style="width:30%">
+                                                                {{refaccion.PTS_DESPARTE}}
+                                                            </td>
+                                                            <td style="width:20%">
+                                                                {{refaccion.PTS_PCOLISTA | currency}}
+                                                            </td>
+                                                            <td style="width:18%">
+                                                                <input ng-value="1" ng-model="refaccion.cantidad" autocomplete="off" size="5" class="show-hover text-center form-control" type="number" value="1" name="cantidad" min="1" max="9999">
+                                                            </td>
+                                                            <td style="width:12%">
+                                                                <button ng-click="agregarACotizacion(refaccion)" class="btn btn-primary show-hover" type="button" name="button">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div ng-show="spinner" class="spinner">
+                                            <div class="rect1"></div>
+                                            <div class="rect2"></div>
+                                            <div class="rect3"></div>
+                                            <div class="rect4"></div>
+                                            <div class="rect5"></div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div ng-show="cotizacionActual.length > 0" class="form-group ">
+                                                <div style="max-height: 30px; overflow: hidden;">
+                                                    <table style="margin-bottom:0px;" class="table table-striped ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    No serie
+                                                                </th>
+                                                                <th>
+                                                                    Descripción
+                                                                </th>
+                                                                <th style="text-align:right">
+                                                                    Precio
+                                                                </th>
+                                                                <th>
+                                                                    Cantidad
+                                                                </th>
+                                                                <th style="text-align:right">
+                                                                    Subtotal
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="refaccion in cotizacionActual">
+                                                                <td>
+                                                                    {{refaccion.PTS_IDPARTE}}
+                                                                </td>
+                                                                <td>
+                                                                    {{refaccion.PTS_DESPARTE}}
+                                                                </td>
+                                                                <td style="text-align:right">
+                                                                    {{refaccion.PTS_PCOLISTA | currency}}
+                                                                </td>
+                                                                <td>
+                                                                    <input style="width:80px" ng-model="refaccion.cantidad" autocomplete="off" size="5" class=" text-center form-control" type="number" value="1" name="cantidad" min="1" max="9999">
+                                                                </td>
+                                                                <td style="text-align:right">
+                                                                    {{refaccion.PTS_PCOLISTA*refaccion.cantidad | currency}}
+                                                                </td>
+                                                                <td>
+                                                                    <button ng-click="borrarCotizacion(refaccion)" class="btn btn-sm btn-danger" type="button" name="button">
+                                                                        <i class="fa fa-minus"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div style="max-height: 38vh; overflow: auto;">
+                                                    <table class="table table-striped ">
+                                                        <tbody>
+                                                            <tr ng-repeat="refaccion in cotizacionActual">
+                                                                <td>
+                                                                    {{refaccion.PTS_IDPARTE}}
+                                                                </td>
+                                                                <td>
+                                                                    {{refaccion.PTS_DESPARTE}}
+                                                                </td>
+                                                                <td style="text-align:right">
+                                                                    {{refaccion.PTS_PCOLISTA | currency}}
+                                                                </td>
+                                                                <td>
+                                                                    <input style="width:80px" ng-model="refaccion.cantidad" autocomplete="off" size="5" class=" text-center form-control" type="number" value="1" name="cantidad" min="1" max="9999">
+                                                                </td>
+                                                                <td style="text-align:right">
+                                                                    {{refaccion.PTS_PCOLISTA*refaccion.cantidad | currency}}
+                                                                </td>
+                                                                <td>
+                                                                    <button ng-click="borrarCotizacion(refaccion)" class="btn btn-sm btn-danger" type="button" name="button">
+                                                                        <i class="fa fa-minus"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-show="cotizacionActual.length > 0" class="row">
+                                            <div class="col-xs-2 col-xs-push-7" style="text-align: right;">
+                                                <h4>Total:</h4>
+                                            </div>
+                                            <div class="col-xs-2 col-xs-push-7" style="text-align: right;">
+                                                <h4>{{total | currency}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-container">
+                                        <button ng-disabled="!guardar" ng-click="guadarCotizacionBack()" ng-show="cotizacionActual.length>0" class="btn btn-success" type="button" name="button">{{folioActual != "TEMP"? "Actualizar cotización": "Guardar cotización"}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Footer button-->
+                        <div class="panel-footer text-right">
+                            <div class="box-inline">
+                                <a ng-hide="backorder || sinbackorder" href="{{previous}}" type="button" class="previous btn btn-info">Anterior</a>
+                                <a ng-disabled="(page == 1 && cotizacionActual.length == 0) ||(!direccionActual &&  page == 2)" href="{{next}}" type="button" class="next btn btn-info disabled" style="display: none;">Siguiente</a>
+                                <a ng-show="backorder || sinbackorder" ng-click="hacerPedido(3)" type="button" class="finish btn btn-warning" style="display: inline-block;">Cancelar pedido</a>
+                                <a ng-show="backorder" ng-click="hacerPedido(0)" type="button" class="finish btn btn-success" style="display: inline-block;">Confirmar pedido <b>con</b> backorder</a>
+                                <a ng-show="sinbackorderTotal" ng-click="hacerPedido(1)" type="button" class="finish btn btn-info" style="display: inline-block;">Confirmar pedido <b>sin</b> backorder</a>
+                                <a ng-hide="backorder || sinbackorder" ng-click="hacerPedido(0)" type="button" class="finish btn btn-primary" style="display: inline-block;">Realizar pedido</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
