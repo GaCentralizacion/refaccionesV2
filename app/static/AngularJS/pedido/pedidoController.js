@@ -1,60 +1,187 @@
 registrationModule.controller('pedidoController', function($scope, $rootScope, $location, $timeout, alertFactory, pedidoRepository, filterFactory, userFactory, globalFactory) {
-    
-    $scope.fechaInicio = null;
-    $scope.fechaFin = null;
 
-    $scope.init = function() {
-        $scope.Usuario = userFactory.getUserData();
-        $scope.getEmpresas();
-          $('#tblPedidoFiltros').DataTable().destroy();
-    };
-    $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario,'admin').then(function(result) {
-            if (result.data.length > 0) {
-                console.log(result.data, 'Soy las empresas ')
-                $scope.empresas = result.data;
-                filterFactory.styleFiltros();
-            } else {
-                alertFactory.success('No se encontraron empresas');
-            }
+           $scope.init = function() {
+                $scope.Usuario = userFactory.getUserData();
+                $scope.getEmpresas();
+            };
 
-        });
-    };
-    $scope.getSucursales = function() {
-        $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresas[0].emp_idempresa, 'admin').then(function(result) {
-            if (result.data.length > 0) {
-                $scope.muestraAgencia = true;
-                console.log(result.data, 'Soy las sucursales ')
-                $scope.sucursales = result.data;
-                filterFactory.styleFiltros();
-            } else {
-                $scope.muestraAgencia = false;
-                alertFactory.success('No se encontraron empresas');
-            }
 
-        });
-    };
+            $scope.getEmpresas = function() {
+                filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {           
+                    if (result.data.length > 0) {
+                    console.log(result.data, 'Soy las empresas ')
+                    $scope.empresas = result.data;
+                    $scope.empresaActual = $scope.empresas[0];
 
-    $scope.consultaPedidos=function(){
+                    //SET EMPRESA LOCALSTORAGE   BEGIN
+                    if (localStorage.getItem('pedEmpresa') !== null) {
 
-        $('#tblPedidoFiltros').DataTable().destroy();
-    pedidoRepository.busquedaPedido($scope.empresas[0].emp_idempresa,$scope.sucursal,$scope.fechaInicio,$scope.fechaFin).then(function(result) {
-        if (result.data.length > 0) {
-            alertFactory.info('Si se  encontraron Resultados');
-            $scope.listaPedidos=result.data;
-                    setTimeout(function() {
-                        $scope.setTablePaging('tblPedidoFiltros');
-                        $("#tblPedidoFiltros_length").removeClass("dataTables_info").addClass("hide-div");
+                        $scope.pedEmpresa = []
+
+                        $scope.tempPedEmp = localStorage.getItem('pedEmpresa')
+                        $scope.pedEmpresa.push(JSON.parse($scope.tempPedEmp))
+
+                        console.log('$scope.pedEmpresa')
+                        console.log($scope.pedEmpresa[0][0])
+
+                        setTimeout(function() {
+
+                            $("#selEmpresas").val($scope.pedEmpresa[0][0].emp_idempresa);
+                            $scope.empresaActual = $scope.pedEmpresa[0][0]; //$scope.empresas;
+
+                            $scope.consultaSucursales();
+                        }, 100);
+
+                    }
+
+
+
+
+                    } else {
+                        alertFactory.success('No se encontraron empresas');
+                     }
+                });
+
+            }; 
+
+
+            $scope.consultaSucursales = function() {
+                  $scope.muestraAgencia = false;
+                    filterFactory.getSucursales($scope.Usuario.idUsuario,$scope.empresaActual.emp_idempresa, 'admin').then(function(result) {
+                        if (result.data.length > 0) {
+                                    $scope.sucursales = result.data;
+                                    $scope.sucursalActual = $scope.sucursales[0];
+
+
+                                    //SET SUCURSAL DESDE LOCALSTORAGE   BEGIN
+                                    if (localStorage.getItem('pedSucursal') !== null) {
+
+                                        $scope.pedSucursal = []
+
+                                        //$scope.histEmpresa = localStorage.getItem('histEmpresa')
+                                        $scope.tempPedSuc = localStorage.getItem('pedSucursal')
+                                        $scope.pedSucursal.push(JSON.parse($scope.tempPedSuc))
+
+                                        console.log('$scope.pedSucursal')
+                                        console.log($scope.pedSucursal[0][0])
+
+                                        setTimeout(function() {
+
+                                            $("#selSucursales").val($scope.pedSucursal[0][0].AGENCIA);
+                                            $scope.sucursalActual = $scope.pedSucursal[0][0]; //$scope.empresas;
+
+                                            $scope.consultaPedidos($scope.empresaActual, $scope.sucursalActual, $scope.fecha, $scope.fechaFin);
+
+                                        }, 100);
+
+                                    } //SET SUCURSAL DESDE LOCALSTORAGE  END
+
+                        }
+                });
+            }; //END consultaSucursales
+
+            $scope.cambioEmpresa = function() {
+                if ($scope.empresaActual.emp_idempresa != 0) {
+
+                    $scope.pedEmpresa = []
+
+                    $scope.pedEmpresa.push({
+                            emp_idempresa: $scope.empresaActual.emp_idempresa,
+                            emp_nombre: $scope.empresaActual.emp_nombre,
+                            emp_nombrecto: $scope.empresaActual.emp_nombrecto
+                        })
+                        //$scope.histEmpresa.push($scope.empresaActual);
+                    localStorage.setItem('pedEmpresa', JSON.stringify($scope.pedEmpresa));
+
+                    $scope.consultaSucursales();
+
+                } else {
+                    $scope.sucursales = $scope.sucursalActual = null;
+                    localStorage.removeItem('pedEmpresa')
+                    localStorage.removeItem('pedSucursal')
+                }
+            };
+
+            $scope.cambioSucursal = function(empresa, sucursal, fecha,fechaFin) {
+
+                    $scope.consultaPedidos(empresa, sucursal, fecha, fechaFin);
+
+                    if ($scope.sucursalActual.AGENCIA != 0) {
+
+                        $scope.pedSucursal = []
+
+                        $scope.pedSucursal.push({
+                                AGENCIA: $scope.sucursalActual.AGENCIA,
+                                NOMBRE_AGENCIA: $scope.sucursalActual.NOMBRE_AGENCIA,
+                                IDSUC: $scope.sucursalActual.IDSUC,
+                                suc_nombrecto: $scope.sucursalActual.suc_nombrecto
+                            })
+                            //$scope.histEmpresa.push($scope.empresaActual);
+                        console.log('agregando sucursal actual a localStorage')
+                        localStorage.setItem('pedSucursal', JSON.stringify($scope.pedSucursal));
+                    } else {
+                        localStorage.removeItem('pedSucursal')
+                    }
+
+            }; //end cambioSucursal
+
+          
+
+            $scope.consultaPedidos = function(empresa, sucursal, fecha, fechaFin) {
+
+                    pedidoRepository.busquedaPedido($scope.Usuario.idUsuario,1, empresa.emp_idempresa,sucursal.AGENCIA,fecha,fechaFin).then(function(result) {
+                     if (result.data.length > 0) { 
+
+                            $scope.listaPedidos = result.data;
+                            //$scope.listaPedidos2 = data;
+
+                            $('#tblPedidoFiltros').DataTable().destroy();
+
+                            setTimeout(function() {
+                                $scope.setTablePaging('tblPedidoFiltros');
+
+                                $("#tblPedidoFiltros_length").removeClass("dataTables_info").addClass("hide-div");
                                 $("#tblPedidoFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
-                    }, 100);
-        } else {
-                alertFactory.info('No se encontraron Resultados');
-            }
-           
-         });
-    };
 
+                            }, 1);
+                        }else{
+                            alertFactory.pedidos('No se encontraron resultados'); 
+                        }
+
+
+
+                        });
+                   
+            }; //end consultaPedidos
+
+
+          
+            $scope.setTablePaging = function(idTable) {
+                    $('#' + idTable).DataTable({
+                        dom: '<"html5buttons"B>lTfgitp',
+                        order: [0, 'desc'],
+                        buttons: [{
+                            extend: 'copy'
+                        }, {
+                            extend: 'csv'
+                        }, {
+                            extend: 'excel',
+                            title: 'ExampleFile'
+                        }, {
+                            extend: 'pdf',
+                            title: 'ExampleFile'
+                        }, {
+                            extend: 'print',
+                            customize: function(win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
+                        }]
+                    });
+            };
 
 
 });

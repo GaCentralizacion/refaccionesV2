@@ -41,6 +41,10 @@ registrationModule.factory('alertFactory', function () {
             toastr.options = { "positionClass": "toast-top-right", "closeButton": true}
             toastr.info(text, 'Pedidos!');
         },
+        historial: function (text) {
+            toastr.options = { "positionClass": "toast-top-right", "closeButton": true}
+            toastr.info(text, 'Historial!');
+        },
         facturas: function (text) {
             toastr.options = { "positionClass": "toast-top-right", "closeButton": true}
             toastr.success(text, 'Facturas!');
