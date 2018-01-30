@@ -1,0 +1,180 @@
+#small-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+#small-chat .badge {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+}
+
+.open-small-chat {
+    height: 38px;
+    width: 38px;
+    display: block;
+    background: #1ab394;
+    padding: 9px 8px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.open-small-chat:hover {
+    color: white;
+    background: #1ab394;
+    cursor:pointer;
+}
+
+.small-chat-box {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 75px;
+    background: #fff;
+    border: 1px solid #e7eaec;
+    width: 230px;
+    height: 320px;
+    border-radius: 4px;
+}
+
+.small-chat-box.ng-small-chat {
+    display: block;
+}
+
+.body-small .small-chat-box {
+    bottom: 70px;
+    right: 20px;
+}
+
+.small-chat-box.active {
+    display: block;
+}
+
+.small-chat-box .heading {
+    background: #2f4050;
+    padding: 8px 15px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.small-chat-box .chat-date {
+    opacity: 0.6;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.small-chat-box .content {
+    padding: 15px 15px;
+    overflow: auto;
+    height: 230px
+}
+
+.small-chat-box .content .author-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    font-size: 11px;
+}
+
+.small-chat-box .content > div {
+    padding-bottom: 20px;
+}
+
+.small-chat-box .content .chat-message {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    line-height: 14px;
+    max-width: 80%;
+    background: #f3f3f4;
+    margin-bottom: 10px;
+}
+
+.small-chat-box .content .chat-message.active {
+    background: #1ab394;
+    color: #fff;
+}
+
+.small-chat-box .content .left {
+    text-align: left;
+    clear: both;
+}
+
+.small-chat-box .content .left .chat-message {
+    float: left;
+}
+
+.small-chat-box .content .right {
+    text-align: right;
+    clear: both;
+}
+
+.small-chat-box .content .right .chat-message {
+    float: right;
+}
+
+.small-chat-box .form-chat {
+    padding: 10px 10px;
+}
+
+
+/*class admin*/
+.admcontent{
+    font-size: 11px;
+}
+
+.admcontent .author-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    font-size: 11px;
+}
+
+.admcontent > div {
+    padding-bottom: 20px;
+}
+
+.admcontent .chat-message {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    line-height: 14px;
+    max-width: 80%;
+    background: #f3f3f4;
+    margin-bottom: 10px;
+}
+
+.admcontent .chat-message.active {
+    background: #6BBEEF;
+    color: #fff;
+}
+
+.admcontent .left {
+    text-align: left;
+    clear: both;
+}
+
+.admcontent .left .chat-message {
+    float: left;
+}
+
+.admcontent .right {
+    text-align: right;
+    clear: both;
+}
+
+.admcontent .right .chat-message {
+    float: right;
+}
+
+.admcontent .form-chat {
+    padding: 10px 10px;
+}
+
+
+
+.chatGreen .active a,
+.chatGreen .active a:hover {
+    background-color: #8BC34A !important; 
+}

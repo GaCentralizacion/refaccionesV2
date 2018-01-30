@@ -1,0 +1,132 @@
+/*cotizaciones modal*/
+
+.modal-header>span {
+    position: absolute;
+    right: 32px;
+    top: 26px;
+    font-size: 1.1em;
+    width: 300px;
+}
+
+.modal-header .progress {
+    width: 300px;
+    margin-right: 20px;
+    position: relative;
+    top: 34px;
+}
+
+.modal-header .progress .restante {
+    font-size: 14px;
+    position: absolute;
+    left: 8px;
+    color: white;
+}
+
+.modal-header h3 {
+    margin-top: 2px;
+}
+
+.modal-header .close {
+    top: 14px;
+    right: 16px;
+    margin: 0;
+    font-size: 2em;
+}
+
+.wz-heading.wz-w-label .progress {
+    margin-top: -4.5px;
+}
+
+
+/*Busqueda*/
+
+.alert {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 0px;
+}
+
+.padding-fix {
+    padding-left: 0px!important;
+}
+
+.show-hover {
+    display: none!important;
+}
+
+.list-group-item-custom:hover .show-hover {
+    display: block!important;
+}
+
+.list-group-item {
+    height: 45px;
+}
+
+.list-group-item {
+    padding: 5px;
+}
+
+.wz-heading .progress {
+    top: 40%!important;
+}
+
+.query-container {
+    max-height: 35vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    left: 8px;
+    right: 0px;
+    z-index: 100;
+    background: white;
+    -webkit-box-shadow: 4px 4px 10px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 4px 4px 10px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 7px 4px 10px 0px rgba(50, 50, 50, 0.5);
+}
+
+.query-container input {
+    width: 80px;
+    margin: auto;
+    display: block;
+}
+
+.list-group-item-custom {
+    cursor: pointer;
+}
+
+.list-group-item-custom {
+    height: 49px!important;
+}
+
+.list-group-item-custom td {
+    line-height: 26px!important;
+}
+
+.btn-container {
+    position: absolute;
+    bottom: 10px;
+    left: 16px;
+    z-index: 10;
+}
+
+.encabezado thead {
+    position: fixed;
+    background-color: whitesmoke;
+    right: 27px;
+    left: 21px;
+}
+
+.encabezado tr {
+    display: block;
+}
+
+#demo-step-tab1 {
+    padding: 0 15px;
+}
+
+
+/**/
+
+.progress-bar-dark {
+    background-color: transparent;
+}
