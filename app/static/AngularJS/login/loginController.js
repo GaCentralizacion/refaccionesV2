@@ -2,6 +2,7 @@
 
     //*******************************Variables*******************************
     $scope.userData = {};
+angular.element('#elementId').focus();
     //**************************Init del controller**************************
     $scope.init = function() {
         $rootScope.mostrarMenu = 0;

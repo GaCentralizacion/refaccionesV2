@@ -9,12 +9,12 @@
         <div class="col-sm-10 col-sm-push-1 mar-top ">
             <div class="panel ">
                 <div class="panel-body pad-top mar-top">
-                   <!--  <div class="col-sm-6  col-xs-12">
+                    <div class="col-sm-6  col-xs-12">
                         <div class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-3 ">Empresa:</label>
                                 <div class="col-sm-8">
-                                    <select ng-change="getSucursales()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                    <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -24,10 +24,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
-                   <!--  <div class="col-sm-6 col-xs-12">
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
                         <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0 " class="form-horizontal">
-                            <div class="form-group">
+                          <!--   <div class="form-group">
                                 <label class="col-sm-3 ">Período: </label>
                                 <div class="col-sm-7">
                                     <input type="text" name="daterange" value="" class="input-sm form-control" ng-model="fecha" />
@@ -36,39 +36,22 @@
                                     <a class="btn btn-info btn-icon">
                                         <i class="fa fa-search" ng-click="cambioSucursal(empresaActual,sucursalActual,fecha)"></i></a>
                                 </div>
-                            </div>
-                        </div>
-                    </div> -->
-                     <div class="col-sm-12">
-                        <form class="form-horizontal">
-                            <div class="form-group" >
-                                <label class="col-sm-1 control-label">Empresa:</label>
-                                <div class="col-sm-3">
-                                    <select class="selectpicker" data-live-search="false" data-width="100%" ng-model="empresa" ng-change="getSucursales()">
-                                        <option value="">Seleccione Empresa</option>
-                                        <option ng-repeat="empresa in empresas" value="{{empresa.emp_idEmpresa}}">{{empresa.emp_nombre}}</option>
-                                    </select>
-                                </div>
-                                <label class="col-sm-1 control-label" >Agencia:</label>
-                                <div class="col-sm-3" >
-                                    <select class="selectpicker" data-live-search="false" data-width="100%" ng-model="sucursal" >
-                                        <option value="">Seleccione la Agencia</option>
-                                        <option ng-repeat="agencia in sucursales" value="{{agencia.AGENCIA}}">{{agencia.NOMBRE_AGENCIA}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                           <div class="form-group">                               
+                            </div> -->
+                             <div class="form-group">                               
                                 <label class="col-sm-1 control-label">De:</label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-8">
                                     <div class="input-group input-daterange" calendar>
-                                        <input type="text" class="form-control" name="start" ng-model="fechaInicio" />
+                                        <input type="text" class="form-control" name="start" ng-model="fecha" />
                                         <span class="input-group-addon">a</span>
                                         <input type="text" class="form-control" name="end" ng-model="fechaFin" />
                                     </div>
                                 </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-info btn-icon">
+                                        <i class="ti-search" ng-click="cambioSucursal(empresaActual,sucursalActual,fecha,fechaFin)"></i></a>
+                                </div>
                             </div>
-                            <button  class="btn btn-info pull-right" type="submit" ng-click="consultaPedidos()"><i class="ti-search"></i> Buscar</button>
-                        </form>
+                        </div>
                     </div>
                     <div ng-show="listaPedidos.length > 0" class="col-xs-12">
                         <table id="tblHistoricoFiltros" st-table="pedidos" st-safe-src="listaPedidos">
