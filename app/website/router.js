@@ -4,7 +4,7 @@
      pedido: require('./controllers/pedido'),
      cotizaciones: require('./controllers/cotizaciones'),
      historial: require('./controllers/historial'),
-     direccion: require('./controllers/direccion')
-
+     direccion: require('./controllers/direccion'),
+     busqueda: require('./controllers/busqueda')
 
  }
