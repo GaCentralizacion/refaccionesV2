@@ -1,4 +1,6 @@
 registrationModule.controller('pedidoController', function($scope, $rootScope, $location, $timeout, alertFactory, pedidoRepository, filterFactory, userFactory, globalFactory) {
+            
+            $scope.listaPedidos = [];
 
            $scope.init = function() {
                 $scope.Usuario = userFactory.getUserData();
@@ -129,32 +131,96 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
 
             $scope.consultaPedidos = function(empresa, sucursal, fecha, fechaFin) {
 
-                    pedidoRepository.busquedaPedido($scope.Usuario.idUsuario,1, empresa.emp_idempresa,sucursal.AGENCIA,fecha,fechaFin).then(function(result) {
-                     if (result.data.length > 0) { 
+                    $scope.pedidos=[
+                        {
+                            idPedidoRef:1,
+                            ID_Pedido:1,
+                            folioPedido:'AA-00-01',
+                            PMM_FECHA:'30/01/2018',
+                            empresaNombre:'Suzuki Andrade',
+                            sucursalNombre:'Suzuki Universidad',
+                            total:10000,
+                            estatus:1,
+                            color:'#003744'
+                        },
+                        {
+                            idPedidoRef:2,
+                            ID_Pedido:2,
+                            folioPedido:'AA-00-02',
+                            PMM_FECHA:'30/01/2018',
+                            empresaNombre:'Suzuki Andrade',
+                            sucursalNombre:'Suzuki Universidad',
+                            total:80000,
+                            estatus:1,
+                            color:'#003744'
+                        }
+                    ];
+                    $scope.listaPedidos=[ $scope.pedidos ];
 
-                            $scope.listaPedidos = result.data;
-                            //$scope.listaPedidos2 = data;
 
-                            $('#tblPedidoFiltros').DataTable().destroy();
+                    // pedidoRepository.busquedaPedido($scope.Usuario.idUsuario,1, empresa.emp_idempresa,sucursal.AGENCIA,fecha,fechaFin).then(function(result) {
+                    //  if (result.data.length > 0) { 
 
-                            setTimeout(function() {
+                    //         $scope.listaPedidos = result.data;
+                    //         //$scope.listaPedidos2 = data;
+
+                          $('#tblPedidoFiltros').DataTable().destroy();
+
+                          setTimeout(function() {
                                 $scope.setTablePaging('tblPedidoFiltros');
 
                                 $("#tblPedidoFiltros_length").removeClass("dataTables_info").addClass("hide-div");
                                 $("#tblPedidoFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
 
-                            }, 1);
-                        }else{
-                            alertFactory.pedidos('No se encontraron resultados'); 
-                        }
+                            }, 100);
+                    //     }else{
+                    //         alertFactory.pedidos('No se encontraron resultados'); 
+                    //     }
 
 
 
-                        });
+                    //     });
+
                    
             }; //end consultaPedidos
 
 
+
+
+            $scope.detallePedido = function(){
+
+           
+                    pedidoRepository.busquedaPedidoUsuarioDetalle().then(function(result) {
+                        console.log(result.data);
+
+                        // if(result.data.length>0)
+                        // {
+
+                        //     $scope.detalles = result.data;
+                        //     $scope.empresa = data;
+
+                        //     var i = 0;
+                        //     $scope.subtotal = 0;
+                        //     angular.forEach($scope.detalles, function(value, key) {
+                        //         $scope.subtotal += $scope.detalles[i].totalItem;
+                        //         i++;
+                        //     });
+
+                        //     $scope.idpedido = $stateParams.idpedido;
+                        //     console.log($scope.detalles.length);
+
+                        //     $scope.totalPedido = 0;
+
+                        //     data.data.forEach(function(entry) {
+                        //         $scope.totalPedido += entry.totalItem;
+                        //     }, this);
+
+                        // }
+                        $('#modalDetalle').modal('show');
+
+
+                    });
+            };
           
             $scope.setTablePaging = function(idTable) {
                     $('#' + idTable).DataTable({

@@ -18,8 +18,6 @@ var pedido = function(conf) {
 pedido.prototype.get_busquedaPedido = function(req, res, next) {
     var self = this;
 
- 
-
     var params = [
         { name: 'idUsuario', value: req.query.tipo, type: self.model.types.INT },
         { name: 'estatus', value: 1, type: self.model.types.INT },
@@ -35,7 +33,20 @@ pedido.prototype.get_busquedaPedido = function(req, res, next) {
             result: result
         });
     });
+},
+pedido.prototype.get_busquedaPedidoUsuarioDEtalle = function(req, res, next) {
+    var self = this;
+
+    var params = [
+        { name: 'idPedido', value: req.query.pedido, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.query.usuario, type: self.model.types.INT }
+    ];
+     console.log(params);
+    self.model.query('SEL_PEDIDO_USUARIODETALLE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
 }
-
-
 module.exports = pedido;

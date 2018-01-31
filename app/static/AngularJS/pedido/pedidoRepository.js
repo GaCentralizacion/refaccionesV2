@@ -20,6 +20,19 @@ registrationModule.factory('pedidoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        busquedaPedidoUsuarioDetalle: function (pedido,usuario) {
+            return $http({
+                url: pedidoURL + 'busquedaPedidoUsuarioDEtalle/',
+                method: "GET",
+                params: {
+                    pedido:pedido,
+                    usuario:usuario              
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
