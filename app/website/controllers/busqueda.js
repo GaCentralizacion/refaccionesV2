@@ -47,6 +47,24 @@ busqueda.prototype.get_plantillas = function(req, res, next) {
     ];
 
     self.model.query('SEL_PLANTILLA_SP', params, function(error, result) {
+        result.unshift({
+            idCotizacionPlantilla: 0,
+            descripcion: "Selecciona ..."
+        });
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+busqueda.prototype.get_infoPlantilla = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idCotizacionPlantilla', value: req.query.idPlantilla, type: self.model.types.INT }
+    ];
+
+    self.model.query('SEL_PLANTILLADETALLE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

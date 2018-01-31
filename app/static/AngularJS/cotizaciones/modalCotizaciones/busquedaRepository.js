@@ -32,6 +32,18 @@ registrationModule.factory('busquedaRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getInfoPlantilla: function(idPlantilla) {
+            return $http({
+                url: busquedaURL + 'infoPlantilla/',
+                method: "GET",
+                params: {
+                    idPlantilla: idPlantilla
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

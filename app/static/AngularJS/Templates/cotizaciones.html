@@ -30,7 +30,7 @@
                                         </div>
                                         <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0" class="form-group">
                                             <div class="col-sm-11 control-label">
-                                                <a ng-click="nuevaCotizacion(); initModal();" class="form-control btn btn-block btn-primary">Nueva cotización</a>
+                                                <a ng-click="nuevaCotizacion()" class="form-control btn btn-block btn-primary">Nueva cotización</a>
                                                 <!-- href="cotizacion/nueva/busqueda/" -->
                                             </div>
                                             <div class="col-sm-11">
@@ -129,63 +129,7 @@
         <!--End page content-->
     </div>
 </div>
-<!--Modal -->
-<!--===================================================-->
-<div class="modal fade" id="ordenes" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle text-white"></i></button>
-                <h4 class="modal-title text-white">Ordenes de Compra</h4>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered ordenesCompra" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="text-top">Operacion</th>
-                                <th class="text-top">VIN</th>
-                                <th class="text-top">Factura</th>
-                                <th class="text-top">Orden de Servicio</th>
-                                <th class="text-top">Tipo <span class="filtrosSelect"></span></th>
-                                <th class="text-top">Fecha</th>
-                                <th class="text-top">Estatus <span class="filtrosSelect"></span></th>
-                                <th class="text-top">Proveedor <span class="filtrosSelect"></span></th>
-                                <th class="text-top">Empresa </th>
-                                <th class="text-top">Sucursal
-                                    <br><span class="filtrosSelect" ng-show="mostrarFitroSucursal"></span></th>
-                                <th class="text-top">Departamento <span class="filtrosSelect"></span></th>
-                                <th class="text-top">Usuario</th>
-                                <th class="text-top">Nodo <span class="filtrosSelect"></span></th>
-                                <th class="text-top">Importe <span class="inputSelect"></span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="orden in ordenes" ng-click="getDetalleOrden(orden)">
-                                <td>{{orden.Folio_Operacion}}</td>
-                                <td>{{orden.numeroSerie}}</td>
-                                <td>{{orden.factura}}</td>
-                                <td>{{orden.ordenServicio}}</td>
-                                <td>{{orden.tipoorden}}</td>
-                                <td>{{orden.oce_fechaorden | date : "dd/MM/yyyy"}}</td>
-                                <td>{{orden.situacionOrden}}</td>
-                                <td>{{orden.Proveedor}}</td>
-                                <td>{{orden.empNombre}}</td>
-                                <td>{{orden.sucursal}}</td>
-                                <td>{{orden.depto}}</td>
-                                <td>{{orden.usuario}}</td>
-                                <td>{{orden.nodoactual + ' ' + orden.nombreNodo}}</td>
-                                <td>{{orden.oce_importetotal | currency}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--===================================================-->
-<!--End Modal -->
+
 <!-- Inicia modal de cotizaciones -->
 <div class="modal fade modal-cotizacion" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
