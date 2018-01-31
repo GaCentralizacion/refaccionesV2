@@ -16,6 +16,16 @@ registrationModule.factory('cotizacionesRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        guardaCotizacion: function(cotizacionGuardar) {
+            return $http({
+                url: cotizacionesURL + 'create/',
+                method: "POST",
+                data: cotizacionGuardar,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

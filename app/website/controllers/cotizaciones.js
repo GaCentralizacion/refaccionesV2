@@ -1,5 +1,6 @@
 var cotizacionesView = require('../views/reference'),
-    cotizacionesModel = require('../models/dataAccess')
+    cotizacionesModel = require('../models/dataAccess'),
+    jsonxml = require('jsontoxml')
 
 var cotizaciones = function(conf) {
     this.conf = conf || {};
@@ -46,14 +47,25 @@ cotizaciones.prototype.get_show = function(req, res, next) {
 // Creates a new Cotizacion in the DB
 cotizaciones.prototype.post_create = function(req, res, next) {
     var self = this;
+    for (var i = 0; i < req.body.refacciones.length; i++) {
+        req.body.refacciones[i] = {
+            refaccion: req.body.refacciones[i]
+        }
+    }
     var params = [
-        { name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
-        { name: 'refacciones', value: req.query.refacciones, type: self.model.types.STRING },
-        { name: 'descripcion', value: req.query.descripcion, type: self.model.types.STRING },
-        { name: 'base', value: req.query.base, type: self.model.types.STRING },
-        { name: 'total', value: req.query.total, type: self.model.types.DECIMAL },
-        { name: 'empresa', value: req.query.empresa, type: self.model.types.STRING },
-        { name: 'sucursal', value: req.query.sucursal, type: self.model.types.STRING }
+        { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
+        {
+            name: 'refacciones',
+            value: jsonxml({
+                refacciones: req.body.refacciones
+            }),
+            type: self.model.types.STRING
+        },
+        { name: 'descripcion', value: req.body.descripcion, type: self.model.types.STRING },
+        { name: 'base', value: req.body.base, type: self.model.types.STRING },
+        { name: 'total', value: req.body.total, type: self.model.types.DECIMAL },
+        { name: 'empresa', value: req.body.empresa, type: self.model.types.STRING },
+        { name: 'sucursal', value: req.body.sucursal, type: self.model.types.STRING }
     ];
     self.model.query('INS_COTIZACION_SP', params, function(error, result) {
         self.view.expositor(res, {

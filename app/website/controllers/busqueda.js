@@ -1,10 +1,5 @@
 var busquedaView = require('../views/reference'),
-    busquedaModel = require('../models/dataAccess'),
-    moment = require('moment');
-var phantom = require('phantom');
-var path = require('path');
-var webPage = require('webpage');
-var request = require('request');
+    busquedaModel = require('../models/dataAccess')
 
 
 var busqueda = function(conf) {
