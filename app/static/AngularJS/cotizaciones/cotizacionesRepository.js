@@ -26,6 +26,26 @@ registrationModule.factory('cotizacionesRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getCotizacion: function(folioActual) {
+            return $http({
+                url: cotizacionesURL + 'show/',
+                method: "GET",
+                params: { id: folioActual },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        deleteCotizacion: function(idCotizacion) {
+            return $http({
+                url: cotizacionesURL + 'destroy/',
+                method: "GET",
+                params: { id: idCotizacion },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

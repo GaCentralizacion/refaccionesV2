@@ -156,28 +156,9 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     }; //end cambio sucursales
     $scope.consultaCotizaciones = function() {
         cotizacionesRepository.getCotizaciones($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
-            // $scope.lisCot = result.data;
-            // $scope.listaCotizaciones = $scope.lisCot;
-            $scope.pedidos = [{
-                    folio: 1,
-                    emp_nombre: 1,
-                    NOMBRE_AGENCIA: 'AA-00-01',
-                    descripcion: '30/01/2018',
-                    total: '12'
-                },
-                {
-                    folio: 2,
-                    emp_nombre: 2,
-                    NOMBRE_AGENCIA: 'AA-00-02',
-                    descripcion: '30/01/2018',
-                    total: '13'
-                }
-            ];
-            $scope.listaCotizaciones = [$scope.pedidos];
-            //$scope.$apply($scope.listaCotizaciones)
-            console.log('SOY -las COTIZACIONES', $scope.listaCotizaciones)
-            //$scope.listaCotizaciones = result.data;
-            console.log('pinta limite credito')
+
+            $scope.listaCotizaciones = result.data;
+            console.log('pinta limite credito', $scope.listaCotizaciones)
             console.log($scope.sucursalActual.Con_LimCredito)
 
             if ($scope.sucursalActual.Con_LimCredito) {
@@ -189,9 +170,6 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
             $('#tblCotizacionFiltros').DataTable().destroy();
 
-            // setTimeout(function() {
-            //     $('#tblCotizacionFiltros').DataTable()
-            // }, 1)
             setTimeout(function() {
                 $scope.setTablePaging('tblCotizacionFiltros');
 
@@ -204,19 +182,18 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     $scope.borrarCotizacion = function(c) {
         bootbox.confirm("<h4>Deseas borrar permanentemente la cotizacion " + c.folio + "?</h4>", function(result) {
             if (result) {
-                c.$delete({
-                    id: c.idCotizacion
-                }, function(data) {
-                    console.log(data)
-                    if (data.estatus == "ok") {
+                cotizacionesRepository.deleteCotizacion(c.idCotizacion).then(function(res) {
+                    console.log(res.data)
+                    if (res.data[0].estatus == "ok") {
                         $scope.listaCotizaciones.forEach(function(d, n) {
                             if (d.idCotizacion == c.idCotizacion) {
                                 $scope.listaCotizaciones.splice(n, 1);
+
                             }
                         })
                         toastr.info(data.mensaje)
                     }
-                })
+                });
             }
         });
     };
@@ -246,7 +223,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             }]
         });
     }; //end setTablePaging
-    $scope.nuevaCotizacion = function() {
+    $scope.nuevaCotizacion = function(tipo) {
 
         $rootScope.total = 0;
         $scope.salir = false;
@@ -254,7 +231,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
         //$scope.cotizacionActual = [];
         $scope.direccionActual;
         $scope.page = 1;
-        $scope.folioActual = "nueva" == "nueva" ? "TEMP" : $stateParams.id;
+        $scope.folioActual = tipo == "nueva" ? "TEMP" : tipo;
         $('.modal-cotizacion').modal('show')
 
         $('.modal-cotizacion').on('shown.bs.modal', function(e) {
@@ -312,7 +289,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
                 if ($current == 1) { //Busqueda
                     //$scope.next = "cotizacion/" + $stateParams.id + "/entrega/"
-                    $scope.previous = "none"
+                    //$scope.previous = "none"
                 } else if ($current == 2) { //Entrega
                     //$scope.previous = "cotizacion/" + $stateParams.id + "/busqueda/"
                     //$scope.next = "cotizacion/" + $stateParams.id + "/confirmacion/"

@@ -30,7 +30,7 @@
                                         </div>
                                         <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0" class="form-group">
                                             <div class="col-sm-11 control-label">
-                                                <a ng-click="nuevaCotizacion()" class="form-control btn btn-block btn-primary">Nueva cotización</a>
+                                                <a ng-click="nuevaCotizacion('nueva')" class="form-control btn btn-block btn-primary">Nueva cotización</a>
                                                 <!-- href="cotizacion/nueva/busqueda/" -->
                                             </div>
                                             <div class="col-sm-11">
@@ -74,7 +74,8 @@
                                 </div>
                             </div>
                             <div style="margin-top: 30px;" ng-show="listaCotizaciones.length > 0" class=" col-xs-12">
-                                <table st-table="cotizaciones" st-safe-src="listaCotizaciones" id="tblCotizacionFiltros">
+                                <table  id="tblCotizacionFiltros"> 
+                                    <!-- st-table="cotizaciones" st-safe-src="listaCotizaciones" -->
                                     <thead>
                                         <tr>
                                             <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
@@ -97,7 +98,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="cotizacion in cotizaciones">
+                                        <tr ng-repeat="cotizacion in listaCotizaciones">
+                                            <!-- "cotizacion in cotizaciones" -->
                                             <td>
                                                 {{cotizacion.folio}}
                                             </td>
@@ -114,7 +116,8 @@
                                                 {{cotizacion.total | currency}}
                                             </td>
                                             <td width="20%">
-                                                <a href="{{'/cotizacion/'+cotizacion.idCotizacion+'/busqueda/'}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                                <a ng-click="nuevaCotizacion(cotizacion.idCotizacion)" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                                <!-- href="{{'/cotizacion/'+cotizacion.idCotizacion+'/busqueda/'}}" -->
                                                 <button ng-click="borrarCotizacion(cotizacion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button>
                                             </td>
                                         </tr>
