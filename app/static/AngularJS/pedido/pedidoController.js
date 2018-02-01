@@ -15,29 +15,26 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
                     $scope.empresas = result.data;
                     $scope.empresaActual = $scope.empresas[0];
 
-                    //SET EMPRESA LOCALSTORAGE   BEGIN
-                    if (localStorage.getItem('pedEmpresa') !== null) {
+                        //SET EMPRESA LOCALSTORAGE   BEGIN
+                        if (localStorage.getItem('pedEmpresa') !== null) {
 
-                        $scope.pedEmpresa = []
+                            $scope.pedEmpresa = []
 
-                        $scope.tempPedEmp = localStorage.getItem('pedEmpresa')
-                        $scope.pedEmpresa.push(JSON.parse($scope.tempPedEmp))
+                            $scope.tempPedEmp = localStorage.getItem('pedEmpresa')
+                            $scope.pedEmpresa.push(JSON.parse($scope.tempPedEmp))
 
-                        console.log('$scope.pedEmpresa')
-                        console.log($scope.pedEmpresa[0][0])
+                            console.log('$scope.pedEmpresa')
+                            console.log($scope.pedEmpresa[0][0])
 
-                        setTimeout(function() {
+                            setTimeout(function() {
 
-                            $("#selEmpresas").val($scope.pedEmpresa[0][0].emp_idempresa);
-                            $scope.empresaActual = $scope.pedEmpresa[0][0]; //$scope.empresas;
+                                $("#selEmpresas").val($scope.pedEmpresa[0][0].emp_idempresa);
+                                $scope.empresaActual = $scope.pedEmpresa[0][0]; //$scope.empresas;
 
-                            $scope.consultaSucursales();
-                        }, 100);
+                                $scope.consultaSucursales();
+                            }, 100);
 
-                    }
-
-
-
+                        }
 
                     } else {
                         alertFactory.success('No se encontraron empresas');
@@ -216,6 +213,21 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
                         //     }, this);
 
                         // }
+
+
+                            $scope.empresa =
+                            {
+                            Nombre:'Andrade',
+                            FECHAPEDIDO:'30/01/2018',
+                            DIRECCION:'Calle X Numero #45',
+                            TELEFONO:123456,
+                            DIRCLIENTE:'calle Y #70',
+                            CORREOCLIENTE:'p@gmail.com',
+                            TELCLIENTE:987654
+                            };
+
+
+
                         $('#modalDetalle').modal('show');
 
 
