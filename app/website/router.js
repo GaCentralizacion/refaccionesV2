@@ -6,6 +6,7 @@
      historial: require('./controllers/historial'),
      direccion: require('./controllers/direccion'),
      busqueda: require('./controllers/busqueda'),
-     plantilla: require('./controllers/plantilla')
+     plantilla: require('./controllers/plantilla'),
+     entrega: require('./controllers/entrega')
 
  }
