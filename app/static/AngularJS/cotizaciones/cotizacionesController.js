@@ -290,6 +290,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
                 if ($current == 1) { //Busqueda
                     //$scope.next = "cotizacion/" + $stateParams.id + "/entrega/"
                     //$scope.previous = "none"
+                    $rootScope.initModal();
                 } else if ($current == 2) { //Entrega
                     //$scope.previous = "cotizacion/" + $stateParams.id + "/busqueda/"
                     //$scope.next = "cotizacion/" + $stateParams.id + "/confirmacion/"
