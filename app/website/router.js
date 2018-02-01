@@ -5,6 +5,7 @@
      cotizaciones: require('./controllers/cotizaciones'),
      historial: require('./controllers/historial'),
      direccion: require('./controllers/direccion'),
-     busqueda: require('./controllers/busqueda')
+     busqueda: require('./controllers/busqueda'),
+     plantilla: require('./controllers/plantilla')
 
  }

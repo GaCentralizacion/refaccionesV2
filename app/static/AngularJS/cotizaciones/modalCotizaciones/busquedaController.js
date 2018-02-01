@@ -1,4 +1,4 @@
-registrationModule.controller('busquedaController', function($scope, $rootScope, $location, $timeout, alertFactory, busquedaRepository, filterFactory, userFactory, globalFactory, datosBusqueda) {
+registrationModule.controller('busquedaController', function($scope, $rootScope, $location, $timeout, alertFactory, busquedaRepository, filterFactory, userFactory, globalFactory, datosBusqueda, plantillaRepository, cotizacionesRepository) {
 
     // $scope.initModal = function() {
     //     $scope.Usuario = userFactory.getUserData();
@@ -8,7 +8,7 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
     //     $scope.busquedaActual = [];
     //     $scope.cotizacionActual = [];
     //     $scope.listaTemplates = [];
-    //     $scope.$parent.$parent.guardarModal = false
+    //     $rootScope.guardarModal = false
     //     $scope.guardar = false;
     //     $scope.templateActual = null;
     //     $scope.templateTemp = null;
@@ -20,7 +20,7 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
         $scope.cotizacionActual = [];
         $scope.listaTemplates = null;
 
-        $scope.$parent.$parent.guardarModal = false
+        $rootScope.guardarModal = false
         $scope.guardar = false;
         $scope.templateActual = null;
         $scope.templateTemp = null;
@@ -44,10 +44,10 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
             $scope.$watch('cotizacionActual', function(a, b) {
                 $scope.$parent.$parent.total = $rootScope.total = calcularTotal($scope.cotizacionActual)
                 if ($scope.cotizacionActual.length > 0) {
-                    $scope.$parent.$parent.guardarModal = true
+                    $rootScope.guardarModal = true
                     $scope.guardar = true;
                 } else {
-                    $scope.$parent.$parent.guardarModal = false
+                    $rootScope.guardarModal = false
                     $scope.guardar = false;
                 }
             }, true);
@@ -92,7 +92,7 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                 callback: function(result) {
                     if (result != null && result != "") {
                         var cotizacionGuardar = {
-                            idUsuario: $scope.user.per_idpersona,
+                            idUsuario: $scope.Usuario.idUsuario,
                             refacciones: $scope.cotizacionActual,
                             descripcion: result,
                             total: $rootScope.total,
@@ -100,21 +100,20 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                             sucursal: $scope.sucursalActual.AGENCIA, //suc_nombrecto,
                             base: ""
                         }
-                        Cotizacion.save(cotizacionGuardar, function(data) {
+                        cotizacionesRepository.guardaCotizacion(cotizacionGuardar).then(function(res) {
                             var params = {
-                                id: data.idCotizacion,
+                                id: res.data[0].idCotizacion,
                             }
                             if ($scope.templateActual != null) {
                                 params.template = $scope.templateActual.idCotizacionPlantilla
                             }
-                            $state.go("user.cotizacion.modal.busqueda", params)
-                            $scope.$parent.$parent.$parent.cambioSucursal()
-                            toastr.success(data.mensaje)
+                            //$state.go("user.cotizacion.modal.busqueda", params)
+                            //$scope.$parent.$parent.$parent.cambioSucursal()
+                            toastr.success(res.data[0].mensaje)
 
-                            $scope.$parent.$parent.guardarModal = false
+                            $rootScope.guardarModal = false
                             $scope.guardar = false;
-
-                        })
+                        });
                     }
                 }
             })
@@ -127,7 +126,7 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
             Cotizacion.update(cotizacionGuardar, function(data) {
                 $scope.$parent.$parent.$parent.cambioSucursal()
                 toastr.success(data.mensaje)
-                $scope.$parent.$parent.guardarModal = false
+                $rootScope.guardarModal = false
                 $scope.guardar = false;
             })
         }
@@ -141,7 +140,7 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                 callback: function(result) {
                     if (result != null && result != "") {
                         var cotizacionGuardar = {
-                            idUsuario: $scope.user.per_idpersona,
+                            idUsuario: $scope.Usuario.idUsuario,
                             idCotizacion: $scope.folioActual,
                             refacciones: $scope.cotizacionActual,
                             descripcion: result,
@@ -149,15 +148,24 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                             sucursal: $scope.sucursalActual.AGENCIA, //suc_nombrecto,
                             base: ""
                         }
-                        Template.save(cotizacionGuardar, function(data) {
-                            console.log(data)
-                            toastr.success(data.mensaje)
+                        plantillaRepository.insertPlantilla(cotizacionGuardar).then(function(res) {
+                            console.log(res.data)
+                            toastr.success(res.data[0].mensaje)
                             $scope.listaTemplates.push({
-                                idCotizacionPlantilla: data.idPlantilla,
+                                idCotizacionPlantilla: res.data[0].idPlantilla,
                                 descripcion: result
                             })
                             $scope.templateActual = $scope.listaTemplates[$scope.listaTemplates.length - 1]
-                        })
+                        });
+                        // Template.save(cotizacionGuardar, function(data) {
+                        //     console.log(data)
+                        //     toastr.success(data.mensaje)
+                        //     $scope.listaTemplates.push({
+                        //         idCotizacionPlantilla: data.idPlantilla,
+                        //         descripcion: result
+                        //     })
+                        //     $scope.templateActual = $scope.listaTemplates[$scope.listaTemplates.length - 1]
+                        // })
                     }
                 }
             })
@@ -166,9 +174,12 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                 idCotizacionPlantilla: $scope.templateActual.idCotizacionPlantilla,
                 refacciones: $scope.cotizacionActual,
             }
-            Template.update(cotizacionGuardar, function(data) {
-                toastr.success(data.mensaje)
-            })
+            plantillaRepository.updatePlantilla(cotizacionGuardar).then(function(result) {
+                toastr.success(result.data[0].mensaje)
+            });
+            // Template.update(cotizacionGuardar, function(data) {
+            //     toastr.success(data.mensaje)
+            // })
         }
     };
 
@@ -233,9 +244,7 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
         bootbox.confirm("<h4>El borrado de la plantilla no afecta su cotizacion actual. ¿Desea continuar con el borrado?</h4>",
             function(result) {
                 if (result) {
-                    Template.remove({
-                        id: $scope.templateActual.idCotizacionPlantilla
-                    }, function(data) {
+                    plantillaRepository.deletePlantilla($scope.templateActual.idCotizacionPlantilla).then(function(res) {
                         $scope.listaTemplates.forEach(function(e, n) {
                             if ($scope.templateActual.idCotizacionPlantilla == e.idCotizacionPlantilla) {
                                 $scope.listaTemplates.splice(n, 1);
@@ -243,8 +252,8 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                                 toastr.info("Se elimino la plantilla correctamente.")
                             }
                         })
-                        console.log(data.mensaje)
-                    })
+                        console.log(res.data[0].mensaje, 'Soy el mensaje al eliminar la plantilla')
+                    });
                 }
             })
     };

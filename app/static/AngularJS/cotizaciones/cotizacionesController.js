@@ -156,8 +156,25 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     }; //end cambio sucursales
     $scope.consultaCotizaciones = function() {
         cotizacionesRepository.getCotizaciones($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
-            $scope.lisCot = [result.data];
-            $scope.listaCotizaciones =[$scope.lisCot]
+            // $scope.lisCot = result.data;
+            // $scope.listaCotizaciones = $scope.lisCot;
+            $scope.pedidos = [{
+                    folio: 1,
+                    emp_nombre: 1,
+                    NOMBRE_AGENCIA: 'AA-00-01',
+                    descripcion: '30/01/2018',
+                    total: '12'
+                },
+                {
+                    folio: 2,
+                    emp_nombre: 2,
+                    NOMBRE_AGENCIA: 'AA-00-02',
+                    descripcion: '30/01/2018',
+                    total: '13'
+                }
+            ];
+            $scope.listaCotizaciones = [$scope.pedidos];
+            //$scope.$apply($scope.listaCotizaciones)
             console.log('SOY -las COTIZACIONES', $scope.listaCotizaciones)
             //$scope.listaCotizaciones = result.data;
             console.log('pinta limite credito')
@@ -172,6 +189,9 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
             $('#tblCotizacionFiltros').DataTable().destroy();
 
+            // setTimeout(function() {
+            //     $('#tblCotizacionFiltros').DataTable()
+            // }, 1)
             setTimeout(function() {
                 $scope.setTablePaging('tblCotizacionFiltros');
 
@@ -230,7 +250,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
         $rootScope.total = 0;
         $scope.salir = false;
-        $scope.guardarModal = false;
+        $rootScope.guardarModal = false;
         //$scope.cotizacionActual = [];
         $scope.direccionActual;
         $scope.page = 1;
@@ -245,7 +265,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
         })
 
         $('.modal-cotizacion').on('hide.bs.modal', function(e) {
-            if ($scope.guardarModal && !$scope.salir) {
+            if ($rootScope.guardarModal && !$scope.salir) {
                 e.preventDefault()
                 bootbox.confirm("<h4>Se perderan los cambios no guardados en la cotizacion actual, ¿Esta seguro de salir?</h4>", function(result) {
                     if (result) {
