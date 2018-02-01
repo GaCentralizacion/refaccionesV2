@@ -137,7 +137,7 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
                             empresaNombre:'Suzuki Andrade',
                             sucursalNombre:'Suzuki Universidad',
                             total:10000,
-                            estatus:1,
+                            estatus:'P',
                             color:'#003744'
                         },
                         {
@@ -148,7 +148,7 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
                             empresaNombre:'Suzuki Andrade',
                             sucursalNombre:'Suzuki Universidad',
                             total:80000,
-                            estatus:1,
+                            estatus:'P',
                             color:'#003744'
                         }
                     ];
