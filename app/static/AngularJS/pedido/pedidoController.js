@@ -1,4 +1,4 @@
-registrationModule.controller('pedidoController', function($scope, $rootScope, $location, $timeout, alertFactory, pedidoRepository, filterFactory, userFactory, globalFactory) {
+registrationModule.controller('pedidoController', function($sce,$http,$scope, $rootScope, $location, $timeout, alertFactory, pedidoRepository, filterFactory, userFactory, globalFactory) {
             
             $scope.listaPedidos = [];
 
@@ -225,7 +225,11 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
                             CORREOCLIENTE:'p@gmail.com',
                             TELCLIENTE:987654
                             };
-
+                            $scope.detalles=[
+                                {PTS_IDPARTE:10151111,PTS_DESPARTE:'Sensor de estacionamiento',PTS_PCOLISTA:10000,prd_cantidadsolicitada:1,color:'#003744',estatusPieza:'SURTIDO',idPedidoBPRO:0056,totalItem:10000},
+                                {PTS_IDPARTE:20000002,PTS_DESPARTE:'Bobina',PTS_PCOLISTA:400,prd_cantidadsolicitada:1,color:'#003744',estatusPieza:'SURTIDO',idPedidoBPRO:0057,totalItem:400},
+                                {PTS_IDPARTE:34444555,PTS_DESPARTE:'Bujia',PTS_PCOLISTA:100,prd_cantidadsolicitada:4,color:'#003744',estatusPieza:'SURTIDO',idPedidoBPRO:0058,totalItem:400},
+                            ];
 
 
                         $('#modalDetalle').modal('show');
@@ -234,6 +238,82 @@ registrationModule.controller('pedidoController', function($scope, $rootScope, $
                     });
             };
           
+
+            $scope.imprimir = function() {
+
+                var rptStructure = {};
+
+                rptStructure.refacciones =[
+                                {PTS_IDPARTE:10151111,PTS_DESPARTE:'Sensor de estacionamiento',PTS_PCOLISTA:10000,prd_cantidadsolicitada:1,color:'#003744',estatusPieza:'SURTIDO',idPedidoBPRO:0056,totalItem:10000},
+                                {PTS_IDPARTE:20000002,PTS_DESPARTE:'Bobina',PTS_PCOLISTA:400,prd_cantidadsolicitada:1,color:'#003744',estatusPieza:'SURTIDO',idPedidoBPRO:0057,totalItem:400},
+                                {PTS_IDPARTE:34444555,PTS_DESPARTE:'Bujia',PTS_PCOLISTA:100,prd_cantidadsolicitada:4,color:'#003744',estatusPieza:'SURTIDO',idPedidoBPRO:0058,totalItem:400},
+                            ];
+
+                // rptStructure.empresa =[{ 'idpedido':$stateParams.id,'FECHAPEDIDO':$scope.empresa.FECHAPEDIDO,'NOMBRE':$scope.empresa.NOMBRE,
+                //                          'DIRECCION':$scope.empresa.DIRECCION,'name':$scope.user.name,'TELEFONO': $scope.empresa.TELEFONO,
+                //                          'DIRCLIENTE':$scope.empresa.DIRCLIENTE,'CORREOCLIENTE':$scope.empresa.CORREOCLIENTE,
+                //                          'TELCLIENTE': $scope.empresa.TELCLIENTE,'subtotal': $scope.subtotal,'iva':($scope.subtotal * .16),
+                //                          'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.colorEstatus,'estatus':$scope.estatus}];
+    
+
+
+                 rptStructure.empresa =[{ 'idpedido':1,'FECHAPEDIDO':'30/01/2018','NOMBRE':'Andrade',
+                                         'DIRECCION':'Calle X Numero #45','name':'Andrade','TELEFONO': 987654,
+                                         'DIRCLIENTE':'Calle X Numero #45','CORREOCLIENTE':'p@gmail.com',
+                                         'TELCLIENTE': 987654,'subtotal':10800,'iva':1728,
+                                         'total':12528,'colorEstatus':'#003744','estatus':'SURTIDO'}];
+    
+
+                var jsonData = {
+                    "template": { "name": "facturaRefacciones_rpt" },
+                    "data": rptStructure
+                }
+
+                $scope.generarPDF(jsonData);
+
+             };
+
+
+              $scope.generarPDF = function(jsonData) {
+                //console.log('Llamada externa');
+                // $http({
+                //  //   url: 'http://189.204.141.193:5488/api/report/',
+                //    // url: 'http://192.168.20.29:5000/api/layout/newpdf/',
+                //    url:'http://192.168.20.89:5488/api/report',
+                //     method: "POST",
+                //     data: { values: jsonData},
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     }
+                // }).then(function(fileName){
+
+                //         setTimeout(function() {
+                //             window.open("http://192.168.20.89:5488/api/layout/viewpdf?fileName=" + fileName.data);
+                //             console.log(fileName.data);
+                //         }, 5000);
+
+                // });
+
+
+                      //  $('#reporteModalPdf').modal('show');
+      new Promise(function(resolve, reject) {
+     
+         
+                resolve(jsonData);
+                }).then(function(jsonData) {
+                    pedidoRepository.getReportePdf(jsonData).then(function(result){
+                        var file = new Blob([result.data], { type: 'application/pdf' });
+                        var fileURL = URL.createObjectURL(file);
+                        $scope.rptResumenConciliacion = $sce.trustAsResourceUrl(fileURL);
+                        window.open($scope.rptResumenConciliacion);
+                    //    $('#reporteModalPdf').modal('show'); 
+                    });
+                });
+
+
+
+            };
+
             $scope.setTablePaging = function(idTable) {
                     $('#' + idTable).DataTable({
                         dom: '<"html5buttons"B>lTfgitp',

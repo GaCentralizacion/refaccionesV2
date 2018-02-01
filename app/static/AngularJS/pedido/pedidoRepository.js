@@ -33,6 +33,20 @@ registrationModule.factory('pedidoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+            getReportePdf: function(jsondata) {
+            return $http({
+                url: 'http://192.168.20.89:5488/api/report',
+                method: "POST",
+                data: {
+                    template: { name: jsondata.template.name },
+                    data: jsondata.data
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'arraybuffer'
+            });
         }
     };
 });

@@ -48,5 +48,42 @@ pedido.prototype.get_busquedaPedidoUsuarioDEtalle = function(req, res, next) {
             result: result
         });
     });
-}
+},
+pedido.prototype.post_reportePdf = function(req, res, next) {
+    var filename = guid();
+    var filePath = path.dirname(require.main.filename) + "\\pdf\\" + filename + ".pdf";
+    console.log(path.dirname(require.main.filename) + "\\pdf\\" + filename + ".pdf");
+    var options = {
+        "method": "POST",
+        "hostname": "192.168.20.89",
+        "port": "5488",
+        "path": "/api/report",
+        "headers": {
+            "content-type": "application/json"
+        }
+    };
+    var request = http.request(options, function(response) {
+        var chunks = [];
+
+        response.on("data", function(chunk) {
+            chunks.push(chunk);
+        });
+
+        response.on("end", function() {
+            var body = Buffer.concat(chunks);
+
+            fs.writeFile(filePath, body, function(err) {
+                if (err) return console.log(err);
+            });
+
+        });
+    });
+    request.write(JSON.stringify(req.body.values));
+    request.end();
+    var self = this;
+    self.view.expositor(res, {
+        error: null,
+        result: filename
+    });
+};
 module.exports = pedido;

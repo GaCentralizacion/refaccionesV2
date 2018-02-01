@@ -151,7 +151,7 @@
                             <td>
                             </td>
                             <td>
-                                <strong>Pedido: </strong>{{idpedido}} - <strong>Solicitado:</strong> {{empresa.FECHAPEDIDO}}
+                                <strong>Pedido: </strong>AA-00 - <strong>Solicitado:</strong> {{empresa.FECHAPEDIDO}}
                             </td>
                         </tr>
                         <tr>
@@ -260,14 +260,28 @@
                                     <b>Total:</b>
                                 </td>
                                 <td style="text-align:right">
-                                    {{subtotal| currency}}
-                                    <br> {{subtotal * .16 | currency}}
-                                    <br> {{subtotal + (subtotal*.16)| currency}}
+                                  <!--   {{subtotal| currency}} -->$10,800.00
+                                    <br> $1,728.00<!--  {{subtotal * .16 | currency}} -->
+                                    <br>$12,528.00 <!-- {{subtotal + (subtotal*.16)| currency}} -->
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="reporteModalPdf" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#38a0f4;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle" style="color:#fff;"></i></button>
+                <h4 class="modal-title text-center" id="myLargeModalLabel" style="color:#fff;">Pedido.</h4>
+            </div>
+            <div  id="htmlReporteConciliacion" class="modal-body text-center">
+               <embed ng-src="{{rptResumenConciliacion}}" style="width:600px;height:500px;"></embed>
+            </div>
             </div>
         </div>
     </div>
