@@ -197,9 +197,20 @@
     padding: 0 15px;
 }
 
+/*Entrega*/
+.map-container {
+  position: absolute;
+  bottom: 72px;
+  top: 80px;
+  left: 30px;
+  right: 30px;
+}
+.map-container> div, .map-container> div>div {
+  height: 100%;
+}
 
 /**/
 
-.progress-bar-dark {
-    background-color: transparent;
+.bg-gray {
+    background-color: #e6eaed;
 }

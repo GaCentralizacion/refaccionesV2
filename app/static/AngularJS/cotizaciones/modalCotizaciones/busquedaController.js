@@ -26,8 +26,10 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
         $scope.templateTemp = null;
         console.log('logre entrar')
         busquedaRepository.getPlantillas($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
+            
             $scope.listaTemplates = result.data
             $scope.templateActual = $scope.listaTemplates[0];
+
             //$scope.sucursalActual = $scope.sucursales[0];
             // if (!$stateParams.template) {
             //     $scope.templateTemp = $scope.templateActual = $scope.listaTemplates[0];
@@ -38,7 +40,6 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
             //         }
             //     })
             // }
-
             $('[data-toggle="tooltip"]').tooltip();
 
             //Carga refacciones si es edicion de cotizacion
@@ -59,7 +60,8 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
             }
             //Monitorea cambios en la lista de refacciones actual
             $scope.$watch('cotizacionActual', function(a, b) {
-                $scope.$parent.$parent.total = $rootScope.total = calcularTotal($scope.cotizacionActual)
+                // $scope.$parent.$parent.total =
+                 $rootScope.total = calcularTotal($scope.cotizacionActual)
                 if ($scope.cotizacionActual.length > 0) {
                     $rootScope.guardarModal = true
                     $scope.guardar = true;

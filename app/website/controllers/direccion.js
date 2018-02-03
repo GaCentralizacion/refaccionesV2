@@ -17,34 +17,32 @@ var direccion = function(conf) {
 direccion.prototype.get_index = function(req, res, next) {
     var self = this;
     var params = [];
-
     var opcion = req.query.opcion; //1:SEL_DIRECCION_SP, 2:SEL_DIRECCION_CLIENTE_SP
-
     var stored = (opcion == 1) ? 'SEL_DIRECCION_SP' : (opcion == 2) ? 'SEL_DIRECCION_CLIENTE_SP' : 'SEL_RUTAS_SP';
 
     params.push({
         name: 'idUsuario',
         value: req.query.idUsuario,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     params.push({
         name: 'idEmpresa',
         value: req.query.idEmpresa,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     params.push({
         name: 'idSucursal',
         value: req.query.idSucursal,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     if (opcion == 2) {
         params.push({
             name: 'idEstatus',
             value: req.query.idEstatus,
-            type: DataAccess.types.INT
+            type: self.model.types.STRING
         })
 
         params.push({
@@ -58,21 +56,20 @@ direccion.prototype.get_index = function(req, res, next) {
         params.push({
             name: 'idDireccion',
             value: req.query.idDireccion,
-            type: DataAccess.types.INT
+            type: self.model.types.STRING
         })
     }
 
 
     console.log(params)
     console.log(stored)
-
-
     self.model.query(stored, params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
+
 };
 // Gets a single Direccion from the DB
 direccion.prototype.get_show = function(req, res, next) {
@@ -83,12 +80,12 @@ direccion.prototype.get_show = function(req, res, next) {
     params.push({
         name: 'idUsuario',
         value: req.query.idUsuario,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
     params.push({
         name: 'idDireccion',
         value: req.query.idDireccion,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     console.log('SEL_DIRECCION_CLIENTE_DETALLE_SP')
