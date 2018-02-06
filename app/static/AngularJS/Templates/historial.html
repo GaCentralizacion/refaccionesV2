@@ -126,7 +126,9 @@
                                         {{pedido.notaCredito}}
                                     </td>
                                     <td>
-                                        <a href="{{'/historial/'+pedido.idPedidoRef+'/'+pedido.color.replace('#','') +'/' + pedido.factura}}" class="btn btn-info btn-icon"><i class="fa fa-search"></i></a>
+                                     <!--    <a href="{{'/historial/'+pedido.idPedidoRef+'/'+pedido.color.replace('#','') +'/' + pedido.factura}}" class="btn btn-info btn-icon"><i class="fa fa-search"></i></a> -->
+                                         <a class="btn btn-info btn-icon">
+                                        <i class="ti-search" ng-click="detalleHistorial(pedido)"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -138,3 +140,149 @@
     </div>
 </div>
 <div id="modal-historial-container" ui-view></div>
+
+<div class="modal fade modal-pedido"  id="modalDetalleHistorial" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" class="bg bg-mint" ng-style="{ 'background-color':'#003744' }">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 style="text-align:center;color:#fff">Historial {{estatus}} </h3>
+                <div class="glyphicon glyphicon-print" ng-click="imprimir()" title="Imprimir" style="padding-left: 96%; width: 135px; font-size: 25px; cursor: pointer;"> </div>
+                <!--a href="#" onClick="window.open('/invoice', '_blank')">OOOO</a-->
+            </div>
+            <div ng-style="{ 'background-color':'#003744' }">
+                <!--a href="{{'/invoice/'+detalle.idPedidoBPRO}}" class="btn btn-info btn-icon"><i class="fa fa-search">Print Invoice</i></a>
+                    <a href="invoice_print.html" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a-->
+            </div>
+            <br>
+            <div id="imprimeme">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <strong>Empresa: </strong>Andrade
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <strong>Pedido: </strong>AA-00 - <strong>Solicitado:</strong> {{empresa.FECHAPEDIDO}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Dirección: </strong> {{empresa.DIRECCION}}
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <strong>Cliente:</strong>Universidad
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Teléfono: </strong> {{empresa.TELEFONO}}
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <strong>Dirección:</strong> {{empresa.DIRCLIENTE}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <strong>Correo: </strong>{{empresa.CORREOCLIENTE}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <strong>Teléfono: </strong>{{empresa.TELCLIENTE}}
+                            </td>
+                        </tr>
+                    </table>
+            
+                </div>
+                <br>
+                <br>
+                <div>
+                    <!--class="modal-body"-->
+                    <table width="100%" class="table">
+                        <thead>
+                            <th style="text-align:left;">
+                                No Serie
+                            </th>
+                            <th style="text-align:left;">
+                                Descripción
+                            </th>
+                            <th>
+                                Precio/Pz
+                            </th>
+                            <th>
+                                No. Piezas
+                            </th>
+                            <th width="15%" style="text-align:center">
+                                Estatus
+                            </th>
+                            <th style="text-align:center">
+                                Pedido
+                            </th>
+                            <th style="text-align:right">
+                                Subtotal
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="detalle in detalles">
+                                <!-- ng-class="{'info': detalle.estatus == 0,'success': detalle.estatus == 1,'warning':detalle.estatus == 2}" -->
+                                <td>
+                                    <span>{{detalle.PTS_IDPARTE}}</span>
+                                </td>
+                                <td>
+                                    {{detalle.PTS_DESPARTE}}
+                                </td>
+                                <td>
+                                    <div>{{detalle.PTS_PCOLISTA | currency}}</div>
+                                </td>
+                                <td align="center">
+                                    {{detalle.prd_cantidadsolicitada}}
+                                </td>
+                                <td width="15%" style="text-align:center">
+                                    <div class="label label-table" ng-style="{ 'background-color':'{{detalle.color}}' }">
+                                        {{detalle.estatusPieza}}
+                                    </div>
+                                </td>
+                                <td style="text-align:center">
+                                    {{detalle.idPedidoBPRO}}
+                                </td>
+                                <td align="right">
+                                    {{detalle.totalItem | currency}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" style="text-align:right">
+                                    <b>Subtotal:</b>
+                                    <br> <b>Iva:</b>
+                                    <br>
+                                    <b>Total:</b>
+                                </td>
+                                <td style="text-align:right">
+                                  <!--   {{subtotal| currency}} -->$10,800.00
+                                    <br> $1,728.00<!--  {{subtotal * .16 | currency}} -->
+                                    <br>$12,528.00 <!-- {{subtotal + (subtotal*.16)| currency}} -->
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

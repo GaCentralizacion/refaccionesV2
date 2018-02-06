@@ -275,28 +275,7 @@ registrationModule.controller('pedidoController', function($sce,$http,$scope, $r
 
 
               $scope.generarPDF = function(jsonData) {
-                //console.log('Llamada externa');
-                // $http({
-                //  //   url: 'http://189.204.141.193:5488/api/report/',
-                //    // url: 'http://192.168.20.29:5000/api/layout/newpdf/',
-                //    url:'http://192.168.20.89:5488/api/report',
-                //     method: "POST",
-                //     data: { values: jsonData},
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     }
-                // }).then(function(fileName){
-
-                //         setTimeout(function() {
-                //             window.open("http://192.168.20.89:5488/api/layout/viewpdf?fileName=" + fileName.data);
-                //             console.log(fileName.data);
-                //         }, 5000);
-
-                // });
-
-
-                      //  $('#reporteModalPdf').modal('show');
-      new Promise(function(resolve, reject) {
+                new Promise(function(resolve, reject) {
      
          
                 resolve(jsonData);

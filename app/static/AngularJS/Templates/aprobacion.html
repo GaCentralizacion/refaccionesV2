@@ -1,0 +1,88 @@
+<div id="page-content" ng-init="init()">
+    <div class="row ">
+        <div class="col-sm-10 col-sm-push-1 mar-top">
+            <div id="">
+                <h1 class="page-header text-overflow">Aprobación de Direcciones</h1>
+                </h1>
+            </div>
+        </div>
+        <div class="col-sm-10 col-sm-push-1 mar-top ">
+            <div class="panel ">
+                <div class="panel-body pad-top mar-top">
+                    <div class="">
+                        <div class="col-sm-6  col-xs-12">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 ">Empresa: </label>
+                                    <div class="col-sm-8">
+                                        <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-sm-3 ">Sucursal: </label>
+                                    <div class="col-sm-8">
+                                        <select id="selSucursales" ng-change="cambioSucursal()" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>                        
+                    </div>
+                    <div style="margin-top: 30px;" ng-show="listaDirecciones.length > 0" class=" col-xs-12">
+                        <table st-table="direcciones" st-safe-src="listaDirecciones" id="tblDireccionFiltros" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th style="display: none;">
+                                        idDireccion  
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" style="width: 20%;" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
+                                        Estado
+                                    </th>
+                                    <th>
+                                        Ciudad
+                                    </th>
+                                    <th>
+                                        Municipio
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                        Colonia
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
+                                        Calle
+                                    </th>
+                                    <th width="5%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="direccion in direcciones">
+                                    <td style="display: none;">
+                                        {{direccion.idDireccion}}
+                                    </td>
+                                    <td>
+                                        {{direccion.Estado}}
+                                    </td>
+                                    <td>
+                                        {{direccion.RTD_CIUDAD}}
+                                    </td>
+                                    <td>
+                                        {{direccion.RTD_DELEGAC}}
+                                    </td>
+                                    <td>
+                                        {{direccion.RTD_COLONIA}}
+                                    </td>
+                                    <td align="right">
+                                        {{direccion.RTD_CALLE1}}
+                                    </td>
+                                    <td width="5%">
+                                        <a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-aprobacion-container" ui-view></div>
