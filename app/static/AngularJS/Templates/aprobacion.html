@@ -28,7 +28,7 @@
                         </div>                        
                     </div>
                     <div style="margin-top: 30px;" ng-show="listaDirecciones.length > 0" class=" col-xs-12">
-                        <table st-table="direcciones" st-safe-src="listaDirecciones" id="tblDireccionFiltros" style="width: 100%;">
+                        <table  id="tblDireccionFiltros" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th style="display: none;">
@@ -54,7 +54,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="direccion in direcciones">
+                                <tr ng-repeat="direccion in listaDirecciones">
                                     <td style="display: none;">
                                         {{direccion.idDireccion}}
                                     </td>
@@ -74,7 +74,9 @@
                                         {{direccion.RTD_CALLE1}}
                                     </td>
                                     <td width="5%">
-                                        <a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                      <!--   <a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a> -->
+                                       <a class="btn btn-info btn-icon">
+                                        <i class="ti-pencil" ng-click="verDetalleDireccion(direccion)"></i></a>
                                     </td>
                                 </tr>
                             </tbody>

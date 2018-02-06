@@ -48,7 +48,7 @@ direccion.prototype.get_index = function(req, res, next) {
         params.push({
             name: 'role',
             value: req.query.role,
-            type: DataAccess.types.STRING
+            type: self.model.types.STRING
         })
     }
 
