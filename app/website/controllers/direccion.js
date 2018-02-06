@@ -17,34 +17,32 @@ var direccion = function(conf) {
 direccion.prototype.get_index = function(req, res, next) {
     var self = this;
     var params = [];
-
     var opcion = req.query.opcion; //1:SEL_DIRECCION_SP, 2:SEL_DIRECCION_CLIENTE_SP
-
     var stored = (opcion == 1) ? 'SEL_DIRECCION_SP' : (opcion == 2) ? 'SEL_DIRECCION_CLIENTE_SP' : 'SEL_RUTAS_SP';
 
     params.push({
         name: 'idUsuario',
         value: req.query.idUsuario,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     params.push({
         name: 'idEmpresa',
         value: req.query.idEmpresa,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     params.push({
         name: 'idSucursal',
         value: req.query.idSucursal,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
     if (opcion == 2) {
         params.push({
             name: 'idEstatus',
             value: req.query.idEstatus,
-            type: DataAccess.types.INT
+            type: self.model.types.STRING
         })
 
         params.push({
@@ -58,41 +56,40 @@ direccion.prototype.get_index = function(req, res, next) {
         params.push({
             name: 'idDireccion',
             value: req.query.idDireccion,
-            type: DataAccess.types.INT
+            type: self.model.types.STRING
         })
     }
 
 
-    console.log(params)
-    console.log(stored)
-
-
+    //console.log(params)
+    //console.log(stored)
     self.model.query(stored, params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
+
 };
 // Gets a single Direccion from the DB
 direccion.prototype.get_show = function(req, res, next) {
     var self = this;
-    console.log('show')
+    //console.log('show')
 
     var params = [];
     params.push({
         name: 'idUsuario',
         value: req.query.idUsuario,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
     params.push({
         name: 'idDireccion',
         value: req.query.idDireccion,
-        type: DataAccess.types.INT
+        type: self.model.types.STRING
     })
 
-    console.log('SEL_DIRECCION_CLIENTE_DETALLE_SP')
-    console.log(params)
+    //console.log('SEL_DIRECCION_CLIENTE_DETALLE_SP')
+    //console.log(params)
 
     self.model.query('SEL_DIRECCION_CLIENTE_DETALLE_SP', params, function(error, result) {
         self.view.expositor(res, {
@@ -104,15 +101,15 @@ direccion.prototype.get_show = function(req, res, next) {
 // Gets a list of Direccions from the DB
 direccion.prototype.get_list = function(req, res, next) {
     var self = this;
-    console.log('list')
+    //console.log('list')
     var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
         { name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT },
         { name: 'idEstatus', value: req.query.idEstatus, type: self.model.types.INT }
     ];
 
-    console.log('SEL_DIRECCION_CLIENTE_SP')
-    console.log(params)
+    //console.log('SEL_DIRECCION_CLIENTE_SP')
+    //console.log(params)
     self.model.query('SEL_DIRECCION_CLIENTE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
@@ -123,7 +120,7 @@ direccion.prototype.get_list = function(req, res, next) {
 // Creates a new Direccion in the DB
 direccion.prototype.post_create = function(req, res, next) {
     var self = this;
-    console.log('guarda direccion server')
+    //console.log('guarda direccion server')
     var params = [{ name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
         { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT },
@@ -156,8 +153,8 @@ direccion.prototype.post_create = function(req, res, next) {
         { name: 'comprobante', value: req.body.comprobante, type: self.model.types.INT }
     ];
 
-    console.log('SEL_DIRECCION_CLIENTE_SP')
-    console.log(params)
+    //console.log('SEL_DIRECCION_CLIENTE_SP')
+    //console.log(params)
     self.model.query('SEL_DIRECCION_CLIENTE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,

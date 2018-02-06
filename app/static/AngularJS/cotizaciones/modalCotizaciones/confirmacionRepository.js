@@ -1,11 +1,11 @@
-var entregaURL = global_settings.urlCORS + 'api/entrega/';
+var confirmacionURL = global_settings.urlCORS + 'api/confirmacion/';
 
 
-registrationModule.factory('entregaRepository', function($http) {
+registrationModule.factory('confirmacionRepository', function($http) {
     return {
         getDirecciones: function(data) {
             return $http({
-                url: entregaURL + 'index/',
+                url: confirmacionURL + 'index/',
                 method: "GET",
                 params: data,
                 headers: {

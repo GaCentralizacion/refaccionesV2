@@ -14,7 +14,7 @@ var entrega = function(conf) {
         this[this.conf.funcionalidad](this.conf.req, this.conf.res, this.conf.next);
     };
 };
-entrega.prototype.get_refacciones = function(req, res, next) {
+entrega.prototype.get_direcciones = function(req, res, next) {
 
     var self = this;
 

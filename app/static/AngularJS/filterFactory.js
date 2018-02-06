@@ -29,9 +29,9 @@ registrationModule.factory('filterFactory', function($http, $timeout) {
             });
         },
         styleFiltros: function() {
-            $timeout(function() {
-                $('.selectpicker').selectpicker('refresh', );
-            });
+           //$timeout(function() {
+               // $('.selectpicker').selectpicker('refresh');
+            //l});
         }
     }
 });
