@@ -1,0 +1,654 @@
+<div class="panel panel-primary" ng-init="init()">
+    <!--Panel heading-->
+    <div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 ">Empresa:</label>
+                        <div class="col-sm-9">
+                            <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                        </div>
+                    </div>
+                </div>
+                <diV class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 ">Sucursal:</label>
+                        <div class="col-sm-8">
+                            <select id="selSucursales" ng-change="cambioSucursal(empresaActual,sucursalActual,fecha)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                        </div>
+                    </div>
+                </diV>
+            </div>
+        </div>
+    </div>
+    <div class="panel-heading" style="background-color: #1E335B;">
+        <div class="panel-control">
+            <ul class="nav nav-tabs">
+                <li ng-click="verTabs(1)" class="{{actD}}" style="cursor: pointer;"><a >Alta de direcciones</a></li>
+                <li ng-click="verTabs(2)" class="{{actP}}" style="cursor: pointer;"><a >Direcciones pendientes</a></li>
+            </ul>
+        </div>
+        <h3 class="panel-title">DIRECCIONES</h3>
+    </div>
+    <!--Panel body-->
+    <div class="panel-body">
+        <!--Tabs content-->
+        <div class="tab-content">
+            <div ng-hide="verTabD">
+                <div class="row">
+                    <div class="col-lg-12" style="width: 85%; padding-left: 10%;">
+                        <div class="panel">
+                            <div class="panel-heading" style="background-color: #1E335B;">
+                                <h3 class="panel-title">Alta de nueva dirección de entrega</h3>
+                            </div>
+                            <!-- BASIC FORM ELEMENTS -->
+                            <!--===================================================-->
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="panel-heading" style="background-color: #7B8599; height: 40px; padding: 0px;">
+                                        <h4 class="panel-title">Datos de domicilio</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!--Estado-->
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select id="selEstado" ng-change="cambioEstado()" class="form-control" ng-options="edo as edo.descripcion for edo in Estados track by edo.idEdo" ng-model="estadoActual"></select>
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--Ciudad-->
+                                        <div class="form-group">
+                                            <label class="control-label">Ciudad</label>
+                                            <select id="selCiudad" ng-change="cambioCiudad()" class="form-control" ng-options="cid as cid.d_ciudad for cid in Ciudades" ng-model="ciudadActual"></select>
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--Municipio-->
+                                        <div class="form-group">
+                                            <label class="control-label">Municipio</label>
+                                            <select id="selMunicipio" ng-change="cambioMunicipio()" class="form-control" ng-options="mun as mun.municipio for mun in Municipios" ng-model="municipioActual"></select>
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--Colonia-->
+                                        <div class="form-group">
+                                            <label class="control-label">Colonia:</label>
+                                            <select id="selColonia" ng-change="cambioColonia()" class="form-control" ng-options="col as col.colonia for col in Colonias" ng-model="coloniaActual"></select>
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!--Calle-->
+                                        <div class="form-group">
+                                            <label class="control-label">Calle:</label>
+                                            <input type="text" class="form-control" placeholder="Calle" ng-model="calle" maxlength="64">
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--No. Ext.-->
+                                        <div class="form-group">
+                                            <label class="control-label">No. Ext.:</label>
+                                            <input type="text" class="form-control" placeholder="Número Exterior" ng-model="exterior" maxlength="20">
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--No. Int.-->
+                                        <div class="form-group">
+                                            <label class="control-label">No. Int.:</label>
+                                            <input type="text" class="form-control" placeholder="Número Interior" ng-model="interior" maxlength="20">
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--Cp-->
+                                        <div class="form-group">
+                                            <label class="control-label">C.P.:</label>
+                                            <select id="selCp" ng-change="cambioCp()" class="form-control" ng-options="cod as cod.cp for cod in Codigos" ng-model="cpActual"></select>
+                                            <small class="help-block"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <!--Referencia-->
+                                        <div class="form-group">
+                                            <label class="col-md-1 control-label" for="demo-textarea-input">Referencia:</label>
+                                            <textarea id="demo-textarea-input" rows="2" class="form-control" placeholder="Referencia del domicilio" maxlength="300" ng-model="referencia"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <!--label class="col-md-6 control-label">Comprobante de domicilio</label-->
+                                            <div class="col-md-12">
+                                                <form id="upload_form" action="/comprobante" method="POST" enctype="multipart/form-data">
+                                                    <div style="padding-top: 21px;">
+                                                        <label class="btn btn-info" style="background-color: #7B8599;">
+                                                            <span class="fa fa-search"> Comprobante de domicilio</span>
+                                                            <input type="file" ngf-select ngf-pattern="'pdf/*'" name="avatar" id="avatar" accept=".pdf" ngf-max-size="20MB" />
+                                                            <!--onchange="angular.element(this).scope().fileNameChanged(this)" -->
+                                                        </label>
+                                                    </div>
+                                                    <!--input type='submit'-->
+                                                    <!--                                                                        <p>{{progress}}</p>-->
+                                                </form>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="panel-heading" style="background-color: #7B8599; height: 40px; padding: 0px;">
+                                        <h4 class="panel-title">Datos de contacto</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <p>
+                                    </div>
+                                </div>
+                                <form name="mainForm" ng-submit="guardaDireccion()">
+                                    <div class="row" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                        <div class="panel-heading" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                            <h4 class="panel-title">Contacto 1</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" ng-model="nombre1" maxlength="80">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" ng-model="apaterno1" maxlength="40">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" ng-model="amaterno1" maxlength="40">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">R.F.C.</label>
+                                                <input type="text" class="form-control" ng-model="rfc1" maxlength="15">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">Lada</label>
+                                                <input type="text" class="form-control" ng-model="lada1" maxlength="6">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 1</label>
+                                                <input type="text" class="form-control" ng-model="tel1_1" maxlength="12">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 2</label>
+                                                <input type="text" class="form-control" ng-model="tel2_1" maxlength="12">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 1</label>
+                                                <input type="email" class="form-control" ng-model="correo1" maxlength="64">
+                                                <span class="error" ng-show="mainForm.correo1.$error.email">invalid email</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                        <div class="panel-heading" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                            <h4 class="panel-title">Contacto 2</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" ng-model="nombre2" maxlength="80">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" ng-model="apaterno2" maxlength="40">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" ng-model="amaterno2" maxlength="40">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label ">R.F.C.</label>
+                                                <input type="text" class="form-control" ng-model="rfc2" maxlength="15">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">Lada</label>
+                                                <input type="text" class="form-control" ng-model="lada2" maxlength="6">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 1</label>
+                                                <input type="tel" class="form-control" ng-model="tel1_2" maxlength="12">
+                                                <span class="error" ng-show="mainForm.tel1_2.$error.tel">invalid email</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 2</label>
+                                                <input type="text" class="form-control" ng-model="tel2_2" maxlength="12">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 2</label>
+                                                <input type="email" id="mailContacto2" class="form-control" ng-model="correo2" maxlength="64">
+                                                <span class="error" ng-show="mainForm.mailContacto2.$error.email">invalid email</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electronico general de sucursal</label>
+                                                <input type="email" class="form-control" ng-model="correoGeneral" maxlength="64">
+                                                <span class="error" ng-show="mainForm.correoGeneral.$error.email">invalid email</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer text-right" style="background-color: #FFFFFF;">
+                                        <button type="submit" class="finish btn btn-info">Guardar dirección</button>
+                                        <!--a ng-click="guardaDireccion()" type="button" class="finish btn btn-info">Guardar dirección</a-->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="verTabP">
+                <!--   -->
+                <div style="margin-top: 30px; padding-left: 10%; width: 90%;" class=" col-xs-12">
+                    <table  id="tblDireccionFiltros" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="display: none;">
+                                    idDireccion
+                                </th>
+                                <th st-class-ascent="fa fa-sort-asc" style="width: 20%;" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
+                                    Estado
+                                </th>
+                                <th>
+                                    Ciudad
+                                </th>
+                                <th>
+                                    Municipio
+                                </th>
+                                <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                    Colonia
+                                </th>
+                                <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
+                                    Calle
+                                </th>
+                               <th style="width: 5%;text-align: center;">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="direccion in listaDirecciones">
+                                <td style="display: none;">
+                                    {{direccion.idDireccion}}
+                                </td>
+                                <td>
+                                    {{direccion.Estado}}
+                                </td>
+                                <td>
+                                    {{direccion.RTD_CIUDAD}}
+                                </td>
+                                <td>
+                                    {{direccion.RTD_DELEGAC}}
+                                </td>
+                                <td>
+                                    {{direccion.RTD_COLONIA}}
+                                </td>
+                                <td align="right">
+                                    {{direccion.RTD_CALLE1}}
+                                </td>
+                                 <td style="width: 5%;text-align: center;">
+                                    <!--a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a-->
+                                    <!--button ng-click="borrarDireccion(direccion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button-->
+                                  <!--   <a href="{{'/direccion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-search"></i></a> -->
+                                        <a class="btn btn-info btn-icon">
+                                        <i class="ti-search" ng-click="verDetalleDireccion(direccion)"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-direccion-container" ui-view></div>
+<div class="modal fade modal-direccion" tabindex="-1" role="dialog" id="modal-direccion">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">            
+            <div id="imprimeme">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel">                                
+                                <div class="panel-body">                                   
+                                    <div class="row">
+                                        <div class="panel-heading" style="background-color: #7B8599; height: 40px; padding: 0px;">
+                                            <h4 class="panel-title" style="color: #FFFFFF;">Datos de domicilio</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!--Estado-->
+                                            <div class="form-group">
+                                                <label class="control-label">Estado</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.Estado" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Ciudad-->
+                                            <div class="form-group">
+                                                <label class="control-label">Ciudad</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_CIUDAD" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Municipio-->
+                                            <div class="form-group">
+                                                <label class="control-label">Municipio</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_DELEGAC" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Colonia-->
+                                            <div class="form-group">
+                                                <label class="control-label">Colonia:</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_COLONIA" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!--Calle-->
+                                            <div class="form-group">
+                                                <label class="control-label">Calle:</label>
+                                                <input type="text" class="form-control" placeholder="Calle" ng-model="direccion.RTD_CALLE1" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--No. Ext.-->
+                                            <div class="form-group">
+                                                <label class="control-label">No. Ext.:</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_NUMEXTER" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--No. Int.-->
+                                            <div class="form-group">
+                                                <label class="control-label">No. Int.:</label>
+                                                <input type="text" class="form-control" placeholder="Número Interior" ng-model="direccion.RTD_NUMINER" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Cp-->
+                                            <div class="form-group">
+                                                <label class="control-label">C.P.:</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_CODPOS" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <!--Referencia-->
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label" for="demo-textarea-input">Referencia:</label>
+                                                <div class="col-md-10">
+                                                    <textarea id="demo-textarea-input" rows="2" class="form-control" placeholder="Referencia del domicilio" ng-model="direccion.RTD_OBSERVACIONES" readonly="true"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" ng-show="direccion.comprobante == 1">
+                                            <!--div class="form-group">
+                                                <label class="col-md-6 control-label">Comprobante de domicilio</label>
+                                                <div class="col-md-6" ng-click="muestraComprobante()">
+                                                    <span class="pull-left btn btn-primary btn-file">
+                                                        <i class="fa fa-search"></i>
+                                            </span>
+                                                </div>
+                                            </div-->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading" style="background-color: #7B8599; height: 40px; padding: 0px;">
+                                            <h4 class="panel-title" style="color: #FFFFFF;">Datos de contacto</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <p>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                        <div class="panel-heading" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                            <h4 class="panel-title" style="color: #FFFFFF;">Contacto 1</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_NOMPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_PATPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_MATPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">R.F.C.</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_RFCPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">Lada</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_LADAPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 1</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL1PER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 2</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL2PER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 1</label>
+                                                <input type="email" class="form-control" ng-model="direccion.RTD_EMAILPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                        <div class="panel-heading" style="background-color: #BBC6DA; height: 40px; padding: 0px;">
+                                            <h4 class="panel-title" style="color: #FFFFFF;">Contacto 2</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_NOMPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_PATPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_MATPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">R.F.C.</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_RFCPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">Lada</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_LADAPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 1</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL1PER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono 2</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL2PER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 2</label>
+                                                <input type="email" class="form-control" ng-model="direccion.RTD_EMAILPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form name="mainForm" ng-submit="Procesar(2)">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="demo-email-input">Correo electronico general de sucursal</label>
+                                                    <input type="email" class="form-control" ng-model="direccion.RTD_EMAILGENERAL" readonly="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                
+                                            </div>
+                                            <div class="col-sm-4">
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <!--button type="submit" class="finish btn btn-info" onclick="document.pressed=this.value" value="Aprobar">Aprobar </button-->
+                                                    <!--button type="submit" class="finish btn btn-danger" onclick="document.pressed=this.value" value="Rechazar">Rechazar ggg</button-->
+                                                    <!--a ng-click="Procesar(2)" type="button" class="finish btn btn-info">Aprobar</a-->
+                                                    <!--a ng-click="Procesar(3)" type="button" class="finish btn btn-danger">Eliminar</a-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="panel-footer text-right" style="background-color: #FFFFFF;">
+                                    </div>
+                                </div>
+                                <form class="panel-body form-horizontal form-padding">
+                                    <div class="panel-body">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
