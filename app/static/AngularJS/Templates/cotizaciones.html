@@ -204,7 +204,7 @@
                     <form class="form-horizontal">
                         <div style="height: 65vh;" class="panel-body">
                             <div class="tab-content">
-                                <!--BEGIN TAB 2 -->
+                                <!--BEGIN TAB 1 -->
                                 <div id="demo-step-tab1" class="tab-pane active in" ng-controller="busquedaController">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -387,8 +387,8 @@
                                         <div class="rect4"></div>
                                         <div class="rect5"></div>
                                     </div>
-                                    <div class="row map-container">
-                                        <div ng-show="direcciones.length > 0">
+                                    <div class="row map-container" ng-show="direcciones.length > 0">
+                                        <div>
                                             <div class="col-xs-6 col-md-5" style="overflow: auto;">
                                                 <h4>Selecciona una direccion de entrega:</h4>
                                                 <div ng-repeat="direccion in direcciones" class="radio">
@@ -427,26 +427,21 @@
                                             </div>
                                             <div ng-show="cotizacionActual.length > 0" class="form-group ">
                                                 <h4>
-                                                    Dirección de entrega
-                                                </h4>
+          Dirección de entrega
+        </h4>
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <b>
-                                                            C. {{direccionActual.RTD_CALLE1}} NO. {{direccionActual.RTD_NUMEXTER}}
-                                                            , COL. 
-                                                        </b>
-                                                        <b>
-                                                            {{direccionActual.RTD_COLONIA}} CP. {{direccionActual.RTD_CODPOS}}, {{ direccionActual.RTD_DELEGAC}},
-                                                            {{direccionActual.RTD_CIUDAD}}  
-                                                        </b>
+                                                        <b>C. {{direccionActual.RTD_CALLE1}} NO. {{direccionActual.RTD_NUMEXTER}}
+            , COL. <b>{{direccionActual.RTD_COLONIA}} CP. {{direccionActual.RTD_CODPOS}}, {{ direccionActual.RTD_DELEGAC}},
+            {{direccionActual.RTD_CIUDAD}}  </b>
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div ng-show="cotizacionActual.length > 0" class="row">
                                                     <div class="col-xs-4">
                                                         <h4>  
-                                                            Lista de refacciones
-                                                        </h4>
+                Lista de refacciones
+              </h4>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
@@ -590,7 +585,7 @@
                                                                 <div class="colTotalMix" ng-show="backorder || sinbackorder">Total</div>
                                                             </div>
                                                             <div id="rowTotales">
-                                                                <div class="columna1"="columna1"><b>Subtotal:</b></div>
+                                                                <div class="columna1"><b>Subtotal:</b></div>
                                                                 <div ng-class="{ 'columna2': backorder || sinbackorder, 'columna22': !backorder || !sinbackorder}">{{(total - totalBackOrder)
                                                                     < 1 ? 0: (total - totalBackOrder) | currency}}</div>
                                                                         <div id="colBackOrder" ng-show="backorder || sinbackorder">{{totalBackOrder | currency}}</div>
@@ -618,9 +613,9 @@
                                                 </div>
                                             </div>
                                             <!-- END TAB 3 -->
+                                            <!--Footer button-->
                                         </div>
                                     </div>
-                                    <!--Footer button-->
                                     <div class="panel-footer text-right">
                                         <div class="box-inline">
                                             <a ng-hide="backorder || sinbackorder" href="{{previous}}" type="button" class="previous btn btn-info">Anterior</a>

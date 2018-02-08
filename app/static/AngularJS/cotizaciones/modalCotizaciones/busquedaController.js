@@ -43,19 +43,19 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
 
             //Carga refacciones si es edicion de cotizacion
 
-            // if ($scope.folioActual != "TEMP") {
-            //     cotizacionesRepository.getCotizacion($scope.folioActual).then(function(result) {
-            //         $scope.cotizacionActual = result.data;
-            //         setTimeout(function() {
-            //             $rootScope.guardarModal = false
-            //             $scope.guardar = false;
-            //             $scope.spinner = false;
-            //             $scope.$apply()
-            //         }, 10)
-            //     });
-            // } else {
-            //     $scope.spinner = false;
-            // }
+            if ($scope.folioActual != "TEMP") {
+                cotizacionesRepository.getCotizacion($scope.folioActual).then(function(result) {
+                    $scope.cotizacionActual = result.data;
+                    setTimeout(function() {
+                        $rootScope.guardarModal = false
+                        $scope.guardar = false;
+                        $scope.spinner = false;
+                        $scope.$apply()
+                    }, 10)
+                });
+            } else {
+                $scope.spinner = false;
+            }
             //Monitorea cambios en la lista de refacciones actual
             $scope.$watch('cotizacionActual', function(a, b) {
                 // $scope.$parent.$parent.total =

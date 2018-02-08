@@ -297,6 +297,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
                     $rootScope.initEntrega();
                 } else if ($current == 3) { //Confirmacion
                     //$scope.previous = "cotizacion/" + $stateParams.id + "/entrega/"
+                    $rootScope.initConfirmacion();
                 }
                 // If it's the last tab then hide the last button and show the finish instead
                 if ($current >= $total) {
