@@ -116,6 +116,7 @@ registrationModule.controller('aprobacionController', function($sce,$scope, $roo
 
                             setTimeout(function() {
                                 $scope.setTablePaging('tblDireccionFiltros');
+                                console.log(  $scope.listaDirecciones);
 
                                 $("#tblDireccionFiltros_length").removeClass("dataTables_info").addClass("hide-div");
                                 $("#tblDireccionFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
@@ -170,10 +171,86 @@ registrationModule.controller('aprobacionController', function($sce,$scope, $roo
 
 
         $scope.verDetalleDireccion=function(direccion){
-            console.log(direccion);
+            
+            $scope.direccion=direccion;
+            
+            $scope.rutas =[{RUT_IDRUTA:0,RUT_NOMBRERT:"Selecciona.."},
+                           {RUT_IDRUTA:1,RUT_NOMBRERT:"Ruta 1"},
+                           {RUT_IDRUTA:2,RUT_NOMBRERT:"Ruta 2"}];
+            $scope.rutaActual = $scope.rutas[0];
 
 
+
+             var datoVn={
+                            idUsuario:$scope.Usuario.idUsuario,
+                            idDireccion: $scope.direccion.idDireccion,
+                            idEmpresa: $scope.empresaActual.emp_idempresa,
+                            idSucursal: $scope.sucursalActual.AGENCIA
+                        }; 
+
+            // $scope.vendedores = [{per_idpersona:0,nombre:"Selecciona.."},
+            //                      {per_idpersona:1,nombre:"Pedro"},
+            //                      {per_idpersona:2,nombre:"Paco"}];
+              direccionRepository.getVendedor(datoVn).then(function(result) {
+
+                      $scope.vendedores =result.data
+                      $scope.vendedores.unshift({per_idpersona:0,nombre:"Selecciona.."});
+                      $scope.vendedorActual = $scope.vendedores[0];
+                });;
+
+          
+
+            $('#modalAprobacion').modal('show');
         };
+
+
+         $scope.Procesar = function(operacion) {
+                     
+
+                    var operacionCadena = (operacion == 2) ? 'Aprobar' : 'Rechazar';
+
+                    new Promise(function(resolve, reject) {
+
+                        $scope.cadenaConfirma = "<h4>Está a punto de " + operacionCadena + " esta dirección ¿Desea continuar?</h4>"
+
+                        bootbox.confirm($scope.cadenaConfirma,
+                            function(result) {
+                                if (result)
+                                    resolve(operacion)
+                                else
+                                    reject(operacion)
+                            }
+                        )
+                    }).then(function(operacion) {
+
+                        new Promise(function(resolve, reject) {
+
+                           var dire={
+                            idUsuario:$scope.Usuario.idUsuario,
+                            idRuta:$scope.rutaActual.RUT_IDRUTA,
+                            idDireccion: $scope.direccion.idDireccion,
+                            operacionP:operacion,
+                            idVendedor:$scope.vendedorActual.per_idpersona
+                           }; 
+
+                          direccionRepository.postUpdate(dire);
+
+                        }).then(function(respuesta) {
+
+                            bootbox.alert("<h4>" + respuesta.mensaje + "</h4>",
+                                function() {
+                                    $('.modal-aprobacion').modal('hide')
+                                        //$state.go("user.aprobacion")
+                                });
+
+                        })
+
+                       
+
+
+                    });
+
+                }; //fin Procesar
 
          
 
