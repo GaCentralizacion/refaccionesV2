@@ -63,6 +63,15 @@ registrationModule.controller('aprobacionController', function($sce,$scope, $roo
 
 
 
+     $scope.muestraComprobante = function() {
+
+            //$scope.idDireccion
+            //alert(document.pressed);
+
+           win.loadURL('C:/GA_Centralizacion/CuentasXCobrar/Refacciones/DireccionesCliente/' +  $scope.direccion.RTD_IDPERSONA + '/' +  $scope.direccion.idDireccion + '/' + $scope.direccion.idDireccion + '_comprobante.pdf', 'Comprobante de domicilio', 'height=400,width=600');
+
+        };
+
 
    
 
