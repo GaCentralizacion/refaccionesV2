@@ -155,11 +155,340 @@ direccion.prototype.post_create = function(req, res, next) {
 
     //console.log('SEL_DIRECCION_CLIENTE_SP')
     //console.log(params)
-    self.model.query('SEL_DIRECCION_CLIENTE_SP', params, function(error, result) {
+    self.model.query('INS_DIRECCION_CLIENTE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
 };
+
+direccion.prototype.post_update=function(req,res,next){
+ var params = [];
+  var self = this;
+
+
+    
+    params.push({
+        name: 'idUsuario',
+        value: req.body.idUsuario,
+       type: self.model.types.INT
+    })    
+
+    params.push({
+        name: 'idRuta',
+        value: req.body.idRuta,
+      type: self.model.types.INT
+    })
+
+    params.push({
+        name: 'idDireccion',
+        value: req.body.idDireccion,
+       type: self.model.types.INT
+    })
+
+    params.push({
+        name: 'operacion',
+        value: req.body.operacionP,
+       type: self.model.types.INT
+    })
+
+    params.push({
+        name: 'idVendedor',
+        value: req.body.idVendedor,
+      type: self.model.types.INT
+    })
+
+    // params.push({
+    //     name: 'modulo',
+    //     value: req.body.modulo,
+    //     type: DataAccess.types.DECIMAL
+    // })
+
+  
+
+    // DataAccess.query('UPD_DIRECCION_SP', params, function(error, result) {
+
+    //     console.log(error)
+    //     console.log(result)
+
+    //     if (error) return handleError(res)(error);
+    //     return respondWithResult(res, 201)(result[0][0])
+    // });
+
+     self.model.query('UPD_DIRECCION_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+direccion.prototype.get_vendedor = function(req, res, next) {
+var params = [];
+  var self = this;
+
+
+
+
+
+   params.push({
+        name: 'idUsuario',
+      value: req.query.idUsuario,
+           type: self.model.types.INT
+    });
+
+    params.push({
+        name: 'idEmpresa',
+     value: req.query.idEmpresa,
+          type: self.model.types.INT
+    });
+
+    params.push({
+        name: 'idSucursal',
+      value: req.query.idSucursal,
+          type: self.model.types.INT
+    });
+    
+    params.push({
+            name: 'idDireccion',
+          value: req.query.idDireccion,
+             type: self.model.types.INT
+        });  
+
+
+   self.model.query('SEL_VENDEDOR_SP', params, function(error, result) {
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
+direccion.prototype.get_estado = function(req, res, next) {
+var params = [];
+  var self = this;
+
+    params.push({
+        name: 'idUsuario',
+        value: req.query.user,
+        type:  self.model.types.STRING
+      })
+
+      params.push({
+        name: 'idEmpresa',
+        value: req.query.idEmpresa,
+        type: self.model.types.INT
+      })
+
+      params.push({
+        name: 'idSucursal',
+        value: req.query.idSucursal,
+        type:  self.model.types.INT
+      })
+
+
+
+   self.model.query('SEL_ESTADOS_SP', params, function(error, result) {
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+direccion.prototype.get_municipio = function(req, res, next) {
+var params = [];
+  var self = this;
+
+
+    params.push({
+        name: 'idUsuario',
+        value: req.query.user,
+        type:  self.model.types.INT
+      })
+
+      params.push({
+        name: 'idEmpresa',
+        value: req.query.idEmpresa,
+        type: self.model.types.INT
+      })
+
+      params.push({
+        name: 'idSucursal',
+        value: req.query.idSucursal,
+        type:  self.model.types.INT
+      })
+    params.push({
+        name: 'ciudad',
+        value: req.query.ciudad,
+        type:  self.model.types.STRING
+      })
+       params.push({
+        name: 'estado',
+        value: req.query.estado,
+        type:  self.model.types.STRING
+      })
+
+
+   self.model.query('SEL_MUNICIPIO_SP', params, function(error, result) {
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
+direccion.prototype.get_ciudad = function(req, res, next) {
+var params = [];
+  var self = this;
+
+
+
+    params.push({
+        name: 'idUsuario',
+        value: req.query.user,
+        type:  self.model.types.STRING
+      })
+
+      params.push({
+        name: 'idEmpresa',
+        value: req.query.idEmpresa,
+        type: self.model.types.INT
+      })
+
+      params.push({
+        name: 'idSucursal',
+        value: req.query.idSucursal,
+        type:  self.model.types.INT
+      })
+    params.push({
+        name: 'estado',
+        value: req.query.estado,
+        type:  self.model.types.STRING
+      })
+
+
+   self.model.query('SEL_CIUDAD_SP', params, function(error, result) {
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+};
+
+direccion.prototype.get_colonia = function(req, res, next) {
+var params = [];
+  var self = this;
+
+
+    params.push({
+        name: 'idUsuario',
+        value: req.query.user,
+        type:  self.model.types.INT
+      })
+
+      params.push({
+        name: 'idEmpresa',
+        value: req.query.idEmpresa,
+        type: self.model.types.INT
+      })
+
+      params.push({
+        name: 'idSucursal',
+        value: req.query.idSucursal,
+        type:  self.model.types.INT
+      })
+    params.push({
+        name: 'estado',
+        value: req.query.estado,
+        type:  self.model.types.STRING
+      })
+    params.push({
+        name: 'ciudad',
+        value: req.query.ciudad,
+        type:  self.model.types.STRING
+    })  
+
+    params.push({
+        name: 'municipio',
+        value: req.query.municipio,
+        type: self.model.types.STRING
+    }) 
+
+
+   self.model.query('SEL_COLONIA_SP', params, function(error, result) {
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+direccion.prototype.get_cp = function(req, res, next) {
+var params = [];
+  var self = this;
+
+
+    params.push({
+        name: 'idUsuario',
+        value: req.query.user,
+        type:  self.model.types.STRING
+      })
+
+      params.push({
+        name: 'idEmpresa',
+        value: req.query.idEmpresa,
+        type: self.model.types.INT
+      })
+
+      params.push({
+        name: 'idSucursal',
+        value: req.query.idSucursal,
+        type:  self.model.types.INT
+      })
+    params.push({
+        name: 'estado',
+        value: req.query.estado,
+        type:  self.model.types.STRING
+      })
+    params.push({
+        name: 'ciudad',
+        value: req.query.ciudad,
+        type:  self.model.types.STRING
+    })  
+
+    params.push({
+        name: 'municipio',
+        value: req.query.municipio,
+        type: self.model.types.STRING
+    }) 
+  params.push({
+    name: 'colonia',
+    value: req.query.colonia,
+    type: self.model.types.STRING
+  }) 
+
+   self.model.query('SEL_CP_SP', params, function(error, result) {
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = direccion;
