@@ -46,6 +46,16 @@ registrationModule.factory('cotizacionesRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        updateCotizacion: function(cotizacion) {
+            return $http({
+                url: cotizacionesURL + 'update/',
+                method: "POST",
+                data: cotizacion,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

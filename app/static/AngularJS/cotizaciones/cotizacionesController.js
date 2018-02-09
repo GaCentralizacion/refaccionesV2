@@ -2,6 +2,8 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
     $scope.sucursalActual = $scope.empresaActual = null;
     $scope.listaCotizaciones = [];
     $scope.init = function() {
+        $scope.sucursalActual = $scope.empresaActual = null;
+        $scope.listaCotizaciones = [];
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
         $('.chart').easyPieChart({
@@ -9,7 +11,6 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             "lineWidth": 8,
             "size": 115
         });
-
 
     };
     $scope.getEmpresas = function() {
@@ -36,23 +37,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
                     }, 100);
 
                 } //SET EMPRESA LOCALSTORAGE  END
-                filterFactory.styleFiltros();
             } else {
-                alertFactory.success('No se encontraron empresas');
-            }
-
-        });
-    };
-    $scope.getSucursales = function() {
-        $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
-            if (result.data.length > 0) {
-                $scope.muestraAgencia = true;
-                console.log(result.data, 'Soy las sucursales ')
-                $scope.sucursales = result.data;
-                filterFactory.styleFiltros();
-            } else {
-                $scope.muestraAgencia = false;
                 alertFactory.success('No se encontraron empresas');
             }
 
@@ -77,49 +62,24 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             localStorage.removeItem('cotSucursal')
         }
     };
-    $scope.consultaSucursales = function() {
-        $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
-            if (result.data.length > 0) {
-                $scope.muestraAgencia = true;
-                console.log(result.data, 'Soy las sucursales ')
-                $scope.sucursales = result.data;
-                $scope.sucursalActual = $scope.sucursales[0];
-                //$scope.cambioSucursal();
+    $scope.borrarCotizacion = function(c) {
+        bootbox.confirm("<h4>Deseas borrar permanentemente la cotizacion " + c.folio + "?</h4>", function(result) {
+            if (result) {
+                cotizacionesRepository.deleteCotizacion(c.idCotizacion).then(function(res) {
+                    console.log(res.data)
+                    if (res.data[0].estatus == "ok") {
+                        $scope.listaCotizaciones.forEach(function(d, n) {
+                            if (d.idCotizacion == c.idCotizacion) {
+                                $scope.listaCotizaciones.splice(n, 1);
 
-                //SET SUCURSAL DESDE LOCALSTORAGE   BEGIN
-                if (localStorage.getItem('cotSucursal') !== null) {
-
-                    console.log('existe sucursal cotizacion')
-
-                    $scope.cotSucursal = []
-
-                    //$scope.histEmpresa = localStorage.getItem('histEmpresa')
-                    $scope.tempCotSuc = localStorage.getItem('cotSucursal')
-                    $scope.cotSucursal.push(JSON.parse($scope.tempCotSuc))
-
-                    console.log($scope.cotSucursal)
-
-                    setTimeout(function() {
-
-                        console.log('poniendo sucursal en cotizacion')
-                        $("#selSucursales").val($scope.cotSucursal[0][0].AGENCIA);
-                        $scope.sucursalActual = $scope.cotSucursal[0][0]; //$scope.empresas;
-
-                        //$scope.consultaCotizaciones();
-                        $scope.cambioSucursal();
-
-                    }, 10);
-
-                } //SET SUCURSAL DESDE LOCALSTORAGE  END
-                filterFactory.styleFiltros();
-            } else {
-                $scope.muestraAgencia = false;
-                alertFactory.success('No se encontraron empresas');
+                            }
+                        })
+                        toastr.info(data.mensaje)
+                    }
+                });
             }
-
         });
-    }; //end consulta sucursales
+    };
     $scope.cambioSucursal = function() {
         $scope.consultaCotizaciones();
 
@@ -154,50 +114,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
         }
 
     }; //end cambio sucursales
-    $scope.consultaCotizaciones = function() {
-        cotizacionesRepository.getCotizaciones($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
-
-            $scope.listaCotizaciones = result.data;
-            console.log('pinta limite credito', $scope.listaCotizaciones)
-            console.log($scope.sucursalActual.Con_LimCredito)
-
-            if ($scope.sucursalActual.Con_LimCredito) {
-
-                $scope.disponible = $scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento
-
-                $('.chart').data('easyPieChart').update((($scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento) / $scope.sucursalActual.Con_LimCredito) * 100);
-            }
-
-            $('#tblCotizacionFiltros').DataTable().destroy();
-
-            setTimeout(function() {
-                $scope.setTablePaging('tblCotizacionFiltros');
-
-                $("#tblCotizacionFiltros_length").removeClass("dataTables_info").addClass("hide-div");
-                $("#tblCotizacionFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
-
-            }, 1);
-        });
-    };
-    $scope.borrarCotizacion = function(c) {
-        bootbox.confirm("<h4>Deseas borrar permanentemente la cotizacion " + c.folio + "?</h4>", function(result) {
-            if (result) {
-                cotizacionesRepository.deleteCotizacion(c.idCotizacion).then(function(res) {
-                    console.log(res.data)
-                    if (res.data[0].estatus == "ok") {
-                        $scope.listaCotizaciones.forEach(function(d, n) {
-                            if (d.idCotizacion == c.idCotizacion) {
-                                $scope.listaCotizaciones.splice(n, 1);
-
-                            }
-                        })
-                        toastr.info(data.mensaje)
-                    }
-                });
-            }
-        });
-    };
-    $scope.setTablePaging = function(idTable) {
+        $scope.setTablePaging = function(idTable) {
         $('#' + idTable).DataTable({
             dom: '<"html5buttons"B>lTfgitp',
             order: [0, 'desc'],
@@ -223,6 +140,76 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
             }]
         });
     }; //end setTablePaging
+    $scope.consultaCotizaciones = function() {
+        cotizacionesRepository.getCotizaciones($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
+
+            $scope.listaCotizaciones = result.data;
+            console.log('pinta limite credito', $scope.listaCotizaciones)
+            console.log($scope.sucursalActual.Con_LimCredito)
+
+            if ($scope.sucursalActual.Con_LimCredito) {
+
+                $scope.disponible = $scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento
+
+                $('.chart').data('easyPieChart').update((($scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento) / $scope.sucursalActual.Con_LimCredito) * 100);
+            }
+
+            $('#tblCotizacionFiltros').DataTable().destroy();
+
+            setTimeout(function() {
+                $scope.setTablePaging('tblCotizacionFiltros');
+
+                $("#tblCotizacionFiltros_length").removeClass("dataTables_info").addClass("hide-div");
+                $("#tblCotizacionFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
+
+            }, 1);
+        });
+    };
+    $scope.consultaSucursales = function() {
+        //$scope.muestraAgencia = false;
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
+            if (result.data.length > 0) {
+                //$scope.muestraAgencia = true;
+                console.log(result.data, 'Soy las sucursales ')
+                $scope.sucursales = result.data;
+                $scope.sucursalActual = $scope.sucursales[0];
+                //$scope.cambioSucursal();
+
+                //SET SUCURSAL DESDE LOCALSTORAGE   BEGIN
+                if (localStorage.getItem('cotSucursal') !== null) {
+
+                    console.log('existe sucursal cotizacion')
+
+                    $scope.cotSucursal = []
+
+                    //$scope.histEmpresa = localStorage.getItem('histEmpresa')
+                    $scope.tempCotSuc = localStorage.getItem('cotSucursal')
+                    $scope.cotSucursal.push(JSON.parse($scope.tempCotSuc))
+
+                    console.log($scope.cotSucursal)
+
+                    setTimeout(function() {
+
+                        console.log('poniendo sucursal en cotizacion')
+                        $("#selSucursales").val($scope.cotSucursal[0][0].AGENCIA);
+                        $scope.sucursalActual = $scope.cotSucursal[0][0]; //$scope.empresas;
+
+                        //$scope.consultaCotizaciones();
+                        $scope.cambioSucursal();
+
+                    }, 10);
+
+                } //SET SUCURSAL DESDE LOCALSTORAGE  END
+            } else {
+                $scope.muestraAgencia = false;
+                alertFactory.success('No se encontraron empresas');
+            }
+
+        });
+    }; //end consulta sucursales
+
+    
+
     $scope.nuevaCotizacion = function(tipo) {
 
         $rootScope.total = 0;
@@ -298,6 +285,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
                 } else if ($current == 3) { //Confirmacion
                     //$scope.previous = "cotizacion/" + $stateParams.id + "/entrega/"
                     $rootScope.initConfirmacion();
+
                 }
                 // If it's the last tab then hide the last button and show the finish instead
                 if ($current >= $total) {

@@ -2,8 +2,8 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
 
 
     $rootScope.initConfirmacion = function() {
-        $scope.spinner = true;
-        $scope.spinner = true;
+        //$scope.spinner = true;
+        //$scope.spinner = true;
         $scope.idPedidoBP = 0;
 
         $scope.msgEntregaBackorder = '';
@@ -12,21 +12,28 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
 
 
         $scope.totalExistencia = -1;
-        if ($scope.folioActual != "TEMP") {
-            Cotizacion.get({
-                id: $scope.folioActual
-            }, function(data) {
-                $scope.$parent.$parent.cotizacionActual = $scope.cotizacionActual = data.data;
-                setTimeout(function() {
-                    $scope.$parent.$parent.guardarModal = false;
-                    $scope.guardar = false;
-                    $scope.spinner = $scope.spinner2 = false;
-                    $scope.$apply()
-                }, 10)
-
-            })
+        if ($scope.cotizacionActual.length > 0) {
+            setTimeout(function() {
+                $scope.spinner = $scope.spinner2 = false;
+                $scope.$apply()
+            }, 1)
+        } else {
+            if ($scope.folioActual != "TEMP") {
+                cotizacionesRepository.getCotizacion($scope.folioActual).then(function(result) {
+                    $scope.cotizacionActual = result.data;
+                    setTimeout(function() {
+                        $rootScope.guardarModal = false
+                        $scope.guardar = false;
+                        $scope.spinner = $scope.spinner2 = false;
+                        $scope.$apply()
+                    }, 10)
+                });
+            } else {
+                $scope.spinner = false;
+            }
         }
     };
+
     $scope.calcularTotal = function(op) {
         var totaltemp = 0;
         $scope.cotizacionActual.forEach(function(e) {

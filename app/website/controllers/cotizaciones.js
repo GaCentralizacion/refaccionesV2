@@ -77,10 +77,21 @@ cotizaciones.prototype.post_create = function(req, res, next) {
 // Updates an existing Cotizacion in the DB
 cotizaciones.prototype.post_update = function(req, res, next) {
     var self = this;
+    for (var i = 0; i < req.body.refacciones.length; i++) {
+        req.body.refacciones[i] = {
+            refaccion: req.body.refacciones[i]
+        }
+    }
     var params = [
-        { name: 'idCotizacion', value: req.query.idCotizacion, type: self.model.types.INT },
-        { name: 'refacciones', value: req.query.refacciones, type: self.model.types.STRING },
-        { name: 'total', value: req.query.total, type: self.model.types.DECIMAL }
+        { name: 'idCotizacion', value: req.body.idCotizacion, type: self.model.types.INT },
+        {
+            name: 'refacciones',
+            value: jsonxml({
+                refacciones: req.body.refacciones
+            }),
+            type: self.model.types.STRING
+        },
+        { name: 'total', value: req.body.total, type: self.model.types.DECIMAL }
     ];
     self.model.query('UPD_COTIZACION_SP', params, function(error, result) {
         self.view.expositor(res, {
