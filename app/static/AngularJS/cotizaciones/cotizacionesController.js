@@ -114,7 +114,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
         }
 
     }; //end cambio sucursales
-        $scope.setTablePaging = function(idTable) {
+    $scope.setTablePaging = function(idTable) {
         $('#' + idTable).DataTable({
             dom: '<"html5buttons"B>lTfgitp',
             order: [0, 'desc'],
@@ -208,7 +208,7 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
         });
     }; //end consulta sucursales
 
-    
+
 
     $scope.nuevaCotizacion = function(tipo) {
 
