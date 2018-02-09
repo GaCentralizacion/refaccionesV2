@@ -1,34 +1,21 @@
 registrationModule.controller('busquedaController', function($scope, $rootScope, $location, $timeout, alertFactory, busquedaRepository, filterFactory, userFactory, globalFactory, datosBusqueda, plantillaRepository, cotizacionesRepository) {
 
-    // $scope.initModal = function() {
-    //     $scope.Usuario = userFactory.getUserData();
-    //     $scope.getEmpresas();
-    //     $scope.sucursalActual = $scope.empresaActual = null;
-    //     $scope.listaCotizaciones = [];
-    //     $scope.busquedaActual = [];
-    //     $scope.cotizacionActual = [];
-    //     $scope.listaTemplates = [];
-    //     $rootScope.guardarModal = false
-    //     $scope.guardar = false;
-    //     $scope.templateActual = null;
-    //     $scope.templateTemp = null;
-    //     $scope.spinner = true;
 
-    // };
     $rootScope.initModal = function() {
         $scope.busquedaActual = [];
         $scope.cotizacionActual = [];
-        $scope.listaTemplates = null;
-        $rootScope.guardarModal = false
+        $scope.listaTemplates = [];
+        $scope.guardarModal = false
         $scope.guardar = false;
         $scope.templateActual = null;
         $scope.templateTemp = null;
+        $scope.spinner = true;
         console.log('logre entrar')
         busquedaRepository.getPlantillas($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
-            
+
             $scope.listaTemplates = result.data
             $scope.templateActual = $scope.listaTemplates[0];
-
+            $scope.templateTemp = $scope.templateActual = $scope.listaTemplates[0];
             //$scope.sucursalActual = $scope.sucursales[0];
             // if (!$stateParams.template) {
             //     $scope.templateTemp = $scope.templateActual = $scope.listaTemplates[0];
@@ -42,24 +29,30 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
             $('[data-toggle="tooltip"]').tooltip();
 
             //Carga refacciones si es edicion de cotizacion
-
-            if ($scope.folioActual != "TEMP") {
-                cotizacionesRepository.getCotizacion($scope.folioActual).then(function(result) {
-                    $scope.cotizacionActual = result.data;
-                    setTimeout(function() {
-                        $rootScope.guardarModal = false
-                        $scope.guardar = false;
-                        $scope.spinner = false;
-                        $scope.$apply()
-                    }, 10)
-                });
+            if ($scope.cotizacionActual.length > 0) {
+                setTimeout(function() {
+                    $scope.spinner = false;
+                }, 1)
             } else {
-                $scope.spinner = false;
+                if ($scope.folioActual != "TEMP") {
+                    cotizacionesRepository.getCotizacion($scope.folioActual).then(function(result) {
+                        $scope.cotizacionActual = result.data;
+                        setTimeout(function() {
+                            $rootScope.guardarModal = false
+                            $scope.guardar = false;
+                            $scope.spinner = false;
+                            $scope.$apply()
+                        }, 10)
+                    });
+                } else {
+                    $scope.spinner = false;
+                }
             }
+            $scope.busquedaActual = []
             //Monitorea cambios en la lista de refacciones actual
             $scope.$watch('cotizacionActual', function(a, b) {
                 // $scope.$parent.$parent.total =
-                 $rootScope.total = calcularTotal($scope.cotizacionActual)
+                $rootScope.total = calcularTotal($scope.cotizacionActual)
                 if ($scope.cotizacionActual.length > 0) {
                     $rootScope.guardarModal = true
                     $scope.guardar = true;
@@ -140,12 +133,12 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                 refacciones: $scope.cotizacionActual,
                 total: $rootScope.total,
             }
-            Cotizacion.update(cotizacionGuardar, function(data) {
-                $scope.$parent.$parent.$parent.cambioSucursal()
-                toastr.success(data.mensaje)
+            cotizacionesRepository.updateCotizacion(cotizacionGuardar).then(function(result) {
+                $scope.cambioSucursal()
+                toastr.success(result.data[0].mensaje)
                 $rootScope.guardarModal = false
                 $scope.guardar = false;
-            })
+            });
         }
     };
 
@@ -174,15 +167,6 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
                             })
                             $scope.templateActual = $scope.listaTemplates[$scope.listaTemplates.length - 1]
                         });
-                        // Template.save(cotizacionGuardar, function(data) {
-                        //     console.log(data)
-                        //     toastr.success(data.mensaje)
-                        //     $scope.listaTemplates.push({
-                        //         idCotizacionPlantilla: data.idPlantilla,
-                        //         descripcion: result
-                        //     })
-                        //     $scope.templateActual = $scope.listaTemplates[$scope.listaTemplates.length - 1]
-                        // })
                     }
                 }
             })
@@ -194,9 +178,6 @@ registrationModule.controller('busquedaController', function($scope, $rootScope,
             plantillaRepository.updatePlantilla(cotizacionGuardar).then(function(result) {
                 toastr.success(result.data[0].mensaje)
             });
-            // Template.update(cotizacionGuardar, function(data) {
-            //     toastr.success(data.mensaje)
-            // })
         }
     };
 
