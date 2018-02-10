@@ -1,4 +1,4 @@
-registrationModule.controller('confirmacionController', function($scope, $rootScope, $location, $timeout, alertFactory, confirmacionRepository, filterFactory, userFactory, globalFactory, datosBusqueda, plantillaRepository, cotizacionesRepository, direccionRepository) {
+registrationModule.controller('confirmacionController', function($scope, $rootScope, $location, $timeout, alertFactory, confirmacionRepository, filterFactory, userFactory, globalFactory, datosBusqueda, plantillaRepository, cotizacionesRepository, direccionRepository, pedidoRepository) {
 
 
     $rootScope.initConfirmacion = function() {
@@ -62,7 +62,7 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
         $scope.sinbackorder = $scope.$parent.$parent.sinbackorder = true;
         $scope.calcularTotal(1)
     };
-    $scope.$parent.$parent.hacerPedido = function(op) {
+    $rootScope.hacerPedido = function(op) {
         new Promise(function(resolve, reject) {
             if (op == 0) {
 
@@ -98,37 +98,56 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
                         refacciones: $scope.cotizacionActual,
                         total: $scope.total,
                     }
-                    Cotizacion.update(cotizacionGuardar, function(data) {
+                    cotizacionesRepository.updateCotizacion(cotizacionGuardar).then(function(result) {
                         resolve($scope.folioActual)
-                    })
+                    });
+                    // Cotizacion.update(cotizacionGuardar, function(data) {
+                    //     resolve($scope.folioActual)
+                    // })
 
                 } else {
-                    Cotizacion.save({
-                        idUsuario: $scope.user.per_idpersona,
+                    var cotizacionGuardar = {
+                        idUsuario: $scope.Usuario.idUsuario,
                         refacciones: $scope.cotizacionActual,
                         descripcion: '',
-                        total: $scope.total,
-                        empresa: $scope.empresaActual.emp_idempresa, //LQMA comment 18102016 .emp_idempresa emp_nombrecto
-                        sucursal: $scope.sucursalActual.AGENCIA, //LQMA comment 18102016 .suc_nombrecto .AGENCIA
-                        base: ''
-                    }, function(data) {
-                        //LQMA 18102016
-                        console.log(data)
-                        $scope.$parent.$parent.folioActual = $scope.$parent.$parent.folioActual.replace('TEMP', data.idCotizacion);
-                        resolve(data.idCotizacion)
-                    })
+                        total: $rootScope.total,
+                        empresa: $scope.empresaActual.emp_idempresa, //emp_nombrecto,
+                        sucursal: $scope.sucursalActual.AGENCIA, //suc_nombrecto,
+                        base: ""
+                    }
+                    cotizacionesRepository.guardaCotizacion(cotizacionGuardar).then(function(res) {
+                        console.log(res.data)
+                        $scope.folioActual = $scope.folioActual.replace('TEMP', res.data[0].idCotizacion);
+                        resolve(res.data[0].idCotizacion)
+                    });
+                    // Cotizacion.save({
+                    //     idUsuario: $scope.user.per_idpersona,
+                    //     refacciones: $scope.cotizacionActual,
+                    //     descripcion: '',
+                    //     total: $scope.total,
+                    //     empresa: $scope.empresaActual.emp_idempresa, //LQMA comment 18102016 .emp_idempresa emp_nombrecto
+                    //     sucursal: $scope.sucursalActual.AGENCIA, //LQMA comment 18102016 .suc_nombrecto .AGENCIA
+                    //     base: ''
+                    // }, function(data) {
+                    //     //LQMA 18102016
+                    //     console.log(data)
+                    //     $scope.$parent.$parent.folioActual = $scope.$parent.$parent.folioActual.replace('TEMP', data.idCotizacion);
+                    //     resolve(data.idCotizacion)
+                    // })
                 }
             }).then(function(idCotizacion) {
                 console.log($scope.direccionActual)
-                Pedido.save({
-                    idUsuario: $scope.user.per_idpersona,
+                var pedidoGuardar = {
+                    idUsuario: $scope.Usuario.idUsuario,
                     idCotizacion: idCotizacion,
                     idPersona: $scope.direccionActual.RTD_IDPERSONA,
                     concecutivo: $scope.direccionActual.RTD_CONSEC,
                     entrega: $scope.direccionActual.RTD_RTENTREGA,
                     operacion: op,
-                    idPedido: $scope.idPedidoBP,
-                }, function(data) {
+                    idPedido: $scope.idPedidoBP
+                }
+                pedidoRepository.guardarPedido(pedidoGuardar).then(function(result) {
+                    data = result.data[0];
                     if (data) {
 
                         console.log(data)
@@ -160,7 +179,8 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
 
                             bootbox.alert("<h4>" + data.mensaje + "</h4>" + folioBPRO,
                                 function() {
-                                    $state.go("user.cotizacion")
+                                    location.href = '/cotizaciones';
+                                    //$state.go("user.cotizacion")
                                 });
 
                         } else if (data.estatus == "ko") {
@@ -179,10 +199,74 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
                             $scope.idPedidoBP = data.idPedidoRef;
                         } else if (data.estatus == "cancelado") {
                             toastr.info(data.mensaje)
-                            $state.go("user.cotizacion")
+                            location.href = '/cotizaciones';
+                            //$state.go("user.cotizacion")
                         }
                     }
-                })
+                });
+                // Pedido.save({
+                //     idUsuario: $scope.user.per_idpersona,
+                //     idCotizacion: idCotizacion,
+                //     idPersona: $scope.direccionActual.RTD_IDPERSONA,
+                //     concecutivo: $scope.direccionActual.RTD_CONSEC,
+                //     entrega: $scope.direccionActual.RTD_RTENTREGA,
+                //     operacion: op,
+                //     idPedido: $scope.idPedidoBP,
+                // }, function(data) {
+                //     if (data) {
+
+                //         console.log(data)
+                //         if (data.estatus == "ok") {
+
+                //             var folioBPRO = '';
+                //             if (data.idPedBPRO == "0")
+                //                 folioBPRO = "<p><h4><font color='#1827F2'><B> Se ha generado un pedido en BACKORDER por las piezas faltantes.</B></font></h4>" +
+                //                 "<p><h4><font color='#CB0A14'><B>" + $scope.msgEntregaBackorder + "</B></font></h4>"
+                //             else
+                //                 folioBPRO = "<p><h4>Folio Pedido: <font color='#1827F2'><B> " + data.idPedBPRO + "</B></font></h4>" +
+                //                 "<p><h4>Su token de entrega es: <font color='#1827F2'><B>" + data.token + "</B></font></h4>" +
+                //                 "<p><h4><font color='#1E1A93'><B>" + $scope.msgTiempoEntrega + "</B></font></h4>"
+
+
+                //             console.log('back order?')
+                //             console.log(data.backOrder)
+
+                //             if (data.backOrder == "1")
+                //                 folioBPRO = folioBPRO + "<p><h4><font color='#1827F2'><B>Se ha generado un pedido en BACKORDER por las piezas faltantes.</B></font></h4>" +
+                //                 "<p><h4><font color='#CB0A14'><B>" + $scope.msgEntregaBackorder + "</B></font></h4>"
+
+                //             /*bootbox.alert("<h4>" + data.mensaje + "</h4>" +
+                //               "<p><h4>Folio Pedido: <font color='#1827F2'><B> " + folioBPRO + "</B></font></h4>" + 
+                //               "<p><h4>Su token de entrega es <font color='#1827F2'><B>" + data.token + "</B></font></h4>",
+                //               function() {
+                //                 $state.go("user.cotizacion")
+                //               });*/
+
+                //             bootbox.alert("<h4>" + data.mensaje + "</h4>" + folioBPRO,
+                //                 function() {
+                //                     $state.go("user.cotizacion")
+                //                 });
+
+                //         } else if (data.estatus == "ko") {
+                //             toastr.info(data.mensaje)
+                //             $scope.backorder = $scope.$parent.$parent.backorder = true;
+
+                //             if (data.data[0].totalPorSurtir > 0) //totalPorSurtir
+                //                 $scope.sinbackorderTotal = $scope.$parent.$parent.sinbackorderTotal = true;
+
+                //             $scope.sinbackorder = $scope.$parent.$parent.sinbackorder = true;
+
+                //             $scope.totalBackOrder = data.totalBackOrder;
+                //             $scope.totalExistencia = data.totalExistencia;
+
+                //             $scope.$parent.$parent.cotizacionActual = $scope.cotizacionActual = data.data;
+                //             $scope.idPedidoBP = data.idPedidoRef;
+                //         } else if (data.estatus == "cancelado") {
+                //             toastr.info(data.mensaje)
+                //             $state.go("user.cotizacion")
+                //         }
+                //     }
+                // })
 
             }, function() {});
         })
