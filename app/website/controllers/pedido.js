@@ -90,15 +90,16 @@ pedido.prototype.post_create = function(req, res, next) {
     var self = this;
 
     var params = [
-        { name: 'idCotizacion', value: req.query.idCotizacion, type: self.model.types.INT },
-        { name: 'idPersona', value: req.query.idPersona, type: self.model.types.INT },
-        { name: 'RTD_CONSEC', value: req.query.concecutivo, type: self.model.types.INT },
-        { name: 'RTD_RTENTREGA', value: req.query.entrega, type: self.model.types.STRING },
-        { name: 'operacion', value: req.query.operacion, type: self.model.types.INT },
-        { name: 'idPedidoRef', value: req.query.idPedido, type: self.model.types.INT },
-        { name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }
+        { name: 'idCotizacion', value: req.body.idCotizacion, type: self.model.types.INT },
+        { name: 'idPersona', value: req.body.idPersona, type: self.model.types.INT },
+        { name: 'RTD_CONSEC', value: req.body.concecutivo, type: self.model.types.INT },
+        { name: 'RTD_RTENTREGA', value: req.body.entrega, type: self.model.types.STRING },
+        { name: 'operacion', value: req.body.operacion, type: self.model.types.INT },
+        { name: 'idPedidoRef', value: req.body.idPedido, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT }
     ];
-     //console.log(params);
+     console.log(params);
+
     self.model.query('INS_PEDIDO_SP', params, function(error, result) {
         console.log(error, 'SOY EL ERROR')
         console.log(result, 'SOY EL RESULT')
