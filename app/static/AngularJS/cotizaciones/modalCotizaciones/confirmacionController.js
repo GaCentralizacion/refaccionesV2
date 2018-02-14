@@ -4,6 +4,7 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
     $rootScope.initConfirmacion = function() {
         //$scope.spinner = true;
         //$scope.spinner = true;
+        $rootScope.muestraConf=true;
         $scope.idPedidoBP = 0;
 
         $scope.msgEntregaBackorder = '';
@@ -179,6 +180,7 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
 
                             bootbox.alert("<h4>" + data.mensaje + "</h4>" + folioBPRO,
                                 function() {
+                                    $scope.cambioSucursal();
                                     location.href = '/cotizaciones';
                                     //$state.go("user.cotizacion")
                                 });
@@ -199,6 +201,7 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
                             $scope.idPedidoBP = data.idPedidoRef;
                         } else if (data.estatus == "cancelado") {
                             toastr.info(data.mensaje)
+                            $scope.cambioSucursal();
                             location.href = '/cotizaciones';
                             //$state.go("user.cotizacion")
                         }

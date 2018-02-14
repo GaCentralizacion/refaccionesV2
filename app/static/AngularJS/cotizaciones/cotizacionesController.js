@@ -235,8 +235,13 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
                     if (result) {
                         $scope.salir = true;
                         $('.modal-cotizacion').modal('hide')
+                        location.href = '/cotizaciones';
                     }
                 })
+            } else if (!$scope.salir) {
+                $scope.salir = true;
+                $('.modal-cotizacion').modal('hide')
+                location.href = '/cotizaciones';
             }
         })
 

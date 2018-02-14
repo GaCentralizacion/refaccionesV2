@@ -10,6 +10,15 @@ registrationModule.controller('mainController', function($scope, $rootScope, $lo
     }
 
     $scope.salir = function() {
+        localStorage.removeItem('histEmpresa')
+        localStorage.removeItem('histSucursal')
+
+        /*remueve las opciones de pedidos*/
+        localStorage.removeItem('pedEmpresa')
+        localStorage.removeItem('pedSucursal')
+        /*remueve las opciones de cotizaciones*/
+        localStorage.removeItem('cotEmpresa')
+        localStorage.removeItem('cotSucursal')
         userFactory.logOut();
     }
 });
