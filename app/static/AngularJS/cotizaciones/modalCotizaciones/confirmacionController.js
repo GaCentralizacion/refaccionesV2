@@ -147,7 +147,7 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
                     idPedido: $scope.idPedidoBP
                 }
                 pedidoRepository.guardarPedido(pedidoGuardar).then(function(result) {
-                    data = result.data[0];
+                    data = result.data;
                     if (data) {
 
                         console.log(data)

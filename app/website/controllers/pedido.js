@@ -100,12 +100,14 @@ pedido.prototype.post_create = function(req, res, next) {
     ];
      console.log(params);
 
-    self.model.query('INS_PEDIDO_SP', params, function(error, result) {
+    self.model.queryAll('INS_PEDIDO_SP', params, function(error, result) {
         console.log(error, 'SOY EL ERROR')
-        console.log(result, 'SOY EL RESULT')
+        console.log(result[1], 'SOY EL RESULT')
+        result[0][0].data = result[1];
+        console.log(result[0][0])
         self.view.expositor(res, {
             error: error,
-            result: result
+            result: result[0][0]
         });
     });
 };
