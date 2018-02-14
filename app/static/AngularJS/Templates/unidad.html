@@ -1,0 +1,172 @@
+<div id="page-content" ng-init="init()">
+    <div class="row ">
+        <div class="col-sm-10 col-sm-push-1 mar-top">
+            <div id="">
+                <h1 class="page-header text-overflow">Unidades</h1>
+                </h1>
+            </div>
+        </div>
+        <div class="col-sm-10 col-sm-push-1 mar-top ">
+            <div class="panel ">
+                <div class="panel-body pad-top mar-top">
+                    <div class="col-sm-6  col-xs-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Empresa:</label>
+                                <div class="col-sm-8">
+                                    <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6  col-xs-12">
+                        <div class="col-sm-11 control-label">
+                          <a  class="form-control btn btn-block btn-primary" ng-click="modalUnidad(null,1);" >Nuevo Unidad </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12  mar-top">
+                     <div ng-show="listUnidades.length > 0" class="col-xs-12">
+                        <table id="tblUnidades" >
+                            <thead>
+                                <tr>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion" >
+                                        Marca
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="modelo">
+                                        Modelo
+                                    </th>
+                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
+                                        Color
+                                    </th>
+                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
+                                        Placas
+                                    </th>
+                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="tipo">
+                                        Tipo
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="capacidad">
+                                        capacidad
+                                    </th>
+                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
+                                        metrosCubicos
+                                    </th>
+                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                    Editar
+                                    </th>
+                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
+                                      Eliminar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="unidad in listUnidades">
+                                    <td>
+                                        <span>{{unidad.descripcion}}</span>
+                                    </td>
+                                     <td>
+                                        <span>{{unidad.modelo}}</span>
+                                    </td>
+                                     <td>
+                                        <span>{{unidad.color}}</span>
+                                    </td>
+                                     <td>
+                                        <span>{{unidad.placas}}</span>
+                                    </td>
+                                  
+                                     <td>
+                                        <span>{{unidad.Tipo}}</span>
+                                    </td>
+                                     <td>
+                                        <span>{{unidad.capacidad}}</span>
+                                    </td>
+                                     <td>
+                                        <span>{{unidad.metrosCubicos}}</span>
+                                    </td>
+                                   <td>
+                                       <a class="btn btn-info btn-icon">
+                                            <i class="ti-pencil-alt" ng-click="modalUnidad(unidad,2);"></i>
+                                        </a>
+                                    </td>   
+                                    <td>                                 
+                                       <a class="btn btn-info btn-icon">
+                                            <i class="ti-eraser" ng-click="modalUnidad(unidad,3)"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade "  id="modalAddUnidad" tabindex="-1" role="dialog">
+    <div class="modal-dialog " >
+        <div class="modal-content">
+            <div class="modal-header">
+          <h4 class="modal-title">Unidad:</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+           <br>
+        <div class="modal-body">
+         <div class="col-sm-12">
+            <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                 <select  ng-disabled="bloquea"  id="marca" class="form-control" ng-options="marca as marca.descripcion for marca in marcas track by marca.idMarca" ng-model="marcaActual"></select>
+            </div>
+            
+            <div class="form-group">
+            <!--     <label >Apellido Paterno:</label> -->
+                <div>
+                    <input  ng-disabled="bloquea" ng-model="modelo" placeholder="Modelo" id="modelo" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+             <!--    <label >Nombre:</label> -->
+                <div >
+                    <input  ng-disabled="bloquea" ng-model="numserie" placeholder="Numero de Serie" id="numserie" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                <div >
+                    <input  ng-disabled="bloquea" ng-model="color" placeholder="Color" id="color" type="text" class="form-control">
+                </div>
+            </div>
+              <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                <div >
+                    <input ng-disabled="bloquea"  ng-model="placas" placeholder="Placas" id="placas" type="text" class="form-control">
+                </div>
+            </div>
+              <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                 <select  ng-disabled="bloquea"  id="tipo" class="form-control" ng-options="tipo as tipo.Descripcion for tipo in tipos track by tipo.idTipoCarga" ng-model="tipoActual"></select>
+            </div>
+              <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                <div >
+                    <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="Capacidad" id="capacidad" type="text" class="form-control">
+                </div>
+            </div>
+              <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                <div >
+                    <input ng-disabled="bloquea"  ng-model="metroscu" placeholder="m3" id="metroscu" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="unidad(1)">Aceptar</button>
+        </div>
+        
+        </div>
+    </div>
+</div>
+

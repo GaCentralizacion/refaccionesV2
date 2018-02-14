@@ -7,6 +7,9 @@
      direccion: require('./controllers/direccion'),
      busqueda: require('./controllers/busqueda'),
      plantilla: require('./controllers/plantilla'),
-     entrega: require('./controllers/entrega')
+     entrega: require('./controllers/entrega'),
+     operador: require('./controllers/operador'),
+     unidad: require('./controllers/unidad'),
+     ruta: require('./controllers/ruta')
 
  }

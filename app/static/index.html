@@ -86,18 +86,19 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
                         <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+                            <a  data-toggle="dropdown" class="dropdown-toggle text-right" data-target="#demo">
                                 <i class="pci-ver-dots"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
-                                <!-- Dropdown footer -->
+                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default" id="demo">
+                                Dropdown footer
                                 <div class="pad-all text-right">
                                     <a href="pages-login.html" class="btn btn-primary" ng-click="salir()">
                                         <i class="demo-pli-unlock"></i> Salir
                                     </a>
                                 </div>
                             </div>
-                        </li>
+                        </li> 
+                      
                     </ul>
                 </div>
                 <!--================================-->
@@ -179,6 +180,30 @@
                                             <i class="ti-check-box"></i>
                                             <span class="menu-title">
                                                 <strong>Aprobación de Direcciones</strong>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/operador">
+                                            <i class="ti-id-badge"></i>
+                                            <span class="menu-title">
+                                                <strong>Operadores</strong>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/unidad">
+                                            <i class="ti-car"></i>
+                                            <span class="menu-title">
+                                                <strong>Unidades</strong>
+                                            </span>
+                                        </a>
+                                    </li>
+                                      <li>
+                                        <a href="/ruta">
+                                            <i class="ti-location-pin"></i>
+                                            <span class="menu-title">
+                                                <strong>Rutas</strong>
                                             </span>
                                         </a>
                                     </li>
@@ -302,6 +327,12 @@
     <script src="AngularJS/cotizaciones/datosBusquedaService.js"></script>
     <script src="AngularJS/aprobacion/aprobacionController.js"></script>
     <script src="AngularJS/aprobacion/aprobacionRepository.js"></script>
+    <script src="AngularJS/operador/operadorController.js"></script>
+    <script src="AngularJS/operador/operadorRepository.js"></script>
+    <script src="AngularJS/unidad/unidadController.js"></script>
+    <script src="AngularJS/unidad/unidadRepository.js"></script>
+    <script src="AngularJS/ruta/rutaController.js"></script>
+    <script src="AngularJS/ruta/rutaRepository.js"></script>
 
 </body>
 

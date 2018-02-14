@@ -1,0 +1,120 @@
+<div id="page-content" ng-init="init()">
+    <div class="row ">
+        <div class="col-sm-10 col-sm-push-1 mar-top">
+            <div id="">
+                <h1 class="page-header text-overflow">Operadores</h1>
+                </h1>
+            </div>
+        </div>
+        <div class="col-sm-10 col-sm-push-1 mar-top ">
+            <div class="panel ">
+                <div class="panel-body pad-top mar-top">
+                    <div class="col-sm-6  col-xs-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Empresa:</label>
+                                <div class="col-sm-8">
+                                    <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6  col-xs-12">
+                        <div class="col-sm-11 control-label">
+                          <a  class="form-control btn btn-block btn-primary" ng-click="modalOperador(true,1);" >Nuevo operador </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12  mar-top">
+                     <div ng-show="listOperadores.length > 0" class="col-xs-12">
+                        <table id="tblOperadores" >
+                            <thead>
+                                <tr>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
+                                        Nombre
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
+                                        Telefono
+                                    </th>
+                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        Editar
+                                    </th>
+                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
+                                        Eliminar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="operador in listOperadores">
+                                    <td>
+                                        <span>{{operador.nombre}}&nbsp;{{operador.apellidoPaterno}}&nbsp;{{operador.apellidoMaterno}}</span>
+                                    </td>
+                                     <td>
+                                        <span>{{operador.telefono}}</span>
+                                    </td>
+                                   <td>
+                                       <a class="btn btn-info btn-icon">
+                                            <i class="ti-pencil-alt" ng-click="modalOperador(operador,2);"></i>
+                                        </a>
+                                    </td>   
+                                    <td>                                 
+                                       <a class="btn btn-info btn-icon">
+                                            <i class="ti-eraser" ng-click="modalOperador(operador,3)"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade "  id="modalAddOperador" tabindex="-1" role="dialog">
+    <div class="modal-dialog " >
+        <div class="modal-content">
+            <div class="modal-header">
+          <h4 class="modal-title">Operador:</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+           <br>
+        <div class="modal-body">
+         <div class="col-sm-12">
+            <div class="form-group">
+             <!--    <label >Nombre:</label> -->
+                <div >
+                    <input  ng-disabled="bloquea" ng-model="nombre" placeholder="Nombre" id="nombre" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+            <!--     <label >Apellido Paterno:</label> -->
+                <div>
+                    <input  ng-disabled="bloquea" ng-model="apPaterno" placeholder="Apellido Paterno" id="apPaterno" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                <div >
+                    <input  ng-disabled="bloquea" ng-model="apMaterno" placeholder="Apellido Materno" id="apMaterno" type="text" class="form-control">
+                </div>
+            </div>
+              <div class="form-group">
+             <!--    <label >Apellido Materno:</label> -->
+                <div >
+                    <input ng-disabled="bloquea"  ng-model="telefono" placeholder="Telefono" id="telefono" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="operador(1)">Aceptar</button>
+        </div>
+        
+        </div>
+    </div>
+</div>
+
