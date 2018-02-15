@@ -17,365 +17,257 @@
                                     <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                 </div>
                             </div>
-                             <div class="form-group">
-                                <label class="col-sm-3 ">Sucursal: </label>
-                                <div class="col-sm-8">
-                                    <select id="selSucursales" ng-change="cambioSucursal(empresaActual)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                        </div>
+                    </div>
+                    <style type="text/css">
+                    .recuadro {
+                      
+                        border: 1px solid #e9e9e9;
+                        border-radius: 10px;
+                    }
+                    .encab{font-weight: 700;
+    color: white;
+    background-color: #7B8599;
+    border-top-left-radius: 7px;
+    height: 35px;
+    border-top-right-radius: 7px;
+    padding-top: 8px;}
+                    </style>
+                    <div class="col-xs-12  mar-top">
+                        <div class="row mar-top recuadro">
+                            <div class="col-sm-12 encab" > Datos de la Ruta </div>
+                            <div class="col-sm-3 mar-top ">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nombre" ng-model="nombre" maxlength="64">
+                                    <small class="help-block"></small>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 mar-top">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Descripcion" ng-model="descripcion" maxlength="64">
+                                    <small class="help-block"></small>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row mar-top recuadro">
+
+                         <div class="col-sm-12 encab" > Datos del Operador : </div>
 
 
-                    <div class="col-sm-6  col-xs-12">
-                        <div class="col-sm-11 control-label">
-                          <a  class="form-control btn btn-block btn-primary" ng-click="" >Nuevo Ruta </a>
-                        </div>
-                    </div>
-                    <div class="col-xs-12  mar-top">
-                        <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label class="control-label">Nombre:</label>
-                                            <input type="text" class="form-control" placeholder="Nombre" ng-model="calle" maxlength="64">
-                                            <small class="help-block"></small>
-                                        </div>
+                          
+                            <div class="col-sm-10" ng-show="vero">
+                                <div class="col-sm-6 mar-top">
+                                    <div class="form-group">
+                                        <span>Nombre: &nbsp;{{nombreOperador}}</span>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label class="control-label">Descripcion:</label>
-                                            <input type="text" class="form-control" placeholder="Descripcion" ng-model="calle" maxlength="64">
-                                            <small class="help-block"></small>
-                                        </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Telefono: &nbsp;{{telefonoOperador}}</span>
                                     </div>
+                                </div>
+                            </div>
+                              <div class="col-sm-10" ng-hide="vero" style="font-size: 45px;color:  #e9e9e9;">
+                                 Sin Elegir
+                                  </div>
+
+                              <div class="col-sm-2 mar-top">
+                                <div class="form-group">
+                                    <div class="col-sm-11 control-label">
+                                        <a class="form-control btn btn-block btn-primary" ng-click="getOperadores();" style="font-size: 11px">{{txto}}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
+                        <div class="row mar-top recuadro" >
+                        <div class="col-sm-12 encab" > Datos de la Unidad : </div>
+                           
+                            <div class="col-sm-10"  ng-show="veru">
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Marca: &nbsp; {{descripcionUni}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Modelo: &nbsp; {{modelo}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Color:  &nbsp;{{color}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Placas: &nbsp; {{placas}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Tipo:  &nbsp;{{Tipo}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>Capacidad: &nbsp; {{capacidad}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mar-top">
+                                    <div class="form-group">
+                                        <span>m3: &nbsp; {{metrosCubicos}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-10" ng-hide="veru" style="font-size: 45px;color:  #e9e9e9;">
+                                Sin Elegir
+                                  </div>
 
 
-
-
-
-
-
-
-<style>
-    
-/*!
- * bootstrap-vertical-tabs - v1.1.0
- * https://dbtek.github.io/bootstrap-vertical-tabs
- * 2014-06-06
- * Copyright (c) 2014 Ä°smail Demirbilek
- * License: MIT
- */
-.tabs-left, .tabs-right {
-  border-bottom: none;
-  padding-top: 2px;
-}
-.tabs-left {
-  border-right: 1px solid #ddd;
-}
-.tabs-right {
-  border-left: 1px solid #ddd;
-}
-.tabs-left>li, .tabs-right>li {
-  float: none;
-  margin-bottom: 2px;
-}
-.tabs-left>li {
-  margin-right: -1px;
-}
-.tabs-right>li {
-  margin-left: -1px;
-}
-.tabs-left>li.active>a,
-.tabs-left>li.active>a:hover,
-.tabs-left>li.active>a:focus {
-  border-bottom-color: #ddd;
-  border-right-color: transparent;
-}
-
-.tabs-right>li.active>a,
-.tabs-right>li.active>a:hover,
-.tabs-right>li.active>a:focus {
-  border-bottom: 1px solid #ddd;
-  border-left-color: transparent;
-}
-.tabs-left>li>a {
-  border-radius: 4px 0 0 4px;
-  margin-right: 0;
-  display:block;
-}
-.tabs-right>li>a {
-  border-radius: 0 4px 4px 0;
-  margin-right: 0;
-}
-.vertical-text {
-  margin-top:50px;
-  border: none;
-  position: relative;
-}
-.vertical-text>li {
-  height: 20px;
-  width: 120px;
-  margin-bottom: 100px;
-}
-.vertical-text>li>a {
-  border-bottom: 1px solid #ddd;
-  border-right-color: transparent;
-  text-align: center;
-  border-radius: 4px 4px 0px 0px;
-}
-.vertical-text>li.active>a,
-.vertical-text>li.active>a:hover,
-.vertical-text>li.active>a:focus {
-  border-bottom-color: transparent;
-  border-right-color: #ddd;
-  border-left-color: #ddd;
-}
-.vertical-text.tabs-left {
-  left: -50px;
-}
-.vertical-text.tabs-right {
-  right: -50px;
-}
-.vertical-text.tabs-right>li {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-.vertical-text.tabs-left>li {
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  transform: rotate(-90deg);
-}
-
-
-
-#tblOperadores_length, #tblOperadores_filter{display: none}
-</style>
-
-
-
-
-                <div class="row">
-
-<div class="col-sm-12  mar-top">
-                     <div  class="col-xs-12">
-                            <table id="tblOperadoresUnidadesRutas" >
-                                <thead>
-                                    <tr>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador" >
-                                            Operador
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad" >
-                                            Unidad
-                                        </th>
-                                      <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar" >
-                                          Regresar
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="elemento in elementos">
-                                        <td>
-                                            <span>{{elemento.operador}}</span>
-                                        </td>
-                                         <td>
-                                            <span>{{elemento.unidad}}</span>
-                                        </td>
-                                       <td>
-                                           <a class="btn btn-info btn-icon">
+                             <div class="col-sm-2  mar-top">
+                                <div class="form-group">
+                                    <div class="col-sm-11 control-label">
+                                        <a class="form-control btn btn-block btn-primary" ng-click="getUnidades();" style="font-size: 11px">{{txtu}} </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mar-top  ">
+                            <div class="col-sm-3 float-right" style="float:  right;">
+                                <div class="col-sm-11 control-label">
+                                    <a class="form-control btn btn-block btn-primary" ng-click="">Guardar Ruta </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-sm-12  mar-top">
+                                <table id="tblOperadoresUnidadesRutas">
+                                    <thead>
+                                        <tr>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
+                                                Operador
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
+                                                Unidad
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                                Regresar
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="elemento in elementos">
+                                            <td>
+                                                <span>{{elemento.operador}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{elemento.unidad}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-info btn-icon">
                                                 <i class="ti-arrow-down" ng-click=""></i>
                                             </a>
-                                        </td>   
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
                     </div>
-
-
-
-
-                    <div class="col-sm-12  mar-top">
-                        
-
-                              <div class="col-sm-1">
-            <!-- required for floating -->
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs tabs-left vertical-text">
-                <li class="active"><a href="#home-v" data-toggle="tab">Operador</a></li>
-                <li><a href="#profile-v" data-toggle="tab">Unidad</a></li>
-               
-            </ul>
-        </div>
-        <div class="col-xs-9">
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="home-v">
-                     <div ng-show="listOperadores.length > 0" class="col-xs-12">
-                            <table id="tblOperadores" >
-                                <thead>
-                                    <tr>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
-                                            Nombre
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
-                                            Telefono
-                                        </th>
-                                      <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar" >
-                                          Seleciona
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="operador in listOperadores">
-                                        <td>
-                                            <span>{{operador.nombre}}&nbsp;{{operador.apellidoPaterno}}&nbsp;{{operador.apellidoMaterno}}</span>
-                                        </td>
-                                         <td>
-                                            <span>{{operador.telefono}}</span>
-                                        </td>
-                                       <td>
-                                           <a class="btn btn-info btn-icon">
-                                                <i class="ti-arrow-up" ng-click=""></i>
-                                            </a>
-                                        </td>   
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-
                 </div>
-                <div class="tab-pane" id="profile-v">
-                    
-
-                       <div ng-show="listUnidades.length > 0" class="col-xs-12">
-                        <table id="tblUnidades" >
-                            <thead>
-                                <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion" >
-                                        Marca
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="modelo">
-                                        Modelo
-                                    </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
-                                        Color
-                                    </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
-                                        Placas
-                                    </th>
-                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="tipo">
-                                        Tipo
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="capacidad">
-                                        capacidad
-                                    </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
-                                        metrosCubicos
-                                    </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
-                                    Seleccionar
-                                    </th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="unidad in listUnidades">
-                                    <td>
-                                        <span>{{unidad.descripcion}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.modelo}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.color}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.placas}}</span>
-                                    </td>
-                                  
-                                     <td>
-                                        <span>{{unidad.Tipo}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.capacidad}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.metrosCubicos}}</span>
-                                    </td>
-                                 <td>
-                                           <a class="btn btn-info btn-icon">
-                                                <i class="ti-arrow-up" ng-click=""></i>
-                                            </a>
-                                        </td>  
-                                  
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
-                    
-                </div>
-                
             </div>
         </div>
-
-
-
-
-
-
-
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                    
-                      </div>
-                    <!-- <div ng-show="listUnidades.length > 0" class="col-xs-12">
-                        <table id="tblUnidades" >
+    </div>
+</div>
+<div class="modal fade " id="modalOperador" tabindex="-1" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Selecciona Operador:</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <br>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div ng-show="listOperadores.length > 0" class="col-xs-12">
+                        <table id="tblOperadores">
                             <thead>
                                 <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion" >
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
+                                        Nombre
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
+                                        Telefono
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        Seleciona
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="operador in listOperadores">
+                                    <td>
+                                        <span>{{operador.nombre}}&nbsp;{{operador.apellidoPaterno}}&nbsp;{{operador.apellidoMaterno}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{operador.telefono}}</span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-icon">
+                                             <i class="ti-export" ng-click="seleccionaOpe(operador);"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="modalUnidad" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Selecciona Unidad:</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <br>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div ng-show="listUnidades.length > 0" class="col-xs-12">
+                        <table id="tblUnidades">
+                            <thead>
+                                <tr>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
                                         Marca
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="modelo">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="modelo">
                                         Modelo
                                     </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
                                         Color
                                     </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
                                         Placas
                                     </th>
-                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="tipo">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="tipo">
                                         Tipo
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="capacidad">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="capacidad">
                                         capacidad
                                     </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
                                         metrosCubicos
                                     </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
-                                    Editar
-                                    </th>
-                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
-                                      Eliminar
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        Seleccionar
                                     </th>
                                 </tr>
                             </thead>
@@ -384,41 +276,37 @@
                                     <td>
                                         <span>{{unidad.descripcion}}</span>
                                     </td>
-                                     <td>
+                                    <td>
                                         <span>{{unidad.modelo}}</span>
                                     </td>
-                                     <td>
+                                    <td>
                                         <span>{{unidad.color}}</span>
                                     </td>
-                                     <td>
+                                    <td>
                                         <span>{{unidad.placas}}</span>
                                     </td>
-                                  
-                                     <td>
+                                    <td>
                                         <span>{{unidad.Tipo}}</span>
                                     </td>
-                                     <td>
+                                    <td>
                                         <span>{{unidad.capacidad}}</span>
                                     </td>
-                                     <td>
+                                    <td>
                                         <span>{{unidad.metrosCubicos}}</span>
                                     </td>
-                                   <td>
-                                       <a class="btn btn-info btn-icon">
-                                            <i class="ti-pencil-alt" ng-click="modalUnidad(unidad,2);"></i>
-                                        </a>
-                                    </td>   
-                                    <td>                                 
-                                       <a class="btn btn-info btn-icon">
-                                            <i class="ti-eraser" ng-click="modalUnidad(unidad,3)"></i>
-                                        </a>
+                                    <td>
+                                        <a class="btn btn-info btn-icon">
+                                                <i class="ti-export" ng-click="seleccionaUni(unidad)"></i>
+                                            </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>-->
                     </div>
-                 </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
         </div>
     </div>
