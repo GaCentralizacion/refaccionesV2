@@ -7,13 +7,13 @@ registrationModule.factory('rutaRepository', function ($http) {
             return $http({
                 url: rutaURL + 'create/',
                 method: "POST",
-                data: operador,
+                data: ruta,
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        getRutas: function(idEmpresa,idSucursal) {
+        getRutas: function(idEmpresa) {
             return $http({
                 url: rutaURL + 'rutasShow/',
                 method: "GET",
@@ -27,7 +27,7 @@ registrationModule.factory('rutaRepository', function ($http) {
             return $http({
                 url: rutaURL + 'update/',
                 method: "POST",
-                data: operador,
+                data: ruta,
                 headers: {
                     'Content-Type': 'application/json'
                 }

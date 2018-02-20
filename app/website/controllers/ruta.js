@@ -15,27 +15,36 @@ var ruta = function(conf) {
     };
 };
 
-// pedido.prototype.get_busquedaPedido = function(req, res, next) {
-//     var self = this;
+ruta.prototype.post_create = function(req, res, next) {
+   var self = this;
 
+
+    var params = [
+        { name: 'nombreRuta', value: req.body.nombreRuta, type: self.model.types.STRING },
+        { name: 'descripcion', value:  req.body.descripcion, type: self.model.types.STRING },
+        { name: 'idResponsable', value: req.body.idResponsable, type: self.model.types.INT },
+        { name: 'idEmpresa', value:  req.body.idEmpresa, type: self.model.types.STRING },
+      	];
+
+    self.model.query('INS_RUTA_SP ', params, function(error, result) {
+        
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+ruta.prototype.get_rutasShow = function(req, res, next) {
+   var self = this;
+
+    var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
  
-
-//     var params = [
-//         { name: 'idUsuario', value: req.query.tipo, type: self.model.types.INT },
-//         { name: 'estatus', value: 1, type: self.model.types.INT },
-//         { name: 'idEmpresa', value: req.query.empresa, type: self.model.types.INT },
-//         { name: 'idSucursal', value: req.query.sucursal, type: self.model.types.INT },
-//         { name: 'fechaInicio', value: req.query.fechaInicio, type: self.model.types.STRING },
-//         { name: 'fechaFin', value: req.query.fechaFin, type: self.model.types.STRING }
-//     ];
-//      console.log(params);
-//     self.model.query('SEL_PEDIDO_USUARIO_SP', params, function(error, result) {
-//         self.view.expositor(res, {
-//             error: error,
-//             result: result
-//         });
-//     });
-// }
-
+    self.model.query('SEL_RUTAS_EMRPESA_SP ', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 module.exports = ruta;

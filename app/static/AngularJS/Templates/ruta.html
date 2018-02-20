@@ -1,3 +1,173 @@
+<style type="text/css">
+.recuadro {
+    padding-bottom: 10px;
+    border: 1px solid #e9e9e9;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.encab {
+    font-weight: 700;
+    color: #42a5f5;
+
+    border-top-left-radius: 7px;
+
+    border-top-right-radius: 7px;
+    padding-top: 8px;
+}
+
+
+
+
+
+.wizard {
+    margin: 20px auto;
+    background: #fff;
+}
+
+.wizard .nav-tabs {
+    position: relative;
+    /*  margin: 40px auto;*/
+    margin-bottom: 0;
+    border-bottom-color: #e0e0e0;
+}
+
+.wizard>div.wizard-inner {
+    position: relative;
+}
+
+.connecting-line {
+    height: 2px;
+    background: #e0e0e0;
+    position: absolute;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.wizard .nav-tabs>li.active>a,
+.wizard .nav-tabs>li.active>a:hover,
+.wizard .nav-tabs>li.active>a:focus {
+    color: #555555;
+    cursor: default;
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+span.round-tab {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: 100px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 25px;
+}
+
+span.round-tab i {
+    color: #555555;
+}
+
+.wizard li.active span.round-tab {
+    background: #fff;
+    border: 2px solid #5bc0de;
+}
+
+.wizard li.active span.round-tab i {
+    color: #5bc0de;
+}
+
+span.round-tab:hover {
+    color: #333;
+    border: 2px solid #333;
+}
+
+.wizard .nav-tabs>li {
+    width: 20%;
+}
+
+.wizard li:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #5bc0de;
+    transition: 0.1s ease-in-out;
+}
+
+.wizard li.active:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 1;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #5bc0de;
+}
+
+.wizard .nav-tabs>li a {
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    border-radius: 100%;
+    padding: 0;
+}
+
+.wizard .nav-tabs>li a:hover {
+    background: transparent;
+}
+
+.wizard .tab-pane {
+    position: relative;
+    padding-top: 20px;
+}
+
+.wizard h3 {
+    margin-top: 0;
+}
+
+.titu{text-align: center;
+    padding-bottom: 20px;}
+
+@media( max-width: 585px) {
+
+    .wizard {
+        width: 90%;
+        height: auto !important;
+    }
+
+    span.round-tab {
+        font-size: 16px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard .nav-tabs>li a {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 35%;
+    }
+}
+</style>
 <div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
@@ -9,7 +179,7 @@
         <div class="col-sm-10 col-sm-push-1 mar-top ">
             <div class="panel ">
                 <div class="panel-body pad-top mar-top">
-                    <div class="col-sm-6  col-xs-12">
+         <div class="col-sm-6  col-xs-12">
                         <div class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-3 ">Empresa:</label>
@@ -19,164 +189,123 @@
                             </div>
                         </div>
                     </div>
-                    <style type="text/css">
-                    .recuadro {
-                      
-                        border: 1px solid #e9e9e9;
-                        border-radius: 10px;
-                    }
-                    .encab{font-weight: 700;
-    color: white;
-    background-color: #7B8599;
-    border-top-left-radius: 7px;
-    height: 35px;
-    border-top-right-radius: 7px;
-    padding-top: 8px;}
-                    </style>
-                    <div class="col-xs-12  mar-top">
-                        <div class="row mar-top recuadro">
-                            <div class="col-sm-12 encab" > Datos de la Ruta </div>
-                            <div class="col-sm-3 mar-top ">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nombre" ng-model="nombre" maxlength="64">
-                                    <small class="help-block"></small>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 mar-top">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Descripcion" ng-model="descripcion" maxlength="64">
-                                    <small class="help-block"></small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mar-top recuadro">
-
-                         <div class="col-sm-12 encab" > Datos del Operador : </div>
-
-
-                          
-                            <div class="col-sm-10" ng-show="vero">
-                                <div class="col-sm-6 mar-top">
-                                    <div class="form-group">
-                                        <span>Nombre: &nbsp;{{nombreOperador}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Telefono: &nbsp;{{telefonoOperador}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                              <div class="col-sm-10" ng-hide="vero" style="font-size: 45px;color:  #e9e9e9;">
-                                 Sin Elegir
-                                  </div>
-
-                              <div class="col-sm-2 mar-top">
-                                <div class="form-group">
+                    <div class="col-sm-2  col-xs-12">&nbsp;</div>
+                    <div class="col-sm-4  col-xs-12" ng-hide="newRuta">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-8">
                                     <div class="col-sm-11 control-label">
-                                        <a class="form-control btn btn-block btn-primary" ng-click="getOperadores();" style="font-size: 11px">{{txto}}</a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="row mar-top recuadro" >
-                        <div class="col-sm-12 encab" > Datos de la Unidad : </div>
-                           
-                            <div class="col-sm-10"  ng-show="veru">
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Marca: &nbsp; {{descripcionUni}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Modelo: &nbsp; {{modelo}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Color:  &nbsp;{{color}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Placas: &nbsp; {{placas}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Tipo:  &nbsp;{{Tipo}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>Capacidad: &nbsp; {{capacidad}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mar-top">
-                                    <div class="form-group">
-                                        <span>m3: &nbsp; {{metrosCubicos}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-10" ng-hide="veru" style="font-size: 45px;color:  #e9e9e9;">
-                                Sin Elegir
-                                  </div>
-
-
-                             <div class="col-sm-2  mar-top">
-                                <div class="form-group">
-                                    <div class="col-sm-11 control-label">
-                                        <a class="form-control btn btn-block btn-primary" ng-click="getUnidades();" style="font-size: 11px">{{txtu}} </a>
+                                        <a class="form-control btn btn-block btn-primary" ng-click="changePanel();" style="font-size: 11px">Nueva Ruta</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mar-top  ">
-                            <div class="col-sm-3 float-right" style="float:  right;">
-                                <div class="col-sm-11 control-label">
-                                    <a class="form-control btn btn-block btn-primary" ng-click="">Guardar Ruta </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="row">
-                            <div class="col-sm-12  mar-top">
-                                <table id="tblOperadoresUnidadesRutas">
-                                    <thead>
-                                        <tr>
-                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
-                                                Operador
-                                            </th>
-                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
-                                                Unidad
-                                            </th>
-                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
-                                                Regresar
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="elemento in elementos">
-                                            <td>
-                                                <span>{{elemento.operador}}</span>
-                                            </td>
-                                            <td>
-                                                <span>{{elemento.unidad}}</span>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info btn-icon">
-                                                <i class="ti-arrow-down" ng-click=""></i>
+                    </div> 
+
+
+
+
+
+
+                    <div class="row  col-sm-12  recuadro" ng-show="gridRutas" style="margin-top: 50PX">
+                        <div class="col-sm-12 encab">Busqueda de Rutas </div>
+                        <div class="col-sm-12  mar-top">
+                            <table id="tblOperadoresUnidadesRutas">
+                                <thead>
+                                    <tr>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
+                                            Ruta
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
+                                            Operador
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
+                                            Unidad
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
+                                            Situacion
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                            Editar
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                            Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="elemento in OperadoresUnidadesRutas">
+                                        <td>
+                                            <span>{{elemento.ruta}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{elemento.operador}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{elemento.unidad}}</span>
+                                        </td>
+                                        <td>
+                                            <div class="label label-table" ng-style="{ 'background-color':'{{elemento.colorsit}}' }">{{elemento.situacion}}</div>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-success  btn-icon">
+                                                <i class="fa fa-pencil" ng-click="editar(elemento)"></i>
                                             </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> -->
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-icon">
+                                                <i class="fa fa-trash-o" ng-click=""></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--mODALES-->
+<div class="modal fade " id="modalDirecc" tabindex="-1" role="dialog">
+    <div class="modal-dialog   modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Selecciona Direcciones para agregar:</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <br>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div ng-show="direcciones.length > 0" class="col-xs-12">
+                        <table id="tblDirecc">
+                            <thead>
+                                <tr>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
+                                        Direccion
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        Seleciona
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="direccion in direcciones">
+                                    <td>
+                                        <span>{{direccion.RTD_CALLE1}}&nbsp;{{direccion.RTD_NUMEXTER}}&nbsp;{{direccion.RTD_COLONIA}}&nbsp;{{direccion.RTD_DELEGAC}}&nbsp;{{direccion.RTD_CODPOS}}&nbsp;{{direccion.RTD_CIUDAD}}</span>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" ng-init="(direccion.seleccionado == 1)?direccion.seleccionada=true:direccion.seleccionada=false" ng-model="direccion.seleccionada" aria-label="Checkbox for following text input" ng-checked="{{ direccion.seleccionada }}">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="direccionPara(direccion);">Aceptar</button>
             </div>
         </div>
     </div>
@@ -311,3 +440,385 @@
         </div>
     </div>
 </div>
+<!-- aqui -->
+<div class="modal fade " id="modal-panelRuta" tabindex="-1" role="dialog" style="overflow: auto;" data-backdrop="static" data-keyboard="false" >
+    <div class="modal-dialog   modal-lg">
+        <div class="modal-content">
+            <div class="modal-header " style="overflow: auto;" ng-hide="verHeader">
+        <!--         <div class="col-sm-4"> Nombre: &nbsp; {{nombreRuta}} </div>
+                <div class="col-sm-4" ng-show="verTot">Total Direcciones: &nbsp; {{lengthDirSell}}</div>
+                <div class="col-sm-12">Descripcion: &nbsp; {{descripcion}}</div>
+                <div class="col-sm-12">Operador: &nbsp; {{nombreOperador}}</div>
+                <div class="col-sm-12">Unidad: &nbsp; {{descripcionUni}} &nbsp; {{modelo}}</div> -->
+                <button type="button" class="close" ng-click="salir()">&times;</button>
+            </div>
+        
+            <div class="modal-body" style="margin-top: 0px;overflow: hidden; ">
+                <div class="col-sm-12">
+                    <div class="">
+                        <div class="row">
+                            <section>
+                                <div class="wizard" style="margin-top: 0px ">
+                                    <div class="wizard-inner">
+                                        <div class="connecting-line"></div>
+                                        <ul class="nav nav-tabs" role="tablist" style="margin-top: 0px !important">
+                                            <li role="presentation" class="active" >
+                                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Descripcion">
+                                                    <span class="round-tab">
+                                                        <i class="glyphicon glyphicon-road"></i>
+                                                    </span>
+                                                </a>
+                                             <div class="titu"> <span >Descripción</span>  </div>
+                                            </li>
+                                            <li role="presentation" class="disabled">
+                                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Direcciones">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-home"></i>
+
+                                                </span>
+                                            </a>
+                                            <div class="titu">  <span >Direcciones</span>   </div>
+                                            </li>
+                                            <li role="presentation" class="disabled">
+                                                <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Operador">
+                                                    <span class="round-tab">
+                                                        <i class=" glyphicon glyphicon-user"></i>
+                                                    </span>
+                                                </a>
+                                               <div class="titu">   <span>Operador</span>  </div>
+                                            </li>
+                                            <li role="presentation" class="disabled">
+                                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Unidad">
+                                                    <span class="round-tab">
+                                                        <i class=" ti-truck"></i>
+                                                    </span>
+                                                </a>
+                                                 <div class="titu">   <span>Unidad</span>  </div>
+                                            </li>
+                                             <li role="presentation" class="disabled">
+                                                <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="Completado">
+                                                    <span class="round-tab">
+                                                        <i class="glyphicon glyphicon-ok"></i>
+                                                    </span>
+                                                </a>
+                                                  <div class="titu">  <span>Finalizar</span> </div> 
+                                            </li>
+                                          <!--   <li role="presentation" class="disabled">
+                                                <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Completado">
+                                                    <span class="round-tab">
+                                                        <i class="glyphicon glyphicon-ok"></i>
+                                                    </span>
+                                                </a>
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                    <div style="background-color: #5bc0de;overflow: hidden;height: 15px;"></div>
+                                    <form role="form">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" role="tabpanel" id="step1">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <!--    <label >Nombre:</label> -->
+                                                        <div>
+                                                            <input ng-disabled="bloquea" ng-model="nombreRuta" placeholder="Nombre" id="nombre" type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <!--     <label >Apellido Paterno:</label> -->
+                                                        <div>
+                                                            <input ng-disabled="bloquea" ng-model="descripcion" placeholder="Descripción" id="apPaterno" class="form-control" rows="5">
+                                                        </div>
+                                                    </div>
+                                                      <div class="form-group">
+                                                        <!--     <label >Apellido Paterno:</label> -->
+                                                        <div>
+                                                            <select ng-change="cambioOperador()" id="selOperadores" class="form-control" ng-options="operadores as operador.nombre for operador in operadores track by operador.idOperador" ng-model="operadorActual"></select>
+                                                        </div>
+                                                    </div>
+                                                   <div class="form-group">
+                                                        <div>
+                                                            <select ng-change="cambioOperador()" id="selUnidades" class="form-control" ng-options="unidades as unidad.nomCompleto for unidad in unidades track by unidad.idUnidad" ng-model="unidadActual"></select>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <ul class="list-inline pull-right">
+                                                        <li>
+                                                            <button type="button" class="btn btn-primary next-step" ng-click="panelDirecciones()">Siguiente</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="step2" style="padding-top: 0px">
+                                                <div class="row mar-top recuadro" ng-show="addDireccion">
+                                                    <div class="col-sm-12 encab"> Direcciones </div>
+                                                    <table id="tbldireccSel" ng-show="verdir" class="mar-top">
+                                                        <thead>
+                                                            <tr>
+                                                                <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
+                                                                    Direccion
+                                                                </th>
+                                                                <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
+                                                                    # Pedidos
+                                                                </th>
+                                                                <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                                                    Eliminar
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="dir in dirForadd">
+                                                                <td>
+                                                                    <span>
+                                                                    &nbsp; {{dir.RTD_CALLE1}}
+                                                                    &nbsp; {{dir.RTD_NUMEXTER}}
+                                                                    &nbsp; Col. {{dir.RTD_COLONIA}}
+                                                                    <br>
+                                                                    &nbsp; Delg. {{dir.RTD_DELEGAC}}
+                                                                    &nbsp; Cp. {{dir.RTD_CODPOS}}
+                                                                    &nbsp; {{dir.RTD_CIUDAD}}
+                                                                    </td>
+                                                                    <td>
+                                                                   <span>{{dir.RTD_NUMEXTER}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="btn btn-danger btn-icon">
+                                                                         <i class="fa fa-trash-o " ng-click="quitar(dir)"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="col-sm-9" ng-hide="verdir" style="font-size: 45px;color:  #e9e9e9;">
+                                                        &nbsp; Sin Elegir
+                                                    </div>
+                                                    <div class="col-sm-3 float-right mar-top" style="float:  right;">
+                                                        <div class="col-sm-11 control-label mar-top">
+                                                            <a class="form-control btn btn-block btn-primary" ng-click="getDirecciones();" style="font-size: 11px">Agregar Direccion</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline pull-right">
+                                                    <li>
+                                                        <button type="button" class="btn btn-default prev-step">Anterior</button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="btn btn-primary next-step" ng-click="panelOperadores()">Siguiente</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="step3">
+                                                <div class="row mar-top recuadro" ng-show="addOperador">
+                                                    <div class="col-sm-12 encab"> Datos del Operador : </div>
+                                                    <div class="col-sm-9" ng-show="vero">
+                                                        <div class="col-sm-6 mar-top">
+                                                            <div class="form-group">
+                                                                <span>Nombre: &nbsp;{{nombreOperador}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 mar-top">
+                                                            <div class="form-group">
+                                                                <span>Telefono: &nbsp;{{telefonoOperador}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9" ng-hide="vero" style="font-size: 45px;color:  #e9e9e9;">
+                                                        &nbsp; Sin Elegir
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-11 control-label">
+                                                                <a class="form-control btn btn-block btn-primary" ng-click="getOperadores();" style="font-size: 11px">{{txto}}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline pull-right">
+                                                    <li>
+                                                        <button type="button" class="btn btn-default prev-step">Anterior</button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="btn btn-primary next-step" ng-click="panelUnidades()">Siguiente</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" id="step4">
+                                                <div class="row mar-top recuadro" ng-show="addUnidad">
+                                                <div class="col-sm-12 encab"> Datos de la Unidad : </div>
+                                                <div class="col-sm-9" ng-show="veru">
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Marca: &nbsp; {{descripcionUni}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Modelo: &nbsp; {{modelo}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Color:  &nbsp;{{color}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Placas: &nbsp; {{placas}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Tipo:  &nbsp;{{Tipo}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Capacidad: &nbsp; {{capacidad}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 mar-top">
+                                                        <div class="form-group">
+                                                            <span>m3: &nbsp; {{metrosCubicos}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9" ng-hide="veru" style="font-size: 45px;color:  #e9e9e9;">
+                                                    &nbsp; Sin Elegir
+                                                </div>
+                                                <div class="col-sm-3  mar-top">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-11 control-label">
+                                                            <a class="form-control btn btn-block btn-primary" ng-click="getUnidades();" style="font-size: 11px">{{txtu}} </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           <!--  <ul class="list-inline pull-right">
+                                                <li>
+                                                    <button type="button" class="btn btn-default prev-step">Anterior</button>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-default next-step">Salir</button>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-primary btn-info-full next-step" ng-click="preguntaSave()">Guardar</button>
+                                                </li>
+                                            </ul> -->
+                                             <ul class="list-inline pull-right">
+                                                    <li>
+                                                        <button type="button" class="btn btn-default prev-step">Anterior</button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="btn btn-primary next-step" ng-click="ultimoPaso()">Siguiente</button>
+                                                    </li>
+                                                </ul>
+                                        </div>
+                                           <div class="tab-pane" role="tabpanel" id="step5">
+                                                <div class="row mar-top recuadro" ng-show="addUnidad">
+                                                <div class="col-sm-12 encab" style="font-size: 35px;text-align: center;"> Resumen de la Ruta </div>
+                                                <div class="col-sm-10" ng-show="veru">
+                                                    <div class="col-sm-12 mar-top">
+
+                                                        <div class="form-group">
+                                                            <span>Nombre: &nbsp; {{nombreRuta}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mar-top">
+                                                        <div class="form-group">
+                                                            <span> Operador: &nbsp; {{nombreOperador}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mar-top">
+                                                        <div class="form-group">
+                                                            <span>Unidad: &nbsp; {{descripcionUni}}  &nbsp;&nbsp; {{modelo}} </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mar-top">
+                                                        <div class="form-group">
+                                                          Total Direcciones de esta ruta: &nbsp; {{lengthDirSell}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              
+                                            </div>
+                                             <ul class="list-inline pull-right">
+                                                <li>
+                                                    <button type="button" class="btn btn-default prev-step" ng-click="atrasSave()">Anterior</button>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-default next-step"  ng-click="salir()">Salir</button>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-primary btn-info-full next-step" ng-click="preguntaSave()">Guardar</button>
+                                                </li>
+                                            </ul> 
+                                         
+                                        </div>
+                                     <!--    <div class="tab-pane" role="tabpanel" id="complete">
+                                            <h3>Complete</h3>
+                                            <p>You have successfully completed all steps.</p>
+                                        </div>
+                                        <div class="clearfix"></div> -->
+                                </div>
+                                </form>
+                        </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            .
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    //Initialize tooltips
+    $('.nav-tabs > li a[title]').tooltip();
+
+    //Wizard
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+
+        var $target = $(e.target);
+
+        if ($target.parent().hasClass('disabled')) {
+            return false;
+        }
+    });
+
+    $(".next-step").click(function(e) {
+
+        var $active = $('.wizard .nav-tabs li.active');
+        $active.next().removeClass('disabled');
+        nextTab($active);
+
+    });
+    $(".prev-step").click(function(e) {
+
+        var $active = $('.wizard .nav-tabs li.active');
+        prevTab($active);
+
+    });
+});
+
+function nextTab(elem) {
+    $(elem).next().find('a[data-toggle="tab"]').click();
+}
+
+function prevTab(elem) {
+    $(elem).prev().find('a[data-toggle="tab"]').click();
+}
+
+$('#panelRuta').modal({
+    backdrop: 'static',
+    keyboard: false
+});
+
+</script>
+
+
+
+   
