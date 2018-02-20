@@ -13,7 +13,7 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-         postCreate: function(direccion) {
+        postCreate: function(direccion) {
             return $http({
                 url: direccionURL + 'create/',
                 method: "POST",
@@ -34,7 +34,7 @@ registrationModule.factory('direccionRepository', function($http) {
             });
         },
         getVendedor: function(dato) {
-     
+
             return $http({
                 url: direccionURL + 'vendedor/',
                 method: "GET",
@@ -44,8 +44,8 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-         getEstado: function(dato) {
-                   console.log(dato);
+        getEstado: function(dato) {
+            console.log(dato);
             return $http({
                 url: direccionURL + 'estado/',
                 method: "GET",
@@ -55,7 +55,7 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-         getMunicipio: function(dato) {
+        getMunicipio: function(dato) {
             return $http({
                 url: direccionURL + 'municipio/',
                 method: "GET",
@@ -65,7 +65,7 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-         getCiudad: function(dato) {
+        getCiudad: function(dato) {
             return $http({
                 url: direccionURL + 'ciudad/',
                 method: "GET",
@@ -75,7 +75,7 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-          getColonia: function(dato) {
+        getColonia: function(dato) {
             return $http({
                 url: direccionURL + 'colonia/',
                 method: "GET",
@@ -85,7 +85,7 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-          getCp: function(dato) {
+        getCp: function(dato) {
             return $http({
                 url: direccionURL + 'cp/',
                 method: "GET",
@@ -95,5 +95,15 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
+        getInformacionCp: function(dato) {
+            return $http({
+                url: direccionURL + 'informacionCp/',
+                method: "GET",
+                params: dato,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 });

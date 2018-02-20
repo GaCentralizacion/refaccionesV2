@@ -197,7 +197,11 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
 
     $scope.detallePedido = function(pedido) {
 
-
+        $scope.estatus = pedido.estatus;
+        $scope.color = pedido.color;
+        $scope.colorEstatus = {
+            "background-color": pedido.color
+        }
         pedidoRepository.busquedaPedidoUsuarioDetalle(pedido.idPedidoRef, $scope.Usuario.idUsuario).then(function(result) {
             console.log(result.data);
 
@@ -213,7 +217,7 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
                     i++;
                 });
 
-                $scope.idpedido = pedido.idPedidoRef;
+                $scope.idpedido = pedido.folioPedido;
                 console.log($scope.detalles.length);
 
                 $scope.totalPedido = 0;
@@ -258,13 +262,23 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
         //     { PTS_IDPARTE: 34444555, PTS_DESPARTE: 'Bujia', PTS_PCOLISTA: 100, prd_cantidadsolicitada: 4, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0058, totalItem: 400 },
         // ];
 
-        // rptStructure.empresa =[{ 'idpedido':$stateParams.id,'FECHAPEDIDO':$scope.empresa.FECHAPEDIDO,'NOMBRE':$scope.empresa.NOMBRE,
-        //                          'DIRECCION':$scope.empresa.DIRECCION,'name':$scope.user.name,'TELEFONO': $scope.empresa.TELEFONO,
-        //                          'DIRCLIENTE':$scope.empresa.DIRCLIENTE,'CORREOCLIENTE':$scope.empresa.CORREOCLIENTE,
-        //                          'TELCLIENTE': $scope.empresa.TELCLIENTE,'subtotal': $scope.subtotal,'iva':($scope.subtotal * .16),
-        //                          'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.colorEstatus,'estatus':$scope.estatus}];
+        rptStructure.empresa = [{
+            'idpedido': $scope.idpedido,
+            'FECHAPEDIDO': $scope.empresa.FECHAPEDIDO,
+            'NOMBRE': $scope.empresa.NOMBRE,
+            'DIRECCION': $scope.empresa.DIRECCION,
+            'name': $scope.Usuario.nombreUsuario,
+            'TELEFONO': $scope.empresa.TELEFONO,
+            'DIRCLIENTE': $scope.empresa.DIRCLIENTE,
+            'CORREOCLIENTE': $scope.empresa.CORREOCLIENTE,
+            'TELCLIENTE': $scope.empresa.TELCLIENTE,
+            'subtotal': $scope.subtotal,
+            'iva': ($scope.subtotal * .16),
+            'total': $scope.totalPedido + ($scope.subtotal * .16),
+            'colorEstatus': $scope.color,
+            'estatus': $scope.estatus
+        }];
 
-        rptStructure.empresa = $scope.empresa;
 
         // rptStructure.empresa = [{
         //     'idpedido': 1,

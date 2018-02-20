@@ -1,3 +1,4 @@
+<link href="css/pedido.css" rel="stylesheet">
 <div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
@@ -129,13 +130,13 @@
 <div class="modal fade modal-pedido" id="modalDetalle" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header" class="bg bg-mint" ng-style="{ 'background-color':'#003744' }">
+            <div class="modal-header" class="bg bg-mint" ng-style="colorEstatus">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 style="text-align:center;color:#fff">PEDIDO {{estatus}} </h3>
-                <div class="glyphicon glyphicon-print" ng-click="imprimir()" title="Imprimir" style="padding-left: 96%; width: 135px; font-size: 25px; cursor: pointer;"> </div>
+                <div class="glyphicon glyphicon-print" ng-click="imprimir()" title="Imprimir" style="padding-left: 96%; width: 135px; font-size: 25px; cursor: pointer;color:#fff"> </div>
                 <!--a href="#" onClick="window.open('/invoice', '_blank')">OOOO</a-->
             </div>
-            <div ng-style="{ 'background-color':'#003744' }">
+            <div ng-style="colorEstatus">
                 <!--a href="{{'/invoice/'+detalle.idPedidoBPRO}}" class="btn btn-info btn-icon"><i class="fa fa-search">Print Invoice</i></a>
                     <a href="invoice_print.html" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a-->
             </div>
@@ -150,7 +151,7 @@
                             <td>
                             </td>
                             <td>
-                                <strong>Pedido: </strong>AA-00 - <strong>Solicitado:</strong> {{empresa.FECHAPEDIDO}}
+                                <strong>Pedido: </strong>{{idpedido}} - <strong>Solicitado:</strong> {{empresa.FECHAPEDIDO}}
                             </td>
                         </tr>
                         <tr>

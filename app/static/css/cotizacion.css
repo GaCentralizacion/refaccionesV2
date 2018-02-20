@@ -89,6 +89,8 @@
 }
 
 
+
+
 /*cotizaciones modal*/
 
 .modal-header>span {
@@ -127,6 +129,8 @@
 .wz-heading.wz-w-label .progress {
     margin-top: -4.5px;
 }
+
+
 
 
 
@@ -217,6 +221,8 @@
 }
 
 
+
+
 /*Entrega*/
 
 .map-container {
@@ -231,6 +237,8 @@
 .map-container>div>div {
     height: 100%;
 }
+
+
 
 
 /*Confirmacion*/
@@ -323,6 +331,8 @@
 }
 
 
+
+
 /* {margin: 0; padding: 0;}*/
 
 #containerMsg {
@@ -351,6 +361,8 @@
 }
 
 
+
+
 /*background: #ECF2F6;*/
 
 #contenedor3 {
@@ -376,8 +388,14 @@
 }
 
 
+
+
 /**/
 
 .bg-gray {
     background-color: #e6eaed;
+}
+
+.close {
+    font-size: 30px !important;
 }
