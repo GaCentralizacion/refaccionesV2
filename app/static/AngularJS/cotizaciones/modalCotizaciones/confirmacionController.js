@@ -142,8 +142,8 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
                     idUsuario: $scope.Usuario.idUsuario,
                     idCotizacion: idCotizacion,
                     idPersona: $scope.direccionActual.RTD_IDPERSONA,
-                    concecutivo: $scope.direccionActual.RTD_CONSEC,
-                    entrega: $scope.direccionActual.RTD_RTENTREGA,
+                    concecutivo: $scope.direccionActual.idDireccion,
+                    entrega: 0,
                     operacion: op,
                     idPedido: $scope.idPedidoBP
                 }

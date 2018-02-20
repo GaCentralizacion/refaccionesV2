@@ -25,8 +25,8 @@
     <div class="panel-heading" style="background-color: #1E335B;">
         <div class="panel-control">
             <ul class="nav nav-tabs">
-                <li ng-click="verTabs(1)" class="{{actD}}" style="cursor: pointer;"><a >Alta de direcciones</a></li>
-                <li ng-click="verTabs(2)" class="{{actP}}" style="cursor: pointer;"><a >Direcciones pendientes</a></li>
+                <li ng-click="verTabs(1)" class="{{actD}}" style="cursor: pointer;"><a>Alta de direcciones</a></li>
+                <li ng-click="verTabs(2)" class="{{actP}}" style="cursor: pointer;"><a>Direcciones pendientes</a></li>
             </ul>
         </div>
         <h3 class="panel-title">DIRECCIONES</h3>
@@ -71,7 +71,7 @@
                                         <!--Ciudad-->
                                         <div class="form-group">
                                             <label class="control-label">Ciudad</label>
-                                            <select id="selCiudad" ng-change="cambioCiudad()" class="form-control" ng-options="cid as cid.d_ciudad for cid in Ciudades" ng-model="ciudadActual"></select>
+                                            <select id="selCiudad" ng-change="cambioCiudad()" class="form-control" ng-options="ciudad as ciudad.d_ciudad for ciudad in Ciudades track by ciudad.idCiudad" ng-model="ciudadActual"></select>
                                             <small class="help-block"></small>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                         <!--Municipio-->
                                         <div class="form-group">
                                             <label class="control-label">Municipio</label>
-                                            <select id="selMunicipio" ng-change="cambioMunicipio()" class="form-control" ng-options="mun as mun.municipio for mun in Municipios" ng-model="municipioActual"></select>
+                                            <select id="selMunicipio" ng-change="cambioMunicipio()" class="form-control" ng-options="municipio as municipio.municipio for municipio in Municipios track by municipio.idMunicipio" ng-model="municipioActual"></select>
                                             <small class="help-block"></small>
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                                         <!--Colonia-->
                                         <div class="form-group">
                                             <label class="control-label">Colonia:</label>
-                                            <select id="selColonia" ng-change="cambioColonia()" class="form-control" ng-options="col as col.colonia for col in Colonias" ng-model="coloniaActual"></select>
+                                            <select id="selColonia" ng-change="cambioColonia()" class="form-control" ng-options="col as col.colonia for col in Colonias track by col.idColonia" ng-model="coloniaActual"></select>
                                             <small class="help-block"></small>
                                         </div>
                                     </div>
@@ -308,7 +308,7 @@
             <div ng-hide="verTabP">
                 <!--   -->
                 <div style="margin-top: 30px; padding-left: 10%; width: 90%;" class=" col-xs-12">
-                    <table  id="tblDireccionFiltros" style="width: 100%;">
+                    <table id="tblDireccionFiltros" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="display: none;">
@@ -329,7 +329,7 @@
                                 <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
                                     Calle
                                 </th>
-                               <th style="width: 5%;text-align: center;">
+                                <th style="width: 5%;text-align: center;">
                                 </th>
                             </tr>
                         </thead>
@@ -353,17 +353,17 @@
                                 <td align="right">
                                     {{direccion.RTD_CALLE1}}
                                 </td>
-                                 <td style="width: 5%;text-align: center;">
+                                <td style="width: 5%;text-align: center;">
                                     <!--a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a-->
                                     <!--button ng-click="borrarDireccion(direccion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button-->
-                                  <!--   <a href="{{'/direccion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-search"></i></a> -->
-                                        <a class="btn btn-info btn-icon">
+                                    <!--   <a href="{{'/direccion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-search"></i></a> -->
+                                    <a class="btn btn-info btn-icon">
                                         <i class="ti-search" ng-click="verDetalleDireccion(direccion)"></i></a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -371,13 +371,13 @@
 <div id="modal-direccion-container" ui-view></div>
 <div class="modal fade modal-direccion" tabindex="-1" role="dialog" id="modal-direccion">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">            
+        <div class="modal-content">
             <div id="imprimeme">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="panel">                                
-                                <div class="panel-body">                                   
+                            <div class="panel">
+                                <div class="panel-body">
                                     <div class="row">
                                         <div class="panel-heading" style="background-color: #7B8599; height: 40px; padding: 0px;">
                                             <h4 class="panel-title" style="color: #FFFFFF;">Datos de domicilio</h4>
@@ -613,10 +613,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                
                                             </div>
                                             <div class="col-sm-4">
-                                                
                                             </div>
                                         </div>
                                         <div class="row">
@@ -650,5 +648,3 @@
         </div>
     </div>
 </div>
-
-

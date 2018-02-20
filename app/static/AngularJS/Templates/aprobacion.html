@@ -23,16 +23,16 @@
                                     <div class="col-sm-8">
                                         <select id="selSucursales" ng-change="cambioSucursal()" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                     <div style="margin-top: 30px;" ng-show="listaDirecciones.length > 0" class=" col-xs-12">
-                        <table  id="tblDireccionFiltros" style="width: 100%;">
+                        <table id="tblDireccionFiltros" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th style="display: none;">
-                                        idDireccion  
+                                        idDireccion
                                     </th>
                                     <th st-class-ascent="fa fa-sort-asc" style="width: 20%;" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
                                         Estado
@@ -74,9 +74,9 @@
                                         {{direccion.RTD_CALLE1}}
                                     </td>
                                     <td width="5%">
-                                      <!--   <a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a> -->
-                                       <a class="btn btn-info btn-icon">
-                                        <i class="ti-pencil" ng-click="verDetalleDireccion(direccion)"></i></a>
+                                        <!--   <a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a> -->
+                                        <a class="btn btn-info btn-icon" ng-click="verDetalleDireccion(direccion)">
+                                        <i class="ti-pencil"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -88,8 +88,7 @@
     </div>
 </div>
 <div id="modal-aprobacion-container" ui-view></div>
-
-<div class="modal fade modal-aprobacion" tabindex="-1" role="dialog"  id="modalAprobacion" ng-controller="aprobacionController">
+<div class="modal fade modal-aprobacion" tabindex="-1" role="dialog" id="modalAprobacion" ng-controller="aprobacionController">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <!--div class="modal-header">
@@ -363,20 +362,20 @@
                                                     <input type="email" class="form-control" ng-model="direccion.RTD_EMAILGENERAL" readonly="true">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
+                                            <!-- <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Ruta de entrega:</label>
                                                     <select id="selRutas" class="form-control" ng-options="ruta as ruta.RUT_NOMBRERT for ruta in rutas track by ruta.RUT_IDRUTA" ng-model="rutaActual" name="selRutas" required></select>
                                                     <span ng-show="mainForm.selRutas.$error.required"></span>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-4">
+                                            </div> -->
+                                            <!-- <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label class="control-label">Vendedor:</label>
                                                     <select id="selVendedor" class="form-control" ng-options="vendedor as vendedor.nombre for vendedor in vendedores track by vendedor.per_idpersona" ng-model="vendedorActual" required></select>
                                                     <span ng-show="mainForm.selVendedor.$error.required"></span>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="row">
                                         </div>

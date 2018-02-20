@@ -19,7 +19,7 @@ pedido.prototype.get_busquedaPedido = function(req, res, next) {
     var self = this;
 
     var params = [
-        { name: 'idUsuario', value: req.query.tipo, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.query.usuario, type: self.model.types.INT },
         { name: 'estatus', value: 1, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.query.empresa, type: self.model.types.INT },
         { name: 'idSucursal', value: req.query.sucursal, type: self.model.types.INT },
@@ -42,10 +42,12 @@ pedido.prototype.get_busquedaPedidoUsuarioDEtalle = function(req, res, next) {
         { name: 'idUsuario', value: req.query.usuario, type: self.model.types.INT }
     ];
      console.log(params);
-    self.model.query('SEL_PEDIDO_USUARIODETALLE_SP', params, function(error, result) {
+    self.model.queryAll('SEL_PEDIDO_USUARIODETALLE_SP', params, function(error, result) {
+        result[0][0].data = result[1]
+        console.log(result[0][0])
         self.view.expositor(res, {
             error: error,
-            result: result
+            result: result[0][0]
         });
     });
 },

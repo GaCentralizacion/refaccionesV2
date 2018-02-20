@@ -1,0 +1,145 @@
+/*Estilos pedido general*/
+
+#tabla-pedido td {
+    line-height: 32px;
+}
+
+#tabla-pedido td:last-child {
+    line-height: 0px;
+}
+
+
+
+
+
+/*Estilo modal */
+
+#demo-step-tab3 {
+    padding: 0 15px;
+}
+
+
+#tableTotales {
+    display: table;
+    /*border: 2px solid #000;    */
+    text-align: right;
+    margin: 0 auto;
+    margin-right: 5px;
+    width: 100%;
+}
+
+#rowTotales {
+    display: table-row;
+}
+
+#columna1,
+#columna2 {
+    display: table-cell;
+    /*border: 1px solid #000;*/
+    vertical-align: middle;
+    /*padding: 0px;*/
+    padding-left: 3px;
+    color: black;
+    text-align: right;
+}
+
+#colBackOrder {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 3px;
+    color: #F50B07;
+    text-align: right;
+}
+
+#colTotalMix {
+    /*display: table-cell;*/
+    vertical-align: middle;
+    padding-left: 3px;
+    color: #921E1C;
+    text-align: center;
+    width: 200%;
+}
+
+#contMensajeBack {
+    display: table;
+    /*border: 2px solid #000;*/
+    /*width: 300px;*/
+    text-align: center;
+    margin: 0 auto;
+    margin-right: 0px;
+}
+
+#mesanjeBack {
+    display: table-cell;
+    /*border: 1px solid #000;*/
+    vertical-align: middle;
+    padding: 10px;
+}
+
+
+
+
+
+/* {margin: 0; padding: 0;}*/
+
+#containerMsg {
+    height: 100%;
+    width: 100%;
+    font-size: 0;
+}
+
+#left,
+#middle,
+#right {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+#middle {
+    width: 70%;
+}
+
+#right {
+    width: 30%;
+}
+
+
+
+
+
+/*background: #ECF2F6;*/
+
+#contenedor3 {
+    display: table;
+    /*border: 2px solid #000;    */
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 0%;
+    margin-right: 500px;
+    width: 100%;
+}
+
+#contenidos {
+    display: table-row;
+}
+
+#colMensaje {
+    display: table-cell;
+    /*border: 1px solid #000;*/
+    vertical-align: middle;
+    text-align: left;
+    padding: 15px;
+}
+
+.close {
+    font-size: 30px !important;
+    color: #fff;
+}
+
+.modal-body>.close,
+.modal-header>.close {
+    top: 20% !important;
+}
