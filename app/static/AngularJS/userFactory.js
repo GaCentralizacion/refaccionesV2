@@ -36,7 +36,12 @@ registrationModule.factory('userFactory', function(localStorageService, alertFac
                     $rootScope.userData = result.data[0];
                     localStorageService.set('userData', $rootScope.userData);
                     $rootScope.mostrarMenu = 1;
-                    location.href = '/cotizaciones';
+                    if ($rootScope.userData.rol == 'user') {
+                        location.href = '/cotizaciones';
+                    } else if ($rootScope.userData.rol == 'admin') {
+                        location.href = '/aprobacion';
+                    }
+
                 } else {
                     alertFactory.info('Inicie sesión desde el panel de aplicaciones o desde el login.');
                 }

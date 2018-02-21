@@ -13,7 +13,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
     };
 
     $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {
+        filterFactory.getEmpresas($scope.Usuario.idUsuario, $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
                 $scope.empresas = result.data;
                 $scope.empresaActual = $scope.empresas[0];
@@ -43,7 +43,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
 
     $scope.consultaSucursales = function() {
 
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.Usuario.rol).then(function(result) {
             $scope.sucursales = result.data;
             $scope.sucursalActual = $scope.sucursales[0];
 
@@ -77,7 +77,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             idSucursal: $scope.sucursalActual.AGENCIA,
             opcion: 2,
             idEstatus: 1,
-            role: 'user'
+            role: $scope.Usuario.rol
         }
         direccionRepository.getDirecciones(datos).then(function(result) {
             $('#tblDireccionFiltros').DataTable().destroy();

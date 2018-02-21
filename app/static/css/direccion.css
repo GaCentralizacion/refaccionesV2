@@ -17,3 +17,6 @@
     margin: auto;
     display: block;
 }
+.cursor{
+    cursor: pointer;
+}
