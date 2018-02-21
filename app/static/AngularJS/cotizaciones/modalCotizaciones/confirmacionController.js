@@ -4,20 +4,22 @@ registrationModule.controller('confirmacionController', function($scope, $rootSc
     $rootScope.initConfirmacion = function() {
         //$scope.spinner = true;
         //$scope.spinner = true;
-        $rootScope.muestraConf=true;
+        $rootScope.muestraConf = true;
         $scope.idPedidoBP = 0;
 
         $scope.msgEntregaBackorder = '';
         $scope.msgAvisoBackorder = '';
         $scope.msgTiempoEntrega = '';
-
+        console.log('SOY el tipo de folio sere TEMP', $scope.folioActual)
 
         $scope.totalExistencia = -1;
-        if ($scope.cotizacionActual.length > 0) {
-            setTimeout(function() {
-                $scope.spinner = $scope.spinner2 = false;
-                $scope.$apply()
-            }, 1)
+        if ($scope.cotizacionActual != undefined && $scope.cotizacionActual != "") {
+            if ($scope.cotizacionActual.length > 0) {
+                setTimeout(function() {
+                    $scope.spinner = $scope.spinner2 = false;
+                    $scope.$apply()
+                }, 1)
+            }
         } else {
             if ($scope.folioActual != "TEMP") {
                 cotizacionesRepository.getCotizacion($scope.folioActual).then(function(result) {

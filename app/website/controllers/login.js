@@ -25,7 +25,9 @@ Login.prototype.get_usuario = function(req, res, next) {
 
     var self = this;
 
-    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT }];
+    var params = [{ name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT },
+        { name: 'rol', value: req.query.rol, type: self.model.types.STRING }
+    ];
 
     self.model.query('SEL_USUARIO_REFACCIONES_SP', params, function(error, result) {
         self.view.expositor(res, {
