@@ -38,15 +38,22 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
 
     $scope.preguntaSave = function() {
 
+
+
+console.log($scope.elemtonDir);
         var datos={
+                    idUsuario:$scope.Usuario.idUsuario,
+                    idEmpresa:$scope.empresaActual.emp_idempresa,
                     nombreRuta:$scope.nombreRuta,
                     descripcion:$scope.descripcion,
                     idOperador:$scope.idOperador,
                     idUnidad:$scope.idUnidad,
-                    direcciones:$scope.dirForadd
-                };
+                    direcciones:$scope.dirForadd                    
+                  };
 
-                console.log(datos);
+              rutaRepository.postCreate(datos).then(function(result){
+                    console.log(result.data);
+              });
     };
 
 
