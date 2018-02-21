@@ -105,26 +105,25 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-<<<<<<< HEAD
-         getDireccionesAll: function() {
-            return $http({
-                url: direccionURL + 'direccionesAll/',
-                method: "GET",
-=======
         getListCp: function(dato) {
             return $http({
                 url: direccionURL + 'listCp/',
                 method: "GET",
                 params: dato,
->>>>>>> 75d336c6f384b91948707c8cacb32e09896556db
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-<<<<<<< HEAD
         },
-=======
+        getDireccionesAll: function() {
+            return $http({
+                url: direccionURL + 'direccionesAll/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
->>>>>>> 75d336c6f384b91948707c8cacb32e09896556db
+
     };
 });
