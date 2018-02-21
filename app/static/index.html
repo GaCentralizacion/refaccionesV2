@@ -143,7 +143,7 @@
                                     <!--Category name-->
                                     <li class="list-header">Navegación</li>
                                     <!--Menu list item-->
-                                    <li>
+                                    <li ng-show="'{{userData.rol}}' == 'user'">
                                         <a href="/cotizaciones">
                                             <i class="ti-wallet"></i>
                                             <span class="menu-title">
@@ -151,7 +151,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li ng-show="'{{userData.rol}}' == 'user'">
                                         <a href="/pedido">
                                             <i class="ti-truck"></i>
                                             <span class="menu-title">
@@ -159,7 +159,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li ng-show="'{{userData.rol}}' == 'user'">
                                         <a href="/historial">
                                             <i class="ti-bar-chart"></i>
                                             <span class="menu-title">
@@ -167,7 +167,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                     <li>
+                                     <li ng-show="'{{userData.rol}}' == 'user'">
                                         <a href="/direccion">
                                             <i class="ti-home"></i>
                                             <span class="menu-title">
@@ -175,7 +175,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li  ng-show="'{{userData.rol}}' == 'admin'">
                                         <a href="/aprobacion">
                                             <i class="ti-check-box"></i>
                                             <span class="menu-title">
@@ -183,7 +183,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li ng-show="'{{userData.rol}}' == 'admin'">
                                         <a href="/operador">
                                             <i class="ti-id-badge"></i>
                                             <span class="menu-title">
@@ -191,7 +191,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li ng-show="'{{userData.rol}}' == 'admin'">
                                         <a href="/unidad">
                                             <i class="ti-car"></i>
                                             <span class="menu-title">
@@ -199,7 +199,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                      <li>
+                                      <li ng-show="'{{userData.rol}}' == 'admin'">
                                         <a href="/ruta">
                                             <i class="ti-location-pin"></i>
                                             <span class="menu-title">

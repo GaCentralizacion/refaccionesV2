@@ -17,7 +17,7 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
 
 
     $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'user').then(function(result) {
+        filterFactory.getEmpresas($scope.Usuario.idUsuario,  $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
                 console.log(result.data, 'Soy las empresas ')
                 $scope.empresas = result.data;
@@ -109,7 +109,7 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
 
 
     $scope.consultaSucursales = function() {
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, 'user').then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa,  $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
                 $scope.sucursalActual = $scope.sucursales[0];
