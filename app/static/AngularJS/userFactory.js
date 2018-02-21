@@ -20,7 +20,7 @@ registrationModule.factory('userFactory', function(localStorageService, alertFac
             }
         },
         //Para obtener la informacion del usuario en bd del panel de aplicaciones 
-        getUsuario: function(idUsuario) {
+        getUsuario: function(idUsuario, rol) {
             /*remueve las opciones de historico*/
             localStorage.removeItem('histEmpresa')
             localStorage.removeItem('histSucursal')
@@ -31,7 +31,7 @@ registrationModule.factory('userFactory', function(localStorageService, alertFac
             /*remueve las opciones de cotizaciones*/
             localStorage.removeItem('cotEmpresa')
             localStorage.removeItem('cotSucursal')
-            loginRepository.getUsuario(idUsuario).then(function(result) {
+            loginRepository.getUsuario(idUsuario, rol).then(function(result) {
                 if (result.data.length > 0) {
                     $rootScope.userData = result.data[0];
                     localStorageService.set('userData', $rootScope.userData);

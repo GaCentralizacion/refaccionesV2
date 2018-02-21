@@ -25,9 +25,9 @@ angular.element('#elementId').focus();
             if (result.data.length > 0) {
                 //$scope.userData = userFactory.saveUserData(result.data[0]);
                 $scope.idUsuario = result.data[0].idUsuarioPanel;
-                $rootScope.role = result.data[0].role;
+                $scope.rol = result.data[0].rol;
  
-                $rootScope.userData = userFactory.getUsuario($scope.idUsuario);
+                $rootScope.userData = userFactory.getUsuario($scope.idUsuario, $scope.rol);
             } else {
                 alertFactory.info('Valide el usuario y/o contraseña');
             }
