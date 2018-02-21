@@ -10,37 +10,12 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
 
-
-
-        // $scope.a = [{ id: 1, nom: 'uno' },
-        //     { id: 2, nom: 'dos' },
-        //     { id: 3, nom: 'tres' },
-        //     { id: 4, nom: 'cuatro' }
-        // ];
-
-        // $scope.b = [
-        //     { id: 2, nom: 'dos' },
-        //     { id: 3, nom: 'tres' }
-        // ];
-
-
-
-        // var onlyInA = $scope.a.filter($scope.comparer($scope.b));
-        // var onlyInB = $scope.b.filter($scope.comparer($scope.a));
-
-        // result = onlyInA.concat(onlyInB);
-
-        // console.log(result);
-
     };
 
 
 
     $scope.preguntaSave = function() {
 
-
-
-console.log($scope.elemtonDir);
         var datos={
                     idUsuario:$scope.Usuario.idUsuario,
                     idEmpresa:$scope.empresaActual.emp_idempresa,
@@ -110,12 +85,7 @@ console.log($scope.elemtonDir);
         $('#tblOperadores').DataTable().destroy();
         $('#tblUnidades').DataTable().destroy();
         $('#tblUnidades').DataTable().destroy();
-        $scope.OperadoresUnidadesRutas = [
-            { ruta: 'SUR', operador: 'JOSÉ JOSÉ', unidad: 'BMW 2015', colorsit: 'green', situacion: 'Proseso' },
-            { ruta: 'LENTA', operador: 'PEDRO', unidad: 'CHEVROLET 2018', colorsit: 'brown', situacion: 'En Espera' },
-            { ruta: 'RAPIDA', operador: 'OMAR', unidad: 'HONDA 2016', colorsit: 'purple', situacion: 'Finalizada' },
-            { ruta: 'NORTE', operador: 'JOSÉ', unidad: 'HONDA 2016', colorsit: 'red', situacion: 'Cancelada' },
-        ];
+        
     };
 
 
@@ -181,8 +151,8 @@ console.log($scope.elemtonDir);
 
 
 
-    $scope.panelOperadores = function() {
-        $scope.addOperador = true;
+    $scope.panelResumen = function() {
+         $scope.lengthDirSell = $scope.dirForadd.length;
     };
 
     $scope.getOperadores = function() {
@@ -288,19 +258,22 @@ console.log($scope.elemtonDir);
     $scope.cambioEmpresa = function() {
         $scope.clean();
         $('#tblOperadoresUnidadesRutas').DataTable().destroy();
-        $scope.OperadoresUnidadesRutas = [
-            { ruta: 'SUR', operador: 'JOSÉ JOSÉ', unidad: 'BMW 2015', colorsit: 'green', situacion: 'Proseso' },
-            { ruta: 'LENTA', operador: 'PEDRO', unidad: 'CHEVROLET 2018', colorsit: 'brown', situacion: 'En Espera' },
-            { ruta: 'RAPIDA', operador: 'OMAR', unidad: 'HONDA 2016', colorsit: 'purple', situacion: 'Finalizada' },
-            { ruta: 'NORTE', operador: 'JOSÉ', unidad: 'HONDA 2016', colorsit: 'red', situacion: 'Cancelada' },
-        ];
-        setTimeout(function() {
+       rutaRepository.getRutas($scope.empresaActual.emp_idempresa).then(function(result){
+
+         $scope.OperadoresUnidadesRutas=result.data;
+          setTimeout(function() {
             $scope.setTablePaging('tblOperadoresUnidadesRutas');
 
             $("#tblOperadoresUnidadesRutas_length").removeClass("dataTables_info").addClass("hide-div");
             $("#tblOperadoresUnidadesRutas_filter").removeClass("dataTables_info").addClass("pull-left");
 
         }, 1);
+
+       });
+
+
+
+       
         $scope.getOperadoresL();
         $scope.getUnidadesL();
 
@@ -309,7 +282,7 @@ console.log($scope.elemtonDir);
     $scope.getEmpresas = function() {
         filterFactory.getEmpresas($scope.Usuario.idUsuario, 'user').then(function(result) {
             if (result.data.length > 0) {
-                console.log(result.data, 'Soy las empresas ')
+           
                 $scope.empresas = result.data;
                 $scope.empresaActual = $scope.empresas[0];
 
@@ -334,8 +307,15 @@ console.log($scope.elemtonDir);
     $scope.editar = function(elementoRuta) {
 
         $scope.nombreRuta = elementoRuta.ruta;
-        $scope.nombreOperador = elementoRuta.operador;
         $scope.descripcionUni = elementoRuta.unidad;
+        $scope.nombreOperador = elementoRuta.operador;
+        $scope.descripcion = elementoRuta.descripcion;
+
+        // rutaRepository.getDireccRuta(elementoRuta.idRuta).then(function(result){
+        //     $scope.dirForadd=result.data;
+
+        // });
+        
 
         $('#modal-panelRuta').modal('show');
 
