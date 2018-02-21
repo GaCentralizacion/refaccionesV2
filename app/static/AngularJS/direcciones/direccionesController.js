@@ -8,6 +8,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         $scope.verTabD = false;
         $scope.verTabP = true;
         $scope.actD = 'active';
+        $scope.mostrarFormulario = false;
 
     };
 
@@ -69,7 +70,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
     };
 
     $scope.cambioSucursal = function(empresa, sucursal, fecha) {
-
+        $scope.mostrarFormulario = true;
         var datos = {
             idUsuario: $scope.Usuario.idUsuario,
             idEmpresa: $scope.empresaActual.emp_idempresa,
@@ -103,7 +104,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             $scope.ciudadActual.idCiudad = 0;
             $scope.municipioActual.idMunicipio = 0;
             $scope.coloniaActual.idColonia = 0
-            $scope.consultaCp();
+            //$scope.consultaCp();
         });
 
     };
@@ -149,11 +150,19 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         // $scope.municipioActual = [];
         // $scope.coloniaActual = [];
         // $scope.Codigos = [];
+        $scope.clearEstado();
         $scope.consultaCiudad();
 
     };
 
-
+    //Limpia busqueda Estado
+    $scope.clearEstado = function() {
+        $scope.cpActual = "";
+        $scope.busquedaActual = [];
+        $scope.ciudadActual = [];
+        $scope.municipioActual = [];
+        $scope.coloniaActual = [];
+    };
     $scope.consultaCiudad = function(direccion) {
 
         var datos = {
@@ -168,24 +177,29 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             $scope.Ciudades.unshift({ idCiudad: "0", d_ciudad: "Seleccioné ..." });
             //$scope.Ciudades.unshift({ d_ciudad: "Seleccioné ..." });
             $scope.ciudadActual = $scope.Ciudades[0];
-            if (direccion.d_ciudad != undefined && direccion.d_ciudad != '') {
+            if (direccion != undefined && direccion != '') {
                 $scope.ciudadActual = $scope.Ciudades.find(checaCiudad);
                 $scope.consultaMunicipio(direccion.D_mnpio);
 
                 function checaCiudad(dir) {
                     return dir.d_ciudad == direccion.d_ciudad;
                 };
-            } else {
-                $scope.consultaCp();
             }
 
         });
 
     };
+    //Limpia busqueda Ciudad
+    $scope.clearCiudad = function() {
+        $scope.cpActual = "";
+        $scope.busquedaActual = [];
+        $scope.municipioActual = [];
+        $scope.coloniaActual = [];
+    };
 
 
     $scope.cambioCiudad = function() {
-
+        $scope.clearCiudad();
         $scope.consultaMunicipio();
 
     };
@@ -216,8 +230,6 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                 function checaMunicipio(dir) {
                     return dir.municipio == municipio;
                 };
-            } else {
-                $scope.consultaCp();
             }
         });
     };
@@ -232,7 +244,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
 
     $scope.consultaColonia = function(consulta) {
         if (consulta == 1) {
-            cp = $scope.cpActual.cp;
+            cp = $scope.cpActual;
         } else {
             cp = '';
         }
@@ -262,22 +274,46 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         $scope.consultaCp();
 
     };
-
+    //Busca listado de Codigos Postales
+    $scope.buscarCP = function() {
+        if ($scope.cpActual.length == 5) {
+            $scope.cambioCp();
+        } else if ($scope.cpActual.length < 5) {
+            $scope.busquedaActual = [];
+            $scope.ciudadActual = [];
+            $scope.municipioActual = [];
+            $scope.coloniaActual = [];
+            $scope.estadoActual = $scope.Estados[0];
+        }
+        if ($scope.cpActual.length > 2) {
+            var datos = {
+                cp: $scope.cpActual,
+                idEmpresa: $scope.empresaActual.emp_idempresa,
+                idSucursal: $scope.sucursalActual.AGENCIA
+            };
+            direccionRepository.getListCp(datos).then(function(result) {
+                $scope.busquedaActual = result.data;
+            });
+        } else {
+            $scope.busquedaActual = []
+        }
+    };
+    //Limpia busqueda de Codigo Postal
+    $scope.clearQuery = function() {
+        $scope.cpActual = "";
+        $scope.busquedaActual = [];
+        $scope.ciudadActual = [];
+        $scope.municipioActual = [];
+        $scope.coloniaActual = [];
+        $scope.estadoActual = $scope.Estados[0];
+    };
+    $scope.seleccionCp = function(cp) {
+        $scope.cpActual = cp;
+        $scope.busquedaActual = [];
+        $scope.cambioCp();
+    };
     $scope.consultaCp = function() {
         var datos = null;
-        if ($scope.estadoActual.idEdo == 0) {
-            $scope.estadoActual.descripcion = '';
-        }
-        if ($scope.ciudadActual.idCiudad == 0) {
-            $scope.ciudadActual.d_ciudad = '';
-        }
-        if ($scope.municipioActual.idMunicipio == 0) {
-            $scope.municipioActual.municipio = '';
-        }
-        if ($scope.coloniaActual.idColonia == 0) {
-            $scope.coloniaActual.colonia = '';
-        }
-
         datos = {
             user: $scope.Usuario.idUsuario,
             idEmpresa: $scope.empresaActual.emp_idempresa,
@@ -288,20 +324,49 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             colonia: $scope.coloniaActual.colonia
         };
         direccionRepository.getCp(datos).then(function(result) {
-            $scope.Codigos = result.data;
-            $scope.Codigos.unshift({ cp: "Seleccioné ..." });
-            if ($scope.Codigos.length == 2) {
-                $scope.cpActual = $scope.Codigos[1];
-            } else {
-                $scope.cpActual = $scope.Codigos[0];
-            }
+            $scope.cpActual = result.data[0].cp;
         });
     };
+
+    // $scope.consultaCp = function() {
+    //     var datos = null;
+    //     if ($scope.estadoActual.idEdo == 0) {
+    //         $scope.estadoActual.descripcion = '';
+    //     }
+    //     if ($scope.ciudadActual.idCiudad == 0) {
+    //         $scope.ciudadActual.d_ciudad = '';
+    //     }
+    //     if ($scope.municipioActual.idMunicipio == 0) {
+    //         $scope.municipioActual.municipio = '';
+    //     }
+    //     if ($scope.coloniaActual.idColonia == 0) {
+    //         $scope.coloniaActual.colonia = '';
+    //     }
+
+    //     datos = {
+    //         user: $scope.Usuario.idUsuario,
+    //         idEmpresa: $scope.empresaActual.emp_idempresa,
+    //         idSucursal: $scope.sucursalActual.AGENCIA,
+    //         estado: $scope.estadoActual.descripcion,
+    //         ciudad: $scope.ciudadActual.d_ciudad,
+    //         municipio: $scope.municipioActual.municipio,
+    //         colonia: $scope.coloniaActual.colonia
+    //     };
+    //     direccionRepository.getCp(datos).then(function(result) {
+    //         $scope.Codigos = result.data;
+    //         $scope.Codigos.unshift({ cp: "Seleccioné ..." });
+    //         if ($scope.Codigos.length == 2) {
+    //             $scope.cpActual = $scope.Codigos[1];
+    //         } else {
+    //             $scope.cpActual = $scope.Codigos[0];
+    //         }
+    //     });
+    // };
 
 
     $scope.cambioCp = function() {
         var datos = {
-            cp: $scope.cpActual.cp,
+            cp: $scope.cpActual,
             idEmpresa: $scope.empresaActual.emp_idempresa,
             idSucursal: $scope.sucursalActual.AGENCIA
         };
@@ -357,7 +422,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                     ciudad: $scope.ciudadActual.d_ciudad,
                     municipio: $scope.municipioActual.municipio,
                     colonia: $scope.coloniaActual.colonia,
-                    cp: $scope.cpActual.cp,
+                    cp: $scope.cpActual,
                     calle: $scope.calle,
                     exterior: $scope.exterior,
                     interior: $scope.interior,
@@ -391,7 +456,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                     $scope.ciudadActual = {};
                     $scope.municipioActual = {};
                     $scope.coloniaActual = {};
-                    $scope.cpActual = {};
+                    $scope.cpActual = '';
 
                     $scope.calle = '';
                     $scope.exterior = '';
@@ -474,6 +539,8 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             }]
         });
     }; //end setTablePaging
+
+
 
 
 });

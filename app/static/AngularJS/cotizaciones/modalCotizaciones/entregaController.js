@@ -48,7 +48,25 @@ registrationModule.controller('entregaController', function($scope, $rootScope, 
     $scope.elegirDireccion = function(direccion) {
         $scope.spinner2 = true;
         $scope.$parent.$parent.direccionActual = direccion;
-        var dir = direccion.RTD_CALLE1 + " " + direccion.RTD_NUMEXTER + " " + direccion.RTD_COLONIA + " " + direccion.RTD_DELEGAC + " " + direccion.RTD_CIUDAD + " " + direccion.RTD_CODPOS;
+        if(direccion.RTD_CALLE1 == null){
+            direccion.RTD_CALLE1 = ''
+        }
+        if(direccion.RTD_NUMEXTER == null){
+            direccion.RTD_NUMEXTER = ''
+        }
+        if(direccion.RTD_COLONIA == null){
+            direccion.RTD_COLONIA = ''
+        }
+        if(direccion.RTD_DELEGAC == null){
+            direccion.RTD_DELEGAC = ''
+        }
+        if(direccion.RTD_CIUDAD == null){
+            direccion.RTD_CIUDAD = ''
+        }
+        if(direccion.RTD_CODPOS == null){
+            direccion.RTD_CODPOS = ''
+        }
+        var dir = direccion.RTD_CALLE1 + "+" + direccion.RTD_NUMEXTER + "+" + direccion.RTD_COLONIA + "+" + direccion.RTD_DELEGAC + "+" + direccion.RTD_CIUDAD + "+" + direccion.RTD_CODPOS;
         $scope.mapaActual = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFoh96sELDelI27Pfwk5mGLsqFYt99AZM&q=" + dir
         //$scope.mapaActual = "https://www.google.com/maps/embed/v1/view?key=AIzaSyBFoh96sELDelI27Pfwk5mGLsqFYt99AZM&q=" + dir
     };

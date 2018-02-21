@@ -515,5 +515,25 @@ direccion.prototype.get_informacionCp = function(req, res, next) {
         });
     });
 };
+// Obtiene los Codigos postales relacionados con la busqueda 
+direccion.prototype.get_listCp = function(req, res, next) {
+    var self = this;
+    //console.log('guarda direccion server')
+    var params = [{ name: 'cp', value: req.query.cp, type: self.model.types.STRING },
+        { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT }
+
+    ];
+
+    console.log('SEL_BUSQUEDA_CP_SP')
+    console.log(params)
+    self.model.query('SEL_BUSQUEDA_CP_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 
 module.exports = direccion;

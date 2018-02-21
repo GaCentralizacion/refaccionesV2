@@ -104,6 +104,16 @@ registrationModule.factory('direccionRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getListCp: function(dato) {
+            return $http({
+                url: direccionURL + 'listCp/',
+                method: "GET",
+                params: dato,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
