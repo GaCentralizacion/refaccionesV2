@@ -1,3 +1,4 @@
+<link href="css/direccion.css" rel="stylesheet">
 <div class="panel panel-primary" ng-init="init()">
     <!--Panel heading-->
     <div>
@@ -22,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="panel-heading" style="background-color: #1E335B;">
+    <div class="panel-heading" style="background-color: #1E335B;" ng-show="mostrarFormulario">
         <div class="panel-control">
             <ul class="nav nav-tabs">
                 <li ng-click="verTabs(1)" class="{{actD}}" style="cursor: pointer;"><a>Alta de direcciones</a></li>
@@ -32,7 +33,7 @@
         <h3 class="panel-title">DIRECCIONES</h3>
     </div>
     <!--Panel body-->
-    <div class="panel-body">
+    <div class="panel-body" ng-show="mostrarFormulario">
         <!--Tabs content-->
         <div class="tab-content">
             <div ng-hide="verTabD">
@@ -121,8 +122,27 @@
                                         <!--Cp-->
                                         <div class="form-group">
                                             <label class="control-label">C.P.:</label>
-                                            <select id="selCp" ng-change="cambioCp()" class="form-control" ng-options="cod as cod.cp for cod in Codigos" ng-model="cpActual"></select>
-                                            <small class="help-block"></small>
+                                            <!-- <select id="selCp" ng-change="cambioCp()" class="form-control" ng-options="cod as cod.cp for cod in Codigos" ng-model="cpActual"></select>
+                                            <small class="help-block"></small> -->
+                                            <div class="input-group">
+                                                <input autocomplete="off" ng-change="buscarCP()" ng-model="cpActual" placeholder="Buscar" id="inputCp" type="text" class="form-control" numbers-only>
+                                                <span class="input-group-btn">
+                                                    <button ng-click="clearQuery()" class="btn btn-primary btn-small" type="button"><i class="fa fa-angle-double-left"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: -15px;" class="col-xs-3 col-md-offset-9">
+                                        <div ng-show="busquedaActual.length > 0 && busquedaActual.length > 1" class="form-group query-container  ">
+                                            <table style="margin-top:35px;" class="table table-hover ">
+                                                <tbody>
+                                                    <tr class="list-group-item-custom" ng-repeat="cp in busquedaActual">
+                                                        <td style="width:20%" ng-click="seleccionCp(cp.d_codigo)">
+                                                            {{cp.d_codigo}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -204,19 +224,19 @@
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label class="control-label">Lada</label>
-                                                <input type="text" class="form-control" ng-model="lada1" maxlength="6">
+                                                <input type="text" class="form-control" ng-model="lada1" maxlength="6" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="control-label">Telefono 1</label>
-                                                <input type="text" class="form-control" ng-model="tel1_1" maxlength="12">
+                                                <input type="text" class="form-control" ng-model="tel1_1" maxlength="12" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="control-label">Telefono 2</label>
-                                                <input type="text" class="form-control" ng-model="tel2_1" maxlength="12">
+                                                <input type="text" class="form-control" ng-model="tel2_1" maxlength="12" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
@@ -262,20 +282,20 @@
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label class="control-label">Lada</label>
-                                                <input type="text" class="form-control" ng-model="lada2" maxlength="6">
+                                                <input type="text" class="form-control" ng-model="lada2" maxlength="6" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="control-label">Telefono 1</label>
-                                                <input type="tel" class="form-control" ng-model="tel1_2" maxlength="12">
+                                                <input type="tel" class="form-control" ng-model="tel1_2" maxlength="12" numbers-only>
                                                 <span class="error" ng-show="mainForm.tel1_2.$error.tel">invalid email</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="control-label">Telefono 2</label>
-                                                <input type="text" class="form-control" ng-model="tel2_2" maxlength="12">
+                                                <input type="text" class="form-control" ng-model="tel2_2" maxlength="12" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
