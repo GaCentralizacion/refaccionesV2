@@ -104,6 +104,15 @@ registrationModule.factory('direccionRepository', function($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+         getDireccionesAll: function() {
+            return $http({
+                url: direccionURL + 'direccionesAll/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
     };
 });

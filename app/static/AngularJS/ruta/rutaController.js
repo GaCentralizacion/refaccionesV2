@@ -4,60 +4,60 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
 
     $scope.dirForadd = [];
     $scope.verTot = false;
+    $scope.resUnidad = false;
 
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
-        //   $scope.clean();
-
-// Array.prototype.diff = function(a) {
-//     return this.filter(function(i) {return a.indexOf(i) < 0;});
-// };
 
 
 
-$scope.a=[{id:1,nom:'uno'},
-            {id:2,nom:'dos'},
-            {id:3,nom:'tres'},
-            {id:4,nom:'cuatro'}];
+        // $scope.a = [{ id: 1, nom: 'uno' },
+        //     { id: 2, nom: 'dos' },
+        //     { id: 3, nom: 'tres' },
+        //     { id: 4, nom: 'cuatro' }
+        // ];
 
-            $scope.b=[
-            {id:2,nom:'dos'},
-            {id:3,nom:'tres'}];
-
-//          //   var ladif=$scope.listN.diff( $scope.listM);
-//          var ladif = $($scope.listM).not( $scope.listN).get();
-//             console.log(ladif); 
+        // $scope.b = [
+        //     { id: 2, nom: 'dos' },
+        //     { id: 3, nom: 'tres' }
+        // ];
 
 
 
-// var array_one = [1,2,3,4];
-// var array_two = [1,3,4,5,6]
+        // var onlyInA = $scope.a.filter($scope.comparer($scope.b));
+        // var onlyInB = $scope.b.filter($scope.comparer($scope.a));
 
-// var difference = $(array_one).not(array_two).get();
+        // result = onlyInA.concat(onlyInB);
 
-// console.log(difference);
-
-var onlyInA = $scope.a.filter( $scope.comparer($scope.b));
-var onlyInB = $scope.b.filter( $scope.comparer($scope.a));
-
-result = onlyInA.concat(onlyInB);
-
-console.log(result);
+        // console.log(result);
 
     };
 
 
 
+    $scope.preguntaSave = function() {
+
+        var datos={
+                    nombreRuta:$scope.nombreRuta,
+                    descripcion:$scope.descripcion,
+                    idOperador:$scope.idOperador,
+                    idUnidad:$scope.idUnidad,
+                    direcciones:$scope.dirForadd
+                };
+
+                console.log(datos);
+    };
 
 
-        $scope.comparer = function(otherArray) {
-            return function(current){
-            return otherArray.filter(function(other){
-            return other.id == current.id 
+
+    $scope.comparer = function(otherArray) {
+        return function(current) {
+            return otherArray.filter(function(other) {
+                return other.idDireccion == current.idDireccion
             }).length == 0;
-            }
-        };
+        }
+    };
 
 
     $scope.clean = function() {
@@ -116,19 +116,31 @@ console.log(result);
     $scope.panelDirecciones = function() {
         $scope.addDireccion = true;
     };
+
+
     $scope.getDirecciones = function() {
 
         $('#tblDirecc').DataTable().destroy();
-        var datos = {
-            idUsuario: $scope.Usuario.idUsuario,
-            idEmpresa: $scope.empresaActual.emp_idempresa,
-            idSucursal: 3,
-            opcion: 1,
-            idEstatus: 1
-        }
-        direccionRepository.getDirecciones(datos).then(function(result) {
-            console.log(result.data, 'Soy las direcciones encontradas')
-            $scope.direcciones = result.data;
+
+        direccionRepository.getDireccionesAll().then(function(result) {
+
+
+            if ($scope.dirForadd.length > 0) {
+
+
+                var onlyInA = result.data.filter($scope.comparer($scope.dirForadd));
+                var onlyInB = $scope.dirForadd.filter($scope.comparer(result.data));
+
+                $scope.direcciones = onlyInA.concat(onlyInB);
+
+
+
+            } else {
+
+                $scope.direcciones = result.data;
+
+            }
+            //$scope.direcciones = result.data;
             setTimeout(function() {
                 $scope.setTablePaging('tblDirecc');
 
@@ -144,23 +156,23 @@ console.log(result);
     };
 
     $scope.direccionPara = function(tipo) {
+        $scope.resUnidad = true;
         $('#tbldireccSel').DataTable().destroy();
         angular.forEach($scope.direcciones, function(value, key) {
             if (value.seleccionada == true) $scope.dirForadd.unshift(value);
         });
-        setTimeout(function() {
-            $scope.setTablePaging('tbldireccSel');
-            $("#tbldireccSel_length").removeClass("dataTables_info").addClass("hide-div");
-            $("#tbldireccSel_filter").removeClass("dataTables_info").addClass("pull-left");
-        }, 1);
+    
 
         $scope.rutDir = true;
         $scope.verdir = true;
         $('#modal-panelRuta').modal('show');
         $scope.lengthDirSell = $scope.dirForadd.length;
         $scope.verTot = true;
-        //$scope.addOperador = true;
+    
     };
+
+
+
 
     $scope.panelOperadores = function() {
         $scope.addOperador = true;
@@ -245,64 +257,7 @@ console.log(result);
 
     $scope.salir = function() {
 
-        new Promise(function(resolve, reject) {
-
-            $scope.cadenaConfirma = "<h4>Está a punto de salir  ¿Desea continuar?</h4>"
-            //   else $scope.cadenaConfirma = "<h4>Está a punto de eliminar al operador "+ $scope.nombre+" "+$scope.apPaterno+" "+$scope.apMaterno+ "¿Desea continuar?</h4>"
-
-            bootbox.confirm($scope.cadenaConfirma,
-                function(result) {
-                    if (result) resolve(1)
-                    else reject(2)
-                }
-            )
-        }).then(function(operacion) {
-            new Promise(function(resolve, reject) {
-                //   if($scope.bloquea==true)$scope.tipo=0;
-                var datos = {
-                    nombreRuta: $scope.nombreRuta,
-                    descripcion: $scope.descripcion,
-                    idResponsable: $scope.Usuario.idUsuario,
-                    idEmpresa: $scope.empresaActual.emp_idempresa
-                };
-
-                if ($scope.add == true)
-                    rutaRepository.postCreate(datos).then(function(result) {
-                        $scope.clean();
-
-                        resolve(result.data);
-                    });
-                else {
-                    datos.idRuta = $scope.idOperador;
-                    datos.estatus = $scope.tipo;
-                    rutaRepository.postUpdate(datos).then(function(result) {
-                        //    $scope.limpaValores();
-                        resolve(result.data);
-                    });
-                }
-
-
-            }).then(function(YES) {
-
-                if (respuesta.estatus = 'ok') {
-                    //    $scope.cambioEmpresa();
-                    bootbox.alert("<h4> Operacion realizada!!. </h4>",
-                        function() {
-                            $('#modalAddRuta').modal('hide')
-                        });
-
-                } else { //error al guardar
-                    bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
-                        function() {
-                            $('#modalAddRuta').modal('hide')
-                            //$state.go("user.aprobacion")
-                        });
-                }
-
-
-            });
-
-        }); //fin promise  
+        $('#modal-panelRuta').modal('hide');
 
 
 
@@ -340,8 +295,8 @@ console.log(result);
 
         }, 1);
         $scope.getOperadoresL();
-            $scope.getUnidadesL();
-        
+        $scope.getUnidadesL();
+
     };
 
     $scope.getEmpresas = function() {
@@ -369,48 +324,48 @@ console.log(result);
 
 
 
-    $scope.editar=function(elementoRuta){
+    $scope.editar = function(elementoRuta) {
 
-       $scope.nombreRuta=elementoRuta.ruta;
-         $scope.nombreOperador=elementoRuta.operador;
-          $scope.descripcionUni=elementoRuta.unidad;
+        $scope.nombreRuta = elementoRuta.ruta;
+        $scope.nombreOperador = elementoRuta.operador;
+        $scope.descripcionUni = elementoRuta.unidad;
 
-           $('#modal-panelRuta').modal('show');
+        $('#modal-panelRuta').modal('show');
 
 
     };
 
 
-        $scope.getOperadoresL = function() {
-     
+    $scope.getOperadoresL = function() {
+
         if ($scope.empresaActual.emp_idempresa != 0) {
             operadorRepository.getOperadores($scope.empresaActual.emp_idempresa).then(function(result) {
                 if (result.data.length > 0) {
-                     console.log('ope:::');
+                    console.log('ope:::');
                     console.log(result.data);
-                     $scope.operadores = result.data;
-                       $scope.operadores.unshift({nombre:'Selecciona Operador..'});
+                    $scope.operadores = result.data;
+                    $scope.operadores.unshift({ nombre: 'Selecciona Operador..' });
                     $scope.operadorActual = $scope.operadores[0];
-                   
-                } 
+
+                }
             });
-        } 
+        }
     };
 
 
 
-       $scope.getUnidadesL = function() {
-       
+    $scope.getUnidadesL = function() {
+
         if ($scope.empresaActual.emp_idempresa != 0) {
             unidadRepository.getUnidades($scope.empresaActual.emp_idempresa).then(function(result) {
                 if (result.data.length > 0) {
-                     console.log('uni:::');
+                    console.log('uni:::');
                     console.log(result.data);
                     $scope.unidades = result.data;
-                      $scope.unidades.unshift({nomCompleto:'Selecciona unidad..'});
-                     $scope.unidadActual = $scope.unidades[0];
-                 
-                } 
+                    $scope.unidades.unshift({ nomCompleto: 'Selecciona unidad..' });
+                    $scope.unidadActual = $scope.unidades[0];
+
+                }
             });
         } else { $scope.listUnidades = []; }
     };

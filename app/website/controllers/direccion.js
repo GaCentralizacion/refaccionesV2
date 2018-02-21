@@ -516,4 +516,19 @@ direccion.prototype.get_informacionCp = function(req, res, next) {
     });
 };
 
+
+// Obtiene la direccion relacionada con el codigo postal
+direccion.prototype.get_direccionesAll= function(req, res, next) {
+    var self = this;
+    //console.log('guarda direccion server')
+ 
+
+    self.model.query('SEL_DIRECCIONES_GENERAL_SP', true, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = direccion;
