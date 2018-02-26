@@ -1,123 +1,67 @@
 registrationModule.controller('rutaController', function($sce, $http, $scope, $rootScope, $location, $timeout, alertFactory, rutaRepository, filterFactory, userFactory, globalFactory, operadorRepository, unidadRepository, direccionRepository) {
 
 
-
+    $scope.newRuta = true;
+    $scope.gridRutas = false;
+    $scope.verdir = false;
     $scope.dirForadd = [];
-    $scope.verTot = false;
-    $scope.resUnidad = false;
+    $scope.inputNewRuta = true;
+    $scope.hideListCatRut = true;
+    $scope.editar = false;
+    $scope.direcciones = [];
+    $scope.direccionesTe = [];
+    $scope.seleccionado = [];
+    $scope.tipo=1;
 
-    $scope.init = function() {
-        $scope.Usuario = userFactory.getUserData();
-        $scope.getEmpresas();
 
+
+    $scope.rowC = function(elemto) {
+
+        $scope.seleccionado = [];
+        $scope.seleccionado.unshift(elemto);
     };
 
 
 
-    $scope.preguntaSave = function() {
-
-        var datos={
-                    idUsuario:$scope.Usuario.idUsuario,
-                    idEmpresa:$scope.empresaActual.emp_idempresa,
-                    nombreRuta:$scope.nombreRuta,
-                    descripcion:$scope.descripcion,
-                    idOperador:$scope.idOperador,
-                    idUnidad:$scope.idUnidad,
-                    direcciones:$scope.dirForadd                    
-                  };
-
-              rutaRepository.postCreate(datos).then(function(result){
-                    console.log(result.data);
-              });
-    };
-
-
-
-    $scope.comparer = function(otherArray) {
-        return function(current) {
-            return otherArray.filter(function(other) {
-                return other.idDireccion == current.idDireccion
-            }).length == 0;
-        }
-    };
-
-
-    $scope.clean = function() {
-        $scope.listOperadores = [];
-        $scope.listUnidades = [];
-        $scope.listRutas = [];
-        $scope.bloquea = false;
-        $scope.add = false;
-        $scope.tipo = 1;
-        $scope.txtr = 'Ver Rutas';
-        $scope.txto = 'Ver Operadores';
-        $scope.txtu = 'Ver Unidades';
-
-        $scope.nombreOperador = "";
-        $scope.idOperador = "";
-        $scope.telefonoOperador = "";
-
-        $scope.descripcionUni = "";
-        $scope.descripcion = "";
-        $scope.modelo = "";
-        $scope.color = "";
-        $scope.placas = "";
-        $scope.Tipo = "";
-        $scope.capacidad = "";
-        $scope.metrosCubicos = "";
-        $scope.idUnidad = "";
-        $scope.vero = false;
-        $scope.verr = false;
-        $scope.veru = false;
-        $scope.rutDir = false;
-        $scope.verd = true;
-        $scope.addDireccion = false;
-        $scope.verdir = false;
-        $scope.btnSave = false;
-        $scope.newRuta = false;
-        $scope.gridRutas = true;
-
-
-
-        $scope.addOperador = false;
-        $scope.addUnidad = false;
-        $('#tblRutas').DataTable().destroy();
-        $('#tblOperadores').DataTable().destroy();
-        $('#tblUnidades').DataTable().destroy();
-        $('#tblUnidades').DataTable().destroy();
-        
-    };
-
-
-
-    $scope.panelDirecciones = function() {
-        $scope.addDireccion = true;
-    };
-
-
-    $scope.getDirecciones = function() {
+    $scope.verDirecciones = function() {
 
         $('#tblDirecc').DataTable().destroy();
 
         direccionRepository.getDireccionesAll().then(function(result) {
+            $scope.direcciones = [];
+            $scope.resultado = result.data;
 
+            if ($scope.editar == true) {
 
-            if ($scope.dirForadd.length > 0) {
+                $scope.direcciones = $scope.resultado;
+                $scope.direcciones = $scope.resultado.filter($scope.comparer($scope.dirForadd));
 
+                if ($scope.seleccionado.length > 0) {
+                    angular.forEach($scope.seleccionado, function(value, key) {
+                        $scope.direcciones.unshift(value);
+                    });
 
-                var onlyInA = result.data.filter($scope.comparer($scope.dirForadd));
-                var onlyInB = $scope.dirForadd.filter($scope.comparer(result.data));
-
-                $scope.direcciones = onlyInA.concat(onlyInB);
+                }
 
 
 
             } else {
 
-                $scope.direcciones = result.data;
+
+                if ($scope.dirForadd.length > 0) {
+
+                    var onlyInA = $scope.resultado.filter($scope.comparer($scope.dirForadd));
+                    var onlyInB = $scope.dirForadd.filter($scope.comparer());
+
+                    $scope.direcciones = onlyInA.concat(onlyInB);
+                } else {
+
+                    $scope.direcciones = $scope.resultado;
+
+                }
 
             }
-            //$scope.direcciones = result.data;
+
             setTimeout(function() {
                 $scope.setTablePaging('tblDirecc');
 
@@ -132,77 +76,306 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
         });
     };
 
-    $scope.direccionPara = function(tipo) {
+
+    $scope.ver = function(elementoRuta) {
+        $scope.rutaDetalle = elementoRuta;
+
+        direccionRepository.getDireccionesRuta(elementoRuta.idRuta).then(function(result) {
+
+            $scope.pedidoDireccionesRuta = result.data;
+            $scope.numDirRut = result.data.length;
+
+
+            $('#modalDetalleRuta').modal('show');
+
+        });
+
+    };
+
+$scope.imprimeDespacho=function(){
+      $scope.rutaDetalle.rutaDetalle=$scope.numDirRut;
+      $scope.rutaDetalle.pedidoDireccionesRuta=  $scope.pedidoDireccionesRuta;
+
+      console.log($scope.rutaDetalle);
+
+};
+
+
+
+
+    $scope.limpiar = function() {
+
+        $scope.nombreRuta = "";
+        $scope.descripcionUni = "";
+        $scope.nombreOperador = "";
+        $scope.descripcion = "";
+        $scope.lengthDirSell = "";
+        $scope.modelo = "";
+        $scope.direcciones = [];
+        $scope.verdir = false;
+        $scope.dirForadd = [];
+
+
+    };
+
+
+
+    $scope.direccionParaRuta = function(tipo) {
         $scope.resUnidad = true;
         $('#tbldireccSel').DataTable().destroy();
         angular.forEach($scope.direcciones, function(value, key) {
-            if (value.seleccionada == true) $scope.dirForadd.unshift(value);
+
+
+
+            if (value.seleccionada == true) {
+                $scope.dirForadd.unshift(value);
+            }
+          
+
+
         });
-    
+
+
+
 
         $scope.rutDir = true;
         $scope.verdir = true;
         $('#modal-panelRuta').modal('show');
         $scope.lengthDirSell = $scope.dirForadd.length;
         $scope.verTot = true;
-    
-    };
 
+    };
 
 
 
     $scope.panelResumen = function() {
-         $scope.lengthDirSell = $scope.dirForadd.length;
+        $scope.lengthDirSell = $scope.dirForadd.length;
     };
+
+
+    $scope.preguntaSave = function(tipo) {
+
+        new Promise(function(resolve, reject) {
+
+            if ($scope.bloquea == false) $scope.cadenaConfirma = "<h4>Está a punto de confirmar la nueva ruta ¿Desea continuar?</h4>"
+            else $scope.cadenaConfirma = "<h4>Está a punto de eliminar la ruta ¿Desea continuar?</h4>"
+
+            bootbox.confirm($scope.cadenaConfirma,
+                function(result) {
+                    if (result) resolve(1)
+                    else reject(2)
+                }
+            )
+
+        }).then(function() {
+            new Promise(function(resolve, reject) {
+                if ($scope.bloquea == true) $scope.tipo = 0;
+
+                var datos = {
+                    idUsuario: $scope.Usuario.idUsuario,
+                    idEmpresa: $scope.empresaActual.emp_idempresa,
+                    nombreRuta: $scope.nombreRuta,
+                    descripcion: $scope.descripcion,
+                    idOperador: $scope.idOperador,
+                    idUnidad: $scope.idUnidad,
+                    direcciones: $scope.dirForadd,
+
+                };
+
+                if ($scope.add == true) {
+                    console.log(datos);
+                    rutaRepository.postCreate(datos).then(function(result) {
+                        console.log(result.data);
+                        resolve(result.data);
+                        $scope.limpiar();
+                    });
+                } else {
+                    datos.idRuta = $scope.idRuta;
+                    datos.tipo = $scope.tipo;
+                    datos.situacionRuta=1;
+
+
+                    rutaRepository.postUpdate(datos).then(function(result) {
+                        resolve(result.data);
+                         $scope.limpiar();
+                    });
+                }
+
+
+            }).then(function(respuesta) {
+
+                if (respuesta.estatus = 'ok') {
+                    $scope.cambioEmpresa();
+                    bootbox.alert("<h4> Operacion realizada!!. </h4>",
+                        function() {
+                            $('#modal-panelRuta').modal('hide')
+                        });
+
+                } else {
+                    bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
+                        function() {
+                            $('#modal-panelRuta').modal('hide')
+
+                        });
+                }
+
+
+            });
+
+        }); //fin promise     
+
+    };
+
+    $scope.editarR = function(elementoRuta) {
+
+        $scope.limpiar();
+        $scope.add = false;
+        $scope.idRuta=elementoRuta.idRuta;
+        $scope.nombreRuta = elementoRuta.ruta;
+        $scope.descripcionUni = elementoRuta.unidad;
+        $scope.nombreOperador = elementoRuta.operador;
+        $scope.descripcion = elementoRuta.descripcion;
+        $scope.idUnidad=elementoRuta.idUnidad;
+        $scope.idOperador=elementoRuta.idOperador;
+
+
+
+        $scope.dirForadd = [];
+
+        direccionRepository.getDireccionesRuta(elementoRuta.idRuta).then(function(result) {
+            $scope.editar = true;
+            $scope.dirForadd = result.data;
+            $scope.direccionesTe = result.data;
+
+
+            $scope.rutDir = true;
+            $scope.verdir = true;
+            $('#modal-panelRuta').modal('show');
+            // $scope.totalPedidos = $scope.dirForadd.length;
+            $scope.verTot = true;
+        });
+    };
+
+
+
+
+    $scope.init = function() {
+        $scope.Usuario = userFactory.getUserData();
+        $scope.getEmpresas();
+    };
+
+    $scope.getEmpresas = function() {
+        filterFactory.getEmpresas($scope.Usuario.idUsuario, $scope.Usuario.rol).then(function(result) {
+            if (result.data.length > 0) {
+
+                $scope.empresas = result.data;
+                $scope.empresaActual = $scope.empresas[0];
+
+                if (localStorage.getItem('pedEmpresa') !== null) {
+                    $scope.pedEmpresa = [];
+                    $scope.tempPedEmp = localStorage.getItem('pedEmpresa');
+                    $scope.pedEmpresa.push(JSON.parse($scope.tempPedEmp));
+                    setTimeout(function() {
+                        $("#selEmpresas").val($scope.pedEmpresa[0][0].emp_idempresa);
+                        $scope.empresaActual = $scope.pedEmpresa[0][0];
+                    }, 100);
+                }
+            } else {
+                alertFactory.success('No se encontraron empresas');
+                $scope.newRuta = true;
+            }
+        });
+    };
+
+    $scope.cambioEmpresa = function() {
+        $scope.OperadoresUnidadesRutas = [];
+        $('#tblOperadoresUnidadesRutas').DataTable().destroy();
+        if ($scope.empresaActual.emp_idempresa > 0) {
+            $scope.newRuta = false;
+
+            rutaRepository.getRutas($scope.empresaActual.emp_idempresa).then(function(result) {
+                if (result.data.length > 0) {
+                    $scope.gridRutas = true;
+                    $scope.OperadoresUnidadesRutas = result.data;
+                    setTimeout(function() {
+                        $scope.setTablePaging('tblOperadoresUnidadesRutas');
+                        $("#tblOperadoresUnidadesRutas_length").removeClass("dataTables_info").addClass("hide-div");
+                        $("#tblOperadoresUnidadesRutas_filter").removeClass("dataTables_info").addClass("pull-left");
+
+                    }, 1);
+                } else $scope.gridRutas = false;
+            });
+        } else $scope.newRuta = true;
+    };
+
+    $scope.verWizard = function(ruta, tipo) {
+
+        $('#modal-panelRuta').modal('show');
+        
+        if (tipo == 1) {
+
+            $scope.limpiar();
+            $scope.add = true;
+            $scope.bloquea = false;
+            $scope.catalogoRutas();
+        }
+    };
+
+    $scope.panelDirecciones = function() {
+
+    };
+
 
     $scope.getOperadores = function() {
         $('#tblOperadores').DataTable().destroy();
         $scope.listOperadores = [];
-        if ($scope.empresaActual.emp_idempresa != 0) {
-            operadorRepository.getOperadores($scope.empresaActual.emp_idempresa).then(function(result) {
-                if (result.data.length > 0) {
-                    $scope.listOperadores = result.data;
-                    setTimeout(function() {
-                        $scope.setTablePaging('tblOperadores');
 
-                        $("#tblOperadores_length").removeClass("dataTables_info").addClass("hide-div");
-                        $("#tblOperadores_filter").removeClass("dataTables_info").addClass("pull-left");
-                        $('#modal-panelRuta').modal('hide');
-                        $('#modalOperador').modal('show');
-                    }, 1);
-                } else {
-                    alertFactory.info("No se encontraron resultados !!");
-                    $scope.listOperadores = [];
-                }
-            });
-        } else { $scope.listOperadores = []; }
+        operadorRepository.getOperadores($scope.empresaActual.emp_idempresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.listOperadores = result.data;
+                setTimeout(function() {
+                    $scope.setTablePaging('tblOperadores');
+
+                    $("#tblOperadores_length").removeClass("dataTables_info").addClass("hide-div");
+                    $("#tblOperadores_filter").removeClass("dataTables_info").addClass("pull-left");
+                    $('#modal-panelRuta').modal('hide');
+                    $('#modalOperador').modal('show');
+                }, 1);
+            } else {
+                alertFactory.info("No se encontraron resultados !!");
+                $scope.listOperadores = [];
+            }
+        });
     };
 
-    $scope.panelUnidades = function() {
-        $scope.addUnidad = true;
+    $scope.seleccionaOpe = function(operador) {
+        $scope.nombreOperador = operador.nombre + " " + operador.apellidoPaterno + " " + operador.apellidoMaterno
+        $scope.telefonoOperador = operador.telefono;
+        $scope.idOperador = operador.idOperador;
+        $('#modalOperador').modal('hide');
+        $('#modal-panelRuta').modal('show');
     };
 
     $scope.getUnidades = function() {
         $('#tblUnidades').DataTable().destroy();
         $scope.listUnidades = [];
-        if ($scope.empresaActual.emp_idempresa != 0) {
-            unidadRepository.getUnidades($scope.empresaActual.emp_idempresa).then(function(result) {
-                if (result.data.length > 0) {
-                    $scope.listUnidades = result.data;
-                    setTimeout(function() {
-                        $scope.setTablePaging('tblUnidades');
 
-                        $("#tblUnidades_length").removeClass("dataTables_info").addClass("hide-div");
-                        $("#tblUnidades_filter").removeClass("dataTables_info").addClass("pull-left");
-                        $('#modal-panelRuta').modal('hide');
-                        $('#modalUnidad').modal('show');
-                    }, 1);
-                } else {
-                    alertFactory.info("No se encontraron resultados !!");
-                    $scope.listUnidades = [];
-                }
-            });
-        } else { $scope.listUnidades = []; }
+        unidadRepository.getUnidades($scope.empresaActual.emp_idempresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.listUnidades = result.data;
+                setTimeout(function() {
+                    $scope.setTablePaging('tblUnidades');
+
+                    $("#tblUnidades_length").removeClass("dataTables_info").addClass("hide-div");
+                    $("#tblUnidades_filter").removeClass("dataTables_info").addClass("pull-left");
+                    $('#modal-panelRuta').modal('hide');
+                    $('#modalUnidad').modal('show');
+                }, 1);
+            } else {
+                alertFactory.info("No se encontraron resultados !!");
+                $scope.listUnidades = [];
+            }
+        });
     };
 
     $scope.seleccionaUni = function(unidad) {
@@ -216,145 +389,60 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
         $scope.idUnidad = unidad.idUnidad;
         $('#modal-panelRuta').modal('show');
         $('#modalUnidad').modal('hide');
-        $scope.txtu = 'Cambia Unidad';
-        $scope.veru = true;
-        // $scope.btnSave = true;
-
-    };
-
-    $scope.ultimoPaso = function() {
-        $scope.verHeader = true;
-    };
-
-    $scope.atrasSave = function() {
-        $scope.verHeader = false;
     };
 
 
 
-    $scope.salir = function() {
-
-        $('#modal-panelRuta').modal('hide');
 
 
 
-    };
+    $scope.catalogoRutas = function() {
+        rutaRepository.getCatalogoRutas($scope.empresaActual.emp_idempresa).then(function(result) {
 
-
-    $scope.seleccionaOpe = function(operador) {
-        $scope.nombreOperador = operador.nombre + " " + operador.apellidoPaterno + " " + operador.apellidoMaterno
-        $scope.telefonoOperador = operador.telefono;
-        $scope.idOperador = operador.idOperador;
-        $('#modalOperador').modal('hide');
-        $('#modal-panelRuta').modal('show');
-        $scope.txto = 'Cambia Operador';
-        $scope.vero = true;
-        $scope.addUnidad = true;
-    };
-
-    $scope.changePanel = function() {
-        $('#modal-panelRuta').modal('show');
-    };
-    $scope.cambioEmpresa = function() {
-        $scope.clean();
-        $('#tblOperadoresUnidadesRutas').DataTable().destroy();
-       rutaRepository.getRutas($scope.empresaActual.emp_idempresa).then(function(result){
-
-         $scope.OperadoresUnidadesRutas=result.data;
-          setTimeout(function() {
-            $scope.setTablePaging('tblOperadoresUnidadesRutas');
-
-            $("#tblOperadoresUnidadesRutas_length").removeClass("dataTables_info").addClass("hide-div");
-            $("#tblOperadoresUnidadesRutas_filter").removeClass("dataTables_info").addClass("pull-left");
-
-        }, 1);
-
-       });
-
-
-
-       
-        $scope.getOperadoresL();
-        $scope.getUnidadesL();
-
-    };
-
-    $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario, 'user').then(function(result) {
             if (result.data.length > 0) {
-           
-                $scope.empresas = result.data;
-                $scope.empresaActual = $scope.empresas[0];
-
-                //SET EMPRESA LOCALSTORAGE   BEGIN
-                if (localStorage.getItem('pedEmpresa') !== null) {
-                    $scope.pedEmpresa = [];
-                    $scope.tempPedEmp = localStorage.getItem('pedEmpresa');
-                    $scope.pedEmpresa.push(JSON.parse($scope.tempPedEmp));
-                    setTimeout(function() {
-                        $("#selEmpresas").val($scope.pedEmpresa[0][0].emp_idempresa);
-                        $scope.empresaActual = $scope.pedEmpresa[0][0];
-                    }, 100);
-                }
-            } else {
-                alertFactory.success('No se encontraron empresas');
-            }
+                $scope.rutas = result.data;
+                $scope.rutas.unshift({ nombreRuta: "Seleccioné Ruta..." });
+                $scope.rutaActual = $scope.rutas[0];
+                $scope.hideListCatRut = false;
+            } else { $scope.hideListCatRut = true; }
         });
     };
 
-
-
-    $scope.editar = function(elementoRuta) {
-
-        $scope.nombreRuta = elementoRuta.ruta;
-        $scope.descripcionUni = elementoRuta.unidad;
-        $scope.nombreOperador = elementoRuta.operador;
-        $scope.descripcion = elementoRuta.descripcion;
-
-        // rutaRepository.getDireccRuta(elementoRuta.idRuta).then(function(result){
-        //     $scope.dirForadd=result.data;
-
-        // });
-        
-
-        $('#modal-panelRuta').modal('show');
-
-
-    };
-
-
-    $scope.getOperadoresL = function() {
-
-        if ($scope.empresaActual.emp_idempresa != 0) {
-            operadorRepository.getOperadores($scope.empresaActual.emp_idempresa).then(function(result) {
-                if (result.data.length > 0) {
-                    console.log('ope:::');
-                    console.log(result.data);
-                    $scope.operadores = result.data;
-                    $scope.operadores.unshift({ nombre: 'Selecciona Operador..' });
-                    $scope.operadorActual = $scope.operadores[0];
-
-                }
-            });
+    $scope.cambioPlantillaRuta = function() {
+        if ($scope.rutaActual.idRuta > 0) {
+            $scope.inputNewRuta = false;
+            $scope.nombreRuta = $scope.rutaActual.nombreRuta;
+        } else {
+            $scope.inputNewRuta = true;
+            $scope.nombreRuta = "";
         }
     };
 
+    $scope.salirOpe = function() {
+        $('#modalOperador').modal('hide');
+        $('#modal-panelRuta').modal('show');
+    };
 
+    $scope.salirUni = function() {
+        $('#modalUnidad').modal('hide');
+        $('#modal-panelRuta').modal('show');
+    };
 
-    $scope.getUnidadesL = function() {
+    $scope.salirDir = function() {
+        $('#modalDirecc').modal('hide');
+        $('#modal-panelRuta').modal('show');
+    };
 
-        if ($scope.empresaActual.emp_idempresa != 0) {
-            unidadRepository.getUnidades($scope.empresaActual.emp_idempresa).then(function(result) {
-                if (result.data.length > 0) {
-                    console.log('uni:::');
-                    console.log(result.data);
-                    $scope.unidades = result.data;
-                    $scope.unidades.unshift({ nomCompleto: 'Selecciona unidad..' });
-                    $scope.unidadActual = $scope.unidades[0];
+    $scope.salir = function() {
+        $('#modal-panelRuta').modal('hide');
+    };
 
-                }
-            });
-        } else { $scope.listUnidades = []; }
+    $scope.comparer = function(otherArray) {
+        return function(current) {
+            return otherArray.filter(function(other) {
+                return other.pre_pedidobpro == current.pre_pedidobpro
+            }).length == 0;
+        }
     };
 
     $scope.setTablePaging = function(idTable) {

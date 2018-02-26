@@ -15,7 +15,7 @@ registrationModule.controller('operadorController', function($sce,$http,$scope, 
 
 
         $scope.getEmpresas = function() {
-                filterFactory.getEmpresas($scope.Usuario.idUsuario, 'admin').then(function(result) {           
+                filterFactory.getEmpresas($scope.Usuario.idUsuario,  $scope.Usuario.rol).then(function(result) {           
                     if (result.data.length > 0) {
                     console.log(result.data, 'Soy las empresas ')
                     $scope.empresas = result.data;
