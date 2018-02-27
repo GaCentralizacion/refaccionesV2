@@ -1,3 +1,4 @@
+<link href="css/modales.css" rel="stylesheet">
 <div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
@@ -75,39 +76,41 @@
 </div>
 
 <div class="modal fade "  id="modalAddOperador" tabindex="-1" role="dialog">
-    <div class="modal-dialog " >
+    <div class="modal-dialog modal-lg" >
         <div class="modal-content">
-            <div class="modal-header">
-          <h4 class="modal-title">Operador:</h4>
+            <div class="modal-header headerModal">
+          
           <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title">Operador</h3>
         </div>
-           <br>
-        <div class="modal-body">
+        <div class="modal-body"> 
+            <div class="row">   
          <div class="col-sm-12">
             <div class="form-group">
-             <!--    <label >Nombre:</label> -->
+                <label >Nombre:</label>
                 <div >
-                    <input  ng-disabled="bloquea" ng-model="nombre" placeholder="Nombre" id="nombre" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="nombre" placeholder="" id="nombre" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group">
-            <!--     <label >Apellido Paterno:</label> -->
+                <label >Apellido Paterno:</label>
                 <div>
-                    <input  ng-disabled="bloquea" ng-model="apPaterno" placeholder="Apellido Paterno" id="apPaterno" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="apPaterno" placeholder="" id="apPaterno" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Apellido Materno:</label>
                 <div >
-                    <input  ng-disabled="bloquea" ng-model="apMaterno" placeholder="Apellido Materno" id="apMaterno" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="apMaterno" placeholder="" id="apMaterno" type="text" class="form-control">
                 </div>
             </div>
               <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Telefono:</label>
                 <div >
-                    <input ng-disabled="bloquea"  ng-model="telefono" placeholder="Telefono" id="telefono" type="text" class="form-control">
+                    <input ng-disabled="bloquea"  ng-model="telefono" placeholder="" id="telefono" type="text" class="form-control">
                 </div>
             </div>
+        </div>
         </div>
         </div>
         <div class="modal-footer">

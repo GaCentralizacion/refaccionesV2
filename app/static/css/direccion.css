@@ -43,3 +43,6 @@
 .close {
     font-size: 30px;
 }
+.modal-dialog {
+    margin-top: 1%;
+}

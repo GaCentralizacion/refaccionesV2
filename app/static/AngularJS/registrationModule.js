@@ -38,18 +38,16 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/ruta.html',
             controller: 'rutaController'
         });
-<<<<<<< HEAD
+
         $routeProvider.when('/despacho', {
             templateUrl: 'AngularJS/Templates/despacho.html',
             controller: 'despachoController'
         });
-=======
+
           $routeProvider.when('/direccionv2', {
             templateUrl: 'AngularJS/Templates/direccionv2.html',
             controller: 'direccionesController'
         });
-
->>>>>>> d8aa28756f90707f8140458f40da3fa561b656a0
 
         $routeProvider.otherwise({ redirectTo: '/' });
 

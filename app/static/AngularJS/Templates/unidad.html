@@ -1,3 +1,4 @@
+<link href="css/modales.css" rel="stylesheet">
 <div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
@@ -112,70 +113,71 @@
 </div>
 
 <div class="modal fade "  id="modalAddUnidad" tabindex="-1" role="dialog">
-    <div class="modal-dialog " >
+    <div class="modal-dialog modal-lg" >
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
           <h4 class="modal-title">Unidad:</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-           <br>
         <div class="modal-body">
+          <div class="row"> 
          <div class="col-sm-12">
             <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Seleccione Marca:</label>
                  <select  ng-disabled="bloquea"  id="marca" class="form-control" ng-options="marca as marca.descripcion for marca in marcas track by marca.idMarca" ng-model="marcaActual"></select>
             </div>
             
-            <div class="form-group">
-            <!--     <label >Apellido Paterno:</label> -->
+            <div class="form-group" >
+                <label >Modelo:</label>
                 <div>
-                    <input  ng-disabled="bloquea" ng-model="modelo" placeholder="Modelo" id="modelo" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="modelo" placeholder="" id="modelo" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group">
-            <!--     <label >Apellido Paterno:</label> -->
+                <label >Año:</label>
                 <div>
-                    <input  ng-disabled="bloquea" ng-model="anio" placeholder="Anio" id="anio" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="anio" placeholder="" id="anio" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group">
-             <!--    <label >Nombre:</label> -->
+                <label >Número de Serie:</label>
                 <div >
-                    <input  ng-disabled="bloquea" ng-model="numserie" placeholder="Numero de Serie" id="numserie" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="numserie" placeholder="" id="numserie" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Color:</label>
                 <div >
-                    <input  ng-disabled="bloquea" ng-model="color" placeholder="Color" id="color" type="text" class="form-control">
+                    <input  ng-disabled="bloquea" ng-model="color" placeholder="" id="color" type="text" class="form-control">
                 </div>
             </div>
               <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Placas:</label>
                 <div >
-                    <input ng-disabled="bloquea"  ng-model="placas" placeholder="Placas" id="placas" type="text" class="form-control">
+                    <input ng-disabled="bloquea"  ng-model="placas" placeholder="" id="placas" type="text" class="form-control">
                 </div>
             </div>
               <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Tipo de Carga:</label>
                  <select  ng-disabled="bloquea"  id="tipo" class="form-control" ng-options="tipo as tipo.Descripcion for tipo in tipos track by tipo.idTipoCarga" ng-model="tipoActual"></select>
             </div>
               <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Capacidad:</label>
                 <div >
-                    <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="Capacidad" id="capacidad" type="text" class="form-control">
+                    <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="" id="capacidad" type="text" class="form-control">
                 </div>
                
-             <!--    <label >Apellido Materno:</label> -->
+                <label >Peso:</label>
                  <select  ng-disabled="bloquea"  id="pesos" class="form-control" ng-options="peso as peso.descripcion for peso in pesos track by peso.idPesoUnida" ng-model="pesoActual"></select>
             
             </div>
               <div class="form-group">
-             <!--    <label >Apellido Materno:</label> -->
+                <label >m3:</label>
                 <div >
                     <input ng-disabled="bloquea"  ng-model="metroscu" placeholder="m3" id="metroscu" type="text" class="form-control">
                 </div>
             </div>
+        </div>
         </div>
         </div>
         <div class="modal-footer">

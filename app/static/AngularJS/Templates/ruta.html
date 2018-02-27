@@ -1,3 +1,4 @@
+<link href="css/modales.css" rel="stylesheet">
 <link href="css/ruta.css" rel="stylesheet">
 <div id="page-content" ng-init="init()">
     <div class="row ">
@@ -97,9 +98,9 @@
 
 
 <div class="modal fade " id="modalOperador" tabindex="-1" role="dialog">
-    <div class="modal-dialog ">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
                 <h4 class="modal-title">Selecciona Operador:</h4>
                 <button type="button" class="close" ng-click="salirOpe()">&times;</button>
             </div>
@@ -230,14 +231,15 @@
 
 <!--Ruta crea la ruta-->
 <div class="modal fade " id="modalAddRuta" tabindex="-1" role="dialog">
-    <div class="modal-dialog ">
+    <div class="modal-dialog  modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
                 <h4 class="modal-title">Ruta / Operador / Unidad</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <br>
             <div class="modal-body">
+                <div class="row">
                 <div class="col-sm-12" style="margin-top: 25px">
                     <div class="form-group" >
                         <label>Nombre:</label>
@@ -265,6 +267,7 @@
                         <label>Unidad:</label>
                         <div> &nbsp; &nbsp;{{descripcionUni}} &nbsp; {{modelo}} </div>
                     </div>
+                </div>
                 </div>
             </div>
             <div class="modal-footer">

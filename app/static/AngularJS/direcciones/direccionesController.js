@@ -565,6 +565,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                         bootbox.alert("<h4> Dirección guardada exitosamente. </h4>",
                             function() {
                                 $('.modal-aprobacion').modal('hide')
+                                $('#modalAltaDirecciones').modal('hide')
                             });
 
                     } //if respuesta.estatus = 0k
@@ -575,6 +576,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                         bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
                             function() {
                                 $('.modal-aprobacion').modal('hide')
+                                $('#modalAltaDirecciones').modal('hide')
                                 //$state.go("user.aprobacion")
                             });
                     }
