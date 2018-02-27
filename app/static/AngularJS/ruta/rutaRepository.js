@@ -33,6 +33,16 @@ registrationModule.factory('rutaRepository', function ($http) {
                 }
             });
         },
+         getCatalogoRutas: function(idEmpresa) {
+            return $http({
+                url: rutaURL + 'catalogoRutas/',
+                method: "GET",
+                params: { idEmpresa: idEmpresa },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
       
        
     };

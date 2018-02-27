@@ -434,8 +434,8 @@ direccion.prototype.get_colonia = function(req, res, next) {
 
     console.log(params)
     self.model.query('SEL_COLONIA_SP', params, function(error, result) {
-            console.log(result,'SOY EL rESULTADO')
-            console.log(error,'SOY EL ERROR')
+        console.log(result, 'SOY EL rESULTADO')
+        console.log(error, 'SOY EL ERROR')
         self.view.expositor(res, {
             error: error,
             result: result
@@ -538,10 +538,10 @@ direccion.prototype.get_listCp = function(req, res, next) {
 
 
 // Obtiene la direccion relacionada con el codigo postal
-direccion.prototype.get_direccionesAll= function(req, res, next) {
+direccion.prototype.get_direccionesAll = function(req, res, next) {
     var self = this;
     //console.log('guarda direccion server')
- 
+
 
     self.model.query('SEL_DIRECCIONES_GENERAL_SP', true, function(error, result) {
         self.view.expositor(res, {
@@ -550,5 +550,25 @@ direccion.prototype.get_direccionesAll= function(req, res, next) {
         });
     });
 };
+
+// Obtiene la direccion relacionada con el codigo postal
+direccion.prototype.get_direccionesRuta = function(req, res, next) {
+    var params = [];
+    var self = this;
+
+     params.push({
+        name: 'ruta',
+        value: req.query.idRuta,
+        type: self.model.types.INT
+    });
+
+self.model.query('SEL_PEDIDOS_X_RUTA_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 
 module.exports = direccion;
