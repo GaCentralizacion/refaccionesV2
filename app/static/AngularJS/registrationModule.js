@@ -49,7 +49,6 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'direccionesController'
         });
 
-
         $routeProvider.otherwise({ redirectTo: '/' });
 
         $locationProvider.html5Mode({

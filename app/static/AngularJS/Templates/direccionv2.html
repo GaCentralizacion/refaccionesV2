@@ -99,7 +99,7 @@
     </div>
 </div>
 <!-- Inicia Modal para nueva dirección -->
-<div class="modal fade modal-cotizacion" tabindex="-1" role="dialog" id="modalAltaDirecciones">
+<div class="modal fade" tabindex="-1" role="dialog" id="modalAltaDirecciones">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header headerModal">
@@ -199,20 +199,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-7">
                         <!--Referencia-->
                         <div class="form-group">
                             <label class="col-md-1 control-label" for="demo-textarea-input">Referencia:</label>
                             <textarea id="demo-textarea-input" rows="2" class="form-control" placeholder="Referencia del domicilio" maxlength="300" ng-model="referencia"></textarea>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <!--label class="col-md-6 control-label">Comprobante de domicilio</label-->
                             <div class="col-md-12">
                                 <form id="upload_form" action="/comprobante" method="POST" enctype="multipart/form-data">
                                     <div style="padding-top: 21px;">
-                                        <label class="btn btn-info" style="background-color: #7B8599;">
+                                        <label class="">
                                             <span class="fa fa-search"> Comprobante de Domicilio:</span>
                                             <input type="file" ngf-select ngf-pattern="'pdf/*'" name="avatar" id="avatar" accept=".pdf" ngf-max-size="20MB" />
                                             <!--onchange="angular.element(this).scope().fileNameChanged(this)" -->
@@ -230,7 +230,7 @@
                     <h4 class="panel-title">Datos de contacto</h4>
                 </div>
                 <hr>
-                <form name="mainForm" ng-submit="guardaDireccion()">
+                <form name="mainForm" >
                     <div class="row">
                         <div class="col-sm-12">
                             <p class="text-main text-bold">Contacto 1</p>
@@ -361,7 +361,7 @@
                 </form>
             </div>
             <div class="panel-footer text-right">
-                <button type="submit" class="finish btn btn-info" ng-show="mostrarGuardar">Guardar Dirección</button>
+                <button type="submit" class="finish btn btn-info" ng-show="mostrarGuardar" ng-click="guardaDireccion()">Guardar Dirección</button>
             </div>
         </div>
     </div>

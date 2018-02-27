@@ -1,0 +1,27 @@
+.headerModal {
+    background-color: #2b425b;
+    text-align:center;
+    color:#fff;
+}
+
+
+
+.close:focus,
+.close:hover {
+    color: #fff;
+}
+
+.modal-body>.close,
+.modal-header>.close {
+    top: 30%;
+}
+
+.close {
+    font-size: 30px;
+}
+.modal-dialog {
+    margin-top: 1%;
+}
+.modal-title {
+    color: #ffffff;
+}
