@@ -1,0 +1,368 @@
+<link href="css/direccion.css" rel="stylesheet">
+<div id="page-content" ng-init="init()">
+    <div class="row ">
+        <div class="col-sm-10 col-sm-push-1 mar-top">
+            <div id="">
+                <h1 class="page-header text-overflow">Direcciones</h1>
+                </h1>
+            </div>
+        </div>
+        <div class="col-sm-10 col-sm-push-1 mar-top ">
+            <div class="panel ">
+                <div class="panel-body pad-top mar-top">
+                    <div class="col-sm-6  col-xs-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Empresa: </label>
+                                <div class="col-sm-8">
+                                    <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Sucursal: </label>
+                                <div class="col-sm-8">
+                                    <select id="selSucursales" ng-change="cambioSucursal(empresaActual,sucursalActual,fecha,fechaFin)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <div ng-hide="!sucursalActual || sucursalActual.AGENCIA == 0 " class="form-horizontal">
+                            <div class="col-sm-11 control-label">
+                                <a ng-click="nuevaDireccion()" class="form-control btn btn-block btn-primary">Nueva Dirección</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="listaDirecciones.length > 0" class=" col-xs-12">
+                        <div>
+                            <!--   -->
+                            <div class=" col-xs-12">
+                                <table id="tblDireccionFiltros" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="display: none;">
+                                                idDireccion
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" style="width: 20%;" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="folio">
+                                                Estado
+                                            </th>
+                                            <th>
+                                                Ciudad
+                                            </th>
+                                            <th>
+                                                Municipio
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                                Colonia
+                                            </th>
+                                            <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
+                                                Calle
+                                            </th>
+                                            <th style="width: 5%;text-align: center;">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="direccion in listaDirecciones">
+                                            <td style="display: none;">
+                                                {{direccion.idDireccion}}
+                                            </td>
+                                            <td>
+                                                {{direccion.Estado}}
+                                            </td>
+                                            <td>
+                                                {{direccion.RTD_CIUDAD}}
+                                            </td>
+                                            <td>
+                                                {{direccion.RTD_DELEGAC}}
+                                            </td>
+                                            <td>
+                                                {{direccion.RTD_COLONIA}}
+                                            </td>
+                                            <td align="right">
+                                                {{direccion.RTD_CALLE1}}
+                                            </td>
+                                            <td style="width: 15%;text-align: center;">
+                                                <a ng-click="verTabs(1,direccion)" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-info btn-icon" ng-click="verDetalleDireccion(direccion)">
+                                        <i class="ti-search"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Inicia Modal para nueva dirección -->
+<div class="modal fade modal-cotizacion" tabindex="-1" role="dialog" id="modalAltaDirecciones">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header headerModal">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 style="text-align:center;color:#fff">Alta de Nueva Dirección de Entrega </h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <h4 class="panel-title">Datos de domicilio</h4>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <!--Estado-->
+                        <div class="form-group">
+                            <label class="control-label">Estado:</label>
+                            <select id="selEstado" ng-change="cambioEstado()" class="form-control" ng-options="edo as edo.descripcion for edo in Estados track by edo.idEdo" ng-model="estadoActual"></select>
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--Ciudad-->
+                        <div class="form-group">
+                            <label class="control-label">Ciudad:</label>
+                            <select id="selCiudad" ng-change="cambioCiudad()" class="form-control" ng-options="ciudad as ciudad.d_ciudad for ciudad in Ciudades track by ciudad.idCiudad" ng-model="ciudadActual"></select>
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--Municipio-->
+                        <div class="form-group">
+                            <label class="control-label">Municipio:</label>
+                            <select id="selMunicipio" ng-change="cambioMunicipio()" class="form-control" ng-options="municipio as municipio.municipio for municipio in Municipios track by municipio.idMunicipio" ng-model="municipioActual"></select>
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--Colonia-->
+                        <div class="form-group">
+                            <label class="control-label">Colonia:</label>
+                            <select id="selColonia" ng-change="cambioColonia()" class="form-control" ng-options="col as col.colonia for col in Colonias track by col.idColonia" ng-model="coloniaActual"></select>
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <!--Calle-->
+                        <div class="form-group">
+                            <label class="control-label">Calle:</label>
+                            <input type="text" class="form-control" placeholder="Calle" ng-model="calle" maxlength="64">
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--No. Ext.-->
+                        <div class="form-group">
+                            <label class="control-label">No. Ext.:</label>
+                            <input type="text" class="form-control" placeholder="Número Exterior" ng-model="exterior" maxlength="20">
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--No. Int.-->
+                        <div class="form-group">
+                            <label class="control-label">No. Int.:</label>
+                            <input type="text" class="form-control" placeholder="Número Interior" ng-model="interior" maxlength="20">
+                            <small class="help-block"></small>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <!--Cp-->
+                        <div class="form-group">
+                            <label class="control-label">C.P.:</label>
+                            <!-- <select id="selCp" ng-change="cambioCp()" class="form-control" ng-options="cod as cod.cp for cod in Codigos" ng-model="cpActual"></select>
+                                            <small class="help-block"></small> -->
+                            <div class="input-group">
+                                <input autocomplete="off" ng-change="buscarCP()" ng-model="cpActual" placeholder="Buscar" id="inputCp" type="text" class="form-control" numbers-only>
+                                <span class="input-group-btn">
+                                                    <button ng-click="clearQuery()" class="btn btn-primary btn-small" type="button"><i class="fa fa-angle-double-left"></i></button>
+                                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: -15px;" class="col-xs-3 col-md-offset-9">
+                        <div ng-show="busquedaActual.length > 0 && busquedaActual.length > 1" class="form-group query-container  ">
+                            <table style="margin-top:35px;" class="table table-hover ">
+                                <tbody>
+                                    <tr class="list-group-item-custom" ng-repeat="cp in busquedaActual">
+                                        <td style="width:20%" ng-click="seleccionCp(cp.d_codigo)" class="cursor">
+                                            {{cp.d_codigo}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <!--Referencia-->
+                        <div class="form-group">
+                            <label class="col-md-1 control-label" for="demo-textarea-input">Referencia:</label>
+                            <textarea id="demo-textarea-input" rows="2" class="form-control" placeholder="Referencia del domicilio" maxlength="300" ng-model="referencia"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!--label class="col-md-6 control-label">Comprobante de domicilio</label-->
+                            <div class="col-md-12">
+                                <form id="upload_form" action="/comprobante" method="POST" enctype="multipart/form-data">
+                                    <div style="padding-top: 21px;">
+                                        <label class="btn btn-info" style="background-color: #7B8599;">
+                                            <span class="fa fa-search"> Comprobante de Domicilio:</span>
+                                            <input type="file" ngf-select ngf-pattern="'pdf/*'" name="avatar" id="avatar" accept=".pdf" ngf-max-size="20MB" />
+                                            <!--onchange="angular.element(this).scope().fileNameChanged(this)" -->
+                                        </label>
+                                    </div>
+                                    <!--input type='submit'-->
+                                    <!--                                                                        <p>{{progress}}</p>-->
+                                </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h4 class="panel-title">Datos de contacto</h4>
+                </div>
+                <hr>
+                <form name="mainForm" ng-submit="guardaDireccion()">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="text-main text-bold">Contacto 1</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Nombre:</label>
+                                <input type="text" class="form-control" ng-model="nombre1" maxlength="80">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Apellido Paterno:</label>
+                                <input type="text" class="form-control" ng-model="apaterno1" maxlength="40">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Apellido Materno:</label>
+                                <input type="text" class="form-control" ng-model="amaterno1" maxlength="40">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">R.F.C.:</label>
+                                <input type="text" class="form-control" ng-model="rfc1" maxlength="15">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label class="control-label">Lada:</label>
+                                <input type="text" class="form-control" ng-model="lada1" maxlength="6" numbers-only>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Telefono:</label>
+                                <input type="text" class="form-control" ng-model="tel1_1" maxlength="12" numbers-only>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Celular:</label>
+                                <input type="text" class="form-control" ng-model="tel2_1" maxlength="12" numbers-only>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="control-label" for="demo-email-input">Correo Electrónico:</label>
+                                <input type="email" class="form-control" ng-model="correo1" maxlength="64">
+                                <span class="error" ng-show="mainForm.correo1.$error.email">invalid email</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="text-main text-bold">Contacto 2</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Nombre:</label>
+                                <input type="text" class="form-control" ng-model="nombre2" maxlength="80">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Apellido Paterno:</label>
+                                <input type="text" class="form-control" ng-model="apaterno2" maxlength="40">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Apellido Materno:</label>
+                                <input type="text" class="form-control" ng-model="amaterno2" maxlength="40">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label ">R.F.C.:</label>
+                                <input type="text" class="form-control" ng-model="rfc2" maxlength="15">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label class="control-label">Lada:</label>
+                                <input type="text" class="form-control" ng-model="lada2" maxlength="6" numbers-only>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Telefono:</label>
+                                <input type="tel" class="form-control" ng-model="tel1_2" maxlength="12" numbers-only>
+                                <span class="error" ng-show="mainForm.tel1_2.$error.tel">invalid email</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Celular:</label>
+                                <input type="text" class="form-control" ng-model="tel2_2" maxlength="12" numbers-only>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="control-label" for="demo-email-input">Correo Electrónico:</label>
+                                <input type="email" id="mailContacto2" class="form-control" ng-model="correo2" maxlength="64">
+                                <span class="error" ng-show="mainForm.mailContacto2.$error.email">invalid email</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="demo-email-input">Correo Electrónico General de Sucursal:</label>
+                                <input type="email" class="form-control" ng-model="correoGeneral" maxlength="64">
+                                <!-- <span>invalid email {{mainForm.correoGeneral.$error.email}} {{mainForm.correoGeneral.$dirty}} {{mainForm.correoGeneral.$error.pattern}}</span> -->
+                                <!--  class="error" ng-show="{{mainForm.correoGeneral.$error.email}}" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="correoGeneral" -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" class="finish btn btn-info" ng-show="mostrarGuardar">Guardar Dirección</button>
+            </div>
+        </div>
+    </div>
+</div>
