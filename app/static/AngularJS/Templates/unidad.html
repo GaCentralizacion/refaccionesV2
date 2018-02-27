@@ -37,6 +37,9 @@
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="modelo">
                                         Modelo
                                     </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="anio">
+                                        Año
+                                    </th>
                                   <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
                                         Color
                                     </th>
@@ -68,6 +71,9 @@
                                      <td>
                                         <span>{{unidad.modelo}}</span>
                                     </td>
+                                      <td>
+                                        <span>{{unidad.anio}}</span>
+                                    </td>
                                      <td>
                                         <span>{{unidad.color}}</span>
                                     </td>
@@ -79,7 +85,7 @@
                                         <span>{{unidad.Tipo}}</span>
                                     </td>
                                      <td>
-                                        <span>{{unidad.capacidad}}</span>
+                                        <span>{{unidad.capacidad}} {{unidad.descripcionP}}</span>
                                     </td>
                                      <td>
                                         <span>{{unidad.metrosCubicos}}</span>
@@ -127,6 +133,12 @@
                 </div>
             </div>
             <div class="form-group">
+            <!--     <label >Apellido Paterno:</label> -->
+                <div>
+                    <input  ng-disabled="bloquea" ng-model="anio" placeholder="Anio" id="anio" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
              <!--    <label >Nombre:</label> -->
                 <div >
                     <input  ng-disabled="bloquea" ng-model="numserie" placeholder="Numero de Serie" id="numserie" type="text" class="form-control">
@@ -153,6 +165,10 @@
                 <div >
                     <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="Capacidad" id="capacidad" type="text" class="form-control">
                 </div>
+               
+             <!--    <label >Apellido Materno:</label> -->
+                 <select  ng-disabled="bloquea"  id="pesos" class="form-control" ng-options="peso as peso.descripcion for peso in pesos track by peso.idPesoUnida" ng-model="pesoActual"></select>
+            
             </div>
               <div class="form-group">
              <!--    <label >Apellido Materno:</label> -->

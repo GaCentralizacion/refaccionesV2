@@ -54,6 +54,15 @@ registrationModule.factory('unidadRepository', function ($http) {
                 }
             });
         },
-       
+        getPesoUni: function() {
+
+            return $http({
+                url: unidadURL + 'pesoUni/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
     };
 });

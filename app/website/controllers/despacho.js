@@ -1,13 +1,13 @@
-var rutaView = require('../views/reference'),
-    rutaModel = require('../models/dataAccess'),
+var despachoView = require('../views/reference'),
+    despachoModel = require('../models/dataAccess'),
     jsonxml = require('jsontoxml')
 
 
-var ruta = function(conf) {
+var despacho = function(conf) {
     this.conf = conf || {};
 
-    this.view = new rutaView();
-    this.model = new rutaModel({
+    this.view = new despachoView();
+    this.model = new despachoModel({
         parameters: this.conf.parameters
     });
 
@@ -16,9 +16,13 @@ var ruta = function(conf) {
     };
 };
 
-ruta.prototype.post_create = function(req, res, next) {
+despacho.prototype.post_create = function(req, res, next) {
    var self = this;
-   
+      for (var i = 0; i < req.body.direcciones.length; i++) {
+        req.body.direcciones[i] = {
+            direccion: req.body.direcciones[i]
+        }
+    }
 
     var params = [
         { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
@@ -27,7 +31,13 @@ ruta.prototype.post_create = function(req, res, next) {
         { name: 'descripcion', value: req.body.descripcion, type: self.model.types.STRING },
         { name: 'idOperador', value: req.body.idOperador, type: self.model.types.INT },
         { name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },
-       
+        {
+            name: 'direcciones',
+            value: jsonxml({
+                direcciones: req.body.direcciones
+            }),
+            type: self.model.types.STRING
+        }
     ];
    
 console.log(params);
@@ -39,20 +49,31 @@ console.log(params);
         });
     });
 };
-ruta.prototype.post_update = function(req, res, next) {
+despacho.prototype.post_update = function(req, res, next) {
    var self = this;
- 
+      for (var i = 0; i < req.body.direcciones.length; i++) {
+        req.body.direcciones[i] = {
+            direccion: req.body.direcciones[i]
+        }
+    }
 
     var params = [
         { name: 'idRuta', value: req.body.idRuta, type: self.model.types.INT },
         { name: 'tipo', value: req.body.tipo, type: self.model.types.INT },
+        { name: 'situacionRuta', value: req.body.situacionRuta, type: self.model.types.INT },
         { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
         { name: 'nombreRuta', value: req.body.nombreRuta, type: self.model.types.STRING },
         { name: 'descripcion', value: req.body.descripcion, type: self.model.types.STRING },
         { name: 'idOperador', value: req.body.idOperador, type: self.model.types.INT },
         { name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },
-      
+        {
+            name: 'direcciones',
+            value: jsonxml({
+                direcciones: req.body.direcciones
+            }),
+            type: self.model.types.STRING
+        }
     ];
    
  console.log(params);
@@ -65,7 +86,7 @@ ruta.prototype.post_update = function(req, res, next) {
         });
     });
 };
-ruta.prototype.get_rutasShow = function(req, res, next) {
+despacho.prototype.get_rutasShow = function(req, res, next) {
    var self = this;
 
     var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
@@ -78,7 +99,7 @@ ruta.prototype.get_rutasShow = function(req, res, next) {
     });
 };
 
-ruta.prototype.get_catalogoRutas = function(req, res, next) {
+despacho.prototype.get_catalogoRutas = function(req, res, next) {
    var self = this;
 
     var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
@@ -92,4 +113,4 @@ ruta.prototype.get_catalogoRutas = function(req, res, next) {
 };
 
 
-module.exports = ruta;
+module.exports = despacho;

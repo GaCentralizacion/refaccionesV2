@@ -10,6 +10,7 @@
      entrega: require('./controllers/entrega'),
      operador: require('./controllers/operador'),
      unidad: require('./controllers/unidad'),
-     ruta: require('./controllers/ruta')
+     ruta: require('./controllers/ruta'),
+     despacho: require('./controllers/despacho')
 
  }
