@@ -563,6 +563,7 @@ direccion.prototype.get_direccionesRuta = function(req, res, next) {
     });
 
     self.model.query('SEL_PEDIDOS_X_RUTA_SP', params, function(error, result) {
+      
         self.view.expositor(res, {
             error: error,
             result: result
