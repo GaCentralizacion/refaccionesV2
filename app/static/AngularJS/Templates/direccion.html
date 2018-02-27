@@ -63,7 +63,7 @@
                                     <div class="col-sm-3">
                                         <!--Estado-->
                                         <div class="form-group">
-                                            <label class="control-label">Estado</label>
+                                            <label class="control-label">Estado:</label>
                                             <select id="selEstado" ng-change="cambioEstado()" class="form-control" ng-options="edo as edo.descripcion for edo in Estados track by edo.idEdo" ng-model="estadoActual"></select>
                                             <small class="help-block"></small>
                                         </div>
@@ -71,7 +71,7 @@
                                     <div class="col-sm-3">
                                         <!--Ciudad-->
                                         <div class="form-group">
-                                            <label class="control-label">Ciudad</label>
+                                            <label class="control-label">Ciudad:</label>
                                             <select id="selCiudad" ng-change="cambioCiudad()" class="form-control" ng-options="ciudad as ciudad.d_ciudad for ciudad in Ciudades track by ciudad.idCiudad" ng-model="ciudadActual"></select>
                                             <small class="help-block"></small>
                                         </div>
@@ -79,7 +79,7 @@
                                     <div class="col-sm-3">
                                         <!--Municipio-->
                                         <div class="form-group">
-                                            <label class="control-label">Municipio</label>
+                                            <label class="control-label">Municipio:</label>
                                             <select id="selMunicipio" ng-change="cambioMunicipio()" class="form-control" ng-options="municipio as municipio.municipio for municipio in Municipios track by municipio.idMunicipio" ng-model="municipioActual"></select>
                                             <small class="help-block"></small>
                                         </div>
@@ -161,7 +161,7 @@
                                                 <form id="upload_form" action="/comprobante" method="POST" enctype="multipart/form-data">
                                                     <div style="padding-top: 21px;">
                                                         <label class="btn btn-info" style="background-color: #7B8599;">
-                                                            <span class="fa fa-search"> Comprobante de domicilio</span>
+                                                            <span class="fa fa-search"> Comprobante de Domicilio:</span>
                                                             <input type="file" ngf-select ngf-pattern="'pdf/*'" name="avatar" id="avatar" accept=".pdf" ngf-max-size="20MB" />
                                                             <!--onchange="angular.element(this).scope().fileNameChanged(this)" -->
                                                         </label>
@@ -197,25 +197,25 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Nombre</label>
+                                                <label class="control-label">Nombre:</label>
                                                 <input type="text" class="form-control" ng-model="nombre1" maxlength="80">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Apellido Paterno</label>
+                                                <label class="control-label">Apellido Paterno:</label>
                                                 <input type="text" class="form-control" ng-model="apaterno1" maxlength="40">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Apellido Materno</label>
+                                                <label class="control-label">Apellido Materno:</label>
                                                 <input type="text" class="form-control" ng-model="amaterno1" maxlength="40">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">R.F.C.</label>
+                                                <label class="control-label">R.F.C.:</label>
                                                 <input type="text" class="form-control" ng-model="rfc1" maxlength="15">
                                             </div>
                                         </div>
@@ -223,25 +223,25 @@
                                     <div class="row ">
                                         <div class="col-sm-1">
                                             <div class="form-group">
-                                                <label class="control-label">Lada</label>
+                                                <label class="control-label">Lada:</label>
                                                 <input type="text" class="form-control" ng-model="lada1" maxlength="6" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 1</label>
+                                                <label class="control-label">Telefono:</label>
                                                 <input type="text" class="form-control" ng-model="tel1_1" maxlength="12" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 2</label>
+                                                <label class="control-label">Celular:</label>
                                                 <input type="text" class="form-control" ng-model="tel2_1" maxlength="12" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
-                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 1</label>
+                                                <label class="control-label" for="demo-email-input">Correo Electrónico:</label>
                                                 <input type="email" class="form-control" ng-model="correo1" maxlength="64">
                                                 <span class="error" ng-show="mainForm.correo1.$error.email">invalid email</span>
                                             </div>
@@ -255,25 +255,25 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Nombre</label>
+                                                <label class="control-label">Nombre:</label>
                                                 <input type="text" class="form-control" ng-model="nombre2" maxlength="80">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Apellido Paterno</label>
+                                                <label class="control-label">Apellido Paterno:</label>
                                                 <input type="text" class="form-control" ng-model="apaterno2" maxlength="40">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Apellido Materno</label>
+                                                <label class="control-label">Apellido Materno:</label>
                                                 <input type="text" class="form-control" ng-model="amaterno2" maxlength="40">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label ">R.F.C.</label>
+                                                <label class="control-label ">R.F.C.:</label>
                                                 <input type="text" class="form-control" ng-model="rfc2" maxlength="15">
                                             </div>
                                         </div>
@@ -281,26 +281,26 @@
                                     <div class="row">
                                         <div class="col-sm-1">
                                             <div class="form-group">
-                                                <label class="control-label">Lada</label>
+                                                <label class="control-label">Lada:</label>
                                                 <input type="text" class="form-control" ng-model="lada2" maxlength="6" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 1</label>
+                                                <label class="control-label">Telefono:</label>
                                                 <input type="tel" class="form-control" ng-model="tel1_2" maxlength="12" numbers-only>
                                                 <span class="error" ng-show="mainForm.tel1_2.$error.tel">invalid email</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 2</label>
+                                                <label class="control-label">Celular:</label>
                                                 <input type="text" class="form-control" ng-model="tel2_2" maxlength="12" numbers-only>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
-                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 2</label>
+                                                <label class="control-label" for="demo-email-input">Correo Electrónico:</label>
                                                 <input type="email" id="mailContacto2" class="form-control" ng-model="correo2" maxlength="64">
                                                 <span class="error" ng-show="mainForm.mailContacto2.$error.email">invalid email</span>
                                             </div>
@@ -309,14 +309,16 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label class="control-label" for="demo-email-input">Correo electronico general de sucursal</label>
+                                                <label class="control-label" for="demo-email-input">Correo Electrónico General de Sucursal:</label>
                                                 <input type="email" class="form-control" ng-model="correoGeneral" maxlength="64">
-                                                <span class="error" ng-show="mainForm.correoGeneral.$error.email">invalid email</span>
+                                                <!-- <span>invalid email {{mainForm.correoGeneral.$error.email}} {{mainForm.correoGeneral.$dirty}} {{mainForm.correoGeneral.$error.pattern}}</span> -->
+                                                <!--  class="error" ng-show="{{mainForm.correoGeneral.$error.email}}" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="correoGeneral" -->
                                             </div>
                                         </div>
                                     </div>
                                     <div class="panel-footer text-right" style="background-color: #FFFFFF;">
-                                        <button type="submit" class="finish btn btn-info">Guardar dirección</button>
+                                        <button class="finish btn btn-success" ng-click="actualizaDireccion()" ng-show="mostrarActualizar">Actualizar Dirección</button>
+                                        <button type="submit" class="finish btn btn-info" ng-show="mostrarGuardar">Guardar Dirección</button>
                                         <!--a ng-click="guardaDireccion()" type="button" class="finish btn btn-info">Guardar dirección</a-->
                                     </div>
                                 </form>
@@ -373,12 +375,13 @@
                                 <td align="right">
                                     {{direccion.RTD_CALLE1}}
                                 </td>
-                                <td style="width: 5%;text-align: center;">
+                                <td style="width: 15%;text-align: center;">
                                     <!--a href="{{'/aprobacion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a-->
                                     <!--button ng-click="borrarDireccion(direccion)" class="btn btn-danger btn-icon"><i class="fa fa-trash-o"></i></button-->
                                     <!--   <a href="{{'/direccion/'+direccion.idDireccion}}" class="btn btn-success btn-icon"><i class="fa fa-search"></i></a> -->
-                                    <a class="btn btn-info btn-icon">
-                                        <i class="ti-search" ng-click="verDetalleDireccion(direccion)"></i></a>
+                                    <a ng-click="verTabs(1,direccion)" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                    <a class="btn btn-info btn-icon" ng-click="verDetalleDireccion(direccion)">
+                                        <i class="ti-search"></i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -550,19 +553,19 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 1</label>
+                                                <label class="control-label">Telefono</label>
                                                 <input type="text" class="form-control" ng-model="direccion.RTD_TEL1PER1" readonly="true">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 2</label>
+                                                <label class="control-label">Celular</label>
                                                 <input type="text" class="form-control" ng-model="direccion.RTD_TEL2PER1" readonly="true">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
-                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 1</label>
+                                                <label class="control-label" for="demo-email-input">Correo electrónico</label>
                                                 <input type="email" class="form-control" ng-model="direccion.RTD_EMAILPER1" readonly="true">
                                             </div>
                                         </div>
@@ -607,19 +610,19 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 1</label>
+                                                <label class="control-label">Telefono</label>
                                                 <input type="text" class="form-control" ng-model="direccion.RTD_TEL1PER2" readonly="true">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label class="control-label">Telefono 2</label>
+                                                <label class="control-label">Celular</label>
                                                 <input type="text" class="form-control" ng-model="direccion.RTD_TEL2PER2" readonly="true">
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
-                                                <label class="control-label" for="demo-email-input">Correo electronico Contacto 2</label>
+                                                <label class="control-label" for="demo-email-input">Correo electrónico</label>
                                                 <input type="email" class="form-control" ng-model="direccion.RTD_EMAILPER2" readonly="true">
                                             </div>
                                         </div>
@@ -628,7 +631,7 @@
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label class="control-label" for="demo-email-input">Correo electronico general de sucursal</label>
+                                                    <label class="control-label" for="demo-email-input">Correo electrónico general de sucursal</label>
                                                     <input type="email" class="form-control" ng-model="direccion.RTD_EMAILGENERAL" readonly="true">
                                                 </div>
                                             </div>

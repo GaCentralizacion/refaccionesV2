@@ -7,8 +7,11 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         $scope.getEmpresas();
         $scope.verTabD = false;
         $scope.verTabP = true;
+        $scope.mostrarGuardar = true;
+        $scope.mostrarActualizar = false;
         $scope.actD = 'active';
         $scope.mostrarFormulario = false;
+        $scope.existeColonia = '';
 
     };
 
@@ -114,12 +117,47 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         $('#modal-direccion').modal('show');
     };
 
-    $scope.verTabs = function(tipo) {
+    $scope.verTabs = function(tipo, direccion) {
         if (tipo == 1) {
             $scope.verTabP = true;
             $scope.verTabD = false;
             $scope.actD = 'active';
             $scope.actP = '';
+            $scope.mostrarGuardar = true;
+            $scope.mostrarActualizar = false;
+            $scope.clearFormulario();
+            $scope.clearQuery();
+            if (direccion != undefined && direccion != '') {
+                $scope.existeColonia = direccion.RTD_COLONIA;
+                $scope.mostrarGuardar = false;
+                $scope.mostrarActualizar = true;
+                $scope.calle = direccion.RTD_CALLE1;
+                $scope.exterior = direccion.RTD_NUMEXTER;
+                $scope.interior = direccion.RTD_NUMINER;
+                $scope.referencia = direccion.RTD_OBSERVACIONES
+                // Contacto 1
+                $scope.nombre1 = direccion.RTD_NOMPER1;
+                $scope.apaterno1 = direccion.RTD_PATPER1;
+                $scope.amaterno1 = direccion.RTD_MATPER1;
+                $scope.rfc1 = direccion.RTD_RFCPER1;
+                $scope.lada1 = direccion.RTD_LADAPER1;
+                $scope.tel1_1 = direccion.RTD_TEL1PER1;
+                $scope.tel2_1 = direccion.RTD_TEL2PER1;
+                $scope.correo1 = direccion.RTD_EMAILPER1;
+                // Contacto 2
+                $scope.nombre2 = direccion.RTD_NOMPER2;
+                $scope.apaterno2 = direccion.RTD_PATPER2;
+                $scope.amaterno2 = direccion.RTD_MATPER2;
+                $scope.rfc2 = direccion.RTD_RFCPER2;
+                $scope.lada2 = direccion.RTD_LADAPER2;
+                $scope.tel1_2 = direccion.RTD_TEL1PER2;
+                $scope.tel2_2 = direccion.RTD_TEL2PER2;
+                $scope.correo2 = direccion.RTD_EMAILPER2;
+                $scope.correoGeneral = direccion.RTD_EMAILGENERAL;
+                $scope.seleccionCp(direccion.RTD_CODPOS);
+
+                console.log('SOY LA DIRECCION', direccion)
+            }
         } else {
             $scope.verTabP = false;
             $scope.verTabD = true;
@@ -127,6 +165,31 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             $scope.actD = '';
         }
     };
+    $scope.clearFormulario = function() {
+        $scope.calle = null;
+        $scope.exterior = null;
+        $scope.interior = null;
+        $scope.referencia = null;
+        // Contacto 1
+        $scope.nombre1 = null;
+        $scope.apaterno1 = null;
+        $scope.amaterno1 = null;
+        $scope.rfc1 = null;
+        $scope.lada1 = null;
+        $scope.tel1_1 = null;
+        $scope.tel2_1 = null;
+        $scope.correo1 = null;
+        // Contacto 2
+        $scope.nombre2 = null;
+        $scope.apaterno2 = null;
+        $scope.amaterno2 = null;
+        $scope.rfc2 = null;
+        $scope.lada2 = null;
+        $scope.tel1_2 = null;
+        $scope.tel2_2 = null;
+        $scope.correo2 = null;
+        $scope.correoGeneral = null;
+    }
 
     $scope.consultaEstado = function() {
 
@@ -264,6 +327,13 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             $scope.Colonias.unshift({ idColonia: "0", colonia: "Seleccioné ..." });
             //$scope.Colonias.unshift({ colonia: "Seleccioné ..." });
             $scope.coloniaActual = $scope.Colonias[0];
+            if ($scope.existeColonia != '' && $scope.existeColonia != undefined && $scope.existeColonia != null) {
+                $scope.coloniaActual = $scope.Colonias.find(checaColonia);
+
+                function checaColonia(dir) {
+                    return dir.colonia == $scope.existeColonia;
+                };
+            }
         });
 
 
@@ -388,127 +458,134 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
 
 
     $scope.guardaDireccion = function() {
+        if ($scope.estadoActual.idEdo == $scope.Estados[0].idEdo) {
+            $scope.mensajeEstado = true;
 
-        new Promise(function(resolve, reject) {
-
-            $scope.cadenaConfirma = "<h4>Está a punto de registrar esta dirección ¿Desea continuar?</h4>"
-
-            bootbox.confirm($scope.cadenaConfirma,
-                function(result) {
-                    if (result)
-                        resolve(1)
-                    else
-                        reject(2)
-                }
-            )
-        }).then(function(operacion) {
-
-            console.log('archivo:')
-            console.log($scope.archivoComprobante)
-
-            var files = $('#avatar').prop("files"); //$(ele).get(0).files;
-
-            $scope.comprobante = 0;
-
-            if (files.length > 0)
-                $scope.comprobante = 1;
-
+        } else {
             new Promise(function(resolve, reject) {
-                var datos = {
-                    idUsuario: $scope.Usuario.idUsuario,
-                    idEmpresa: $scope.empresaActual.emp_idempresa,
-                    idSucursal: $scope.sucursalActual.AGENCIA,
-                    estado: $scope.estadoActual.idEdo,
-                    ciudad: $scope.ciudadActual.d_ciudad,
-                    municipio: $scope.municipioActual.municipio,
-                    colonia: $scope.coloniaActual.colonia,
-                    cp: $scope.cpActual,
-                    calle: $scope.calle,
-                    exterior: $scope.exterior,
-                    interior: $scope.interior,
-                    referencia: $scope.referencia,
-                    nombre1: $scope.nombre1,
-                    apaterno1: $scope.apaterno1,
-                    amaterno1: $scope.amaterno1,
-                    rfc1: $scope.rfc1,
-                    lada1: $scope.lada1,
-                    tel1_1: $scope.tel1_1,
-                    tel2_1: $scope.tel2_1,
-                    correo1: $scope.correo1,
-                    nombre2: $scope.nombre2,
-                    apaterno2: $scope.apaterno2,
-                    amaterno2: $scope.amaterno2,
-                    rfc2: $scope.rfc2,
-                    lada2: $scope.lada2,
-                    tel1_2: $scope.tel1_2,
-                    tel2_2: $scope.tel2_2,
-                    correo2: $scope.correo2,
-                    correoGeneral: $scope.correoGeneral,
-                    archivo: $scope.archivoComprobante,
-                    comprobante: $scope.comprobante
-                };
 
-                direccionRepository.postCreate(datos).then(function(result) {
+                $scope.cadenaConfirma = "<h4>Está a punto de registrar esta dirección ¿Desea continuar?</h4>"
 
-                    $scope.empresaActual = $scope.empresas[0];
-                    $scope.sucursalActual = {};
-                    $scope.estadoActual = {};
-                    $scope.ciudadActual = {};
-                    $scope.municipioActual = {};
-                    $scope.coloniaActual = {};
-                    $scope.cpActual = '';
+                bootbox.confirm($scope.cadenaConfirma,
+                    function(result) {
+                        if (result)
+                            resolve(1)
+                        else
+                            reject(2)
+                    }
+                )
+            }).then(function(operacion) {
 
-                    $scope.calle = '';
-                    $scope.exterior = '';
-                    $scope.interior = '';
-                    $scope.referencia = '';
+                console.log('archivo:')
+                console.log($scope.archivoComprobante)
 
-                    $scope.nombre1 = '';
-                    $scope.apaterno1 = '';
-                    $scope.amaterno1 = '';
-                    $scope.rfc1 = '';
-                    $scope.lada1 = '';
-                    $scope.tel1_1 = '';
-                    $scope.tel2_1 = '';
-                    $scope.correo1 = '';
+                var files = $('#avatar').prop("files"); //$(ele).get(0).files;
 
-                    $scope.nombre2 = '';
-                    $scope.apaterno2 = '';
-                    $scope.amaterno2 = '';
-                    $scope.rfc2 = '';
-                    $scope.lada2 = '';
-                    $scope.tel1_2 = '';
-                    $scope.tel2_2 = '';
-                    $scope.correo2 = '';
-                    $scope.correoGeneral = '';
-                    resolve(result.data);
+                $scope.comprobante = 0;
+
+                if (files.length > 0)
+                    $scope.comprobante = 1;
+
+                new Promise(function(resolve, reject) {
+                    var datos = {
+                        idUsuario: $scope.Usuario.idUsuario,
+                        idEmpresa: $scope.empresaActual.emp_idempresa,
+                        idSucursal: $scope.sucursalActual.AGENCIA,
+                        estado: $scope.estadoActual.idEdo,
+                        ciudad: $scope.ciudadActual.d_ciudad,
+                        municipio: $scope.municipioActual.municipio,
+                        colonia: $scope.coloniaActual.colonia,
+                        cp: $scope.cpActual,
+                        calle: $scope.calle,
+                        exterior: $scope.exterior,
+                        interior: $scope.interior,
+                        referencia: $scope.referencia,
+                        nombre1: $scope.nombre1,
+                        apaterno1: $scope.apaterno1,
+                        amaterno1: $scope.amaterno1,
+                        rfc1: $scope.rfc1,
+                        lada1: $scope.lada1,
+                        tel1_1: $scope.tel1_1,
+                        tel2_1: $scope.tel2_1,
+                        correo1: $scope.correo1,
+                        nombre2: $scope.nombre2,
+                        apaterno2: $scope.apaterno2,
+                        amaterno2: $scope.amaterno2,
+                        rfc2: $scope.rfc2,
+                        lada2: $scope.lada2,
+                        tel1_2: $scope.tel1_2,
+                        tel2_2: $scope.tel2_2,
+                        correo2: $scope.correo2,
+                        correoGeneral: $scope.correoGeneral,
+                        archivo: $scope.archivoComprobante,
+                        comprobante: $scope.comprobante
+                    };
+
+                    direccionRepository.postCreate(datos).then(function(result) {
+
+                        $scope.empresaActual = $scope.empresas[0];
+                        $scope.sucursalActual = {};
+                        $scope.estadoActual = {};
+                        $scope.ciudadActual = {};
+                        $scope.municipioActual = {};
+                        $scope.coloniaActual = {};
+                        $scope.cpActual = '';
+
+                        $scope.calle = '';
+                        $scope.exterior = '';
+                        $scope.interior = '';
+                        $scope.referencia = '';
+
+                        $scope.nombre1 = '';
+                        $scope.apaterno1 = '';
+                        $scope.amaterno1 = '';
+                        $scope.rfc1 = '';
+                        $scope.lada1 = '';
+                        $scope.tel1_1 = '';
+                        $scope.tel2_1 = '';
+                        $scope.correo1 = '';
+
+                        $scope.nombre2 = '';
+                        $scope.apaterno2 = '';
+                        $scope.amaterno2 = '';
+                        $scope.rfc2 = '';
+                        $scope.lada2 = '';
+                        $scope.tel1_2 = '';
+                        $scope.tel2_2 = '';
+                        $scope.correo2 = '';
+                        $scope.correoGeneral = '';
+                        resolve(result.data);
+                    });
+
+                }).then(function(respuesta) {
+
+                    if (respuesta.estatus = 'ok') {
+                        // $scope.guardarArchivo(respuesta.idDireccion, $scope.user.per_idpersona);
+
+                        bootbox.alert("<h4> Dirección guardada exitosamente. </h4>",
+                            function() {
+                                $('.modal-aprobacion').modal('hide')
+                            });
+
+                    } //if respuesta.estatus = 0k
+                    else { //error al guardar
+
+                        console.log('error al guardar')
+
+                        bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
+                            function() {
+                                $('.modal-aprobacion').modal('hide')
+                                //$state.go("user.aprobacion")
+                            });
+                    }
+
                 });
 
-            }).then(function(respuesta) {
+            }); //fin promise  
 
-                if (respuesta.estatus = 'ok') {
-                    // $scope.guardarArchivo(respuesta.idDireccion, $scope.user.per_idpersona);
+        }
 
-                    bootbox.alert("<h4> Dirección guardada exitosamente. </h4>",
-                        function() {
-                            $('.modal-aprobacion').modal('hide')
-                        });
 
-                } //if respuesta.estatus = 0k
-                else { //error al guardar
-
-                    console.log('error al guardar')
-
-                    bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
-                        function() {
-                            $('.modal-aprobacion').modal('hide')
-                            //$state.go("user.aprobacion")
-                        });
-                }
-
-            });
-
-        }); //fin promise                    
 
     }; // fin guarda direccion
 
@@ -540,7 +617,140 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         });
     }; //end setTablePaging
 
+//     // Actualiza la dirección  actualizaDireccion
+//         $scope.actualizaDireccion = function(direccion) {
+//         if ($scope.estadoActual.idEdo == $scope.Estados[0].idEdo) {
+//             $scope.mensajeEstado = true;
 
+//         } else {
+//             new Promise(function(resolve, reject) {
+
+//                 $scope.cadenaConfirma = "<h4>Está a punto de actualizar esta dirección ¿Desea continuar?</h4>"
+
+//                 bootbox.confirm($scope.cadenaConfirma,
+//                     function(result) {
+//                         if (result)
+//                             resolve(1)
+//                         else
+//                             reject(2)
+//                     }
+//                 )
+//             }).then(function(operacion) {
+
+//                 console.log('archivo:')
+//                 console.log($scope.archivoComprobante)
+
+//                 var files = $('#avatar').prop("files"); //$(ele).get(0).files;
+
+//                 $scope.comprobante = 0;
+
+//                 if (files.length > 0)
+//                     $scope.comprobante = 1;
+
+//                 new Promise(function(resolve, reject) {
+//                     var datos = {
+//                         idDireccion : direccion.idDireccion
+//                         idUsuario: $scope.Usuario.idUsuario,
+//                         idEmpresa: $scope.empresaActual.emp_idempresa,
+//                         idSucursal: $scope.sucursalActual.AGENCIA,
+//                         estado: $scope.estadoActual.idEdo,
+//                         ciudad: $scope.ciudadActual.d_ciudad,
+//                         municipio: $scope.municipioActual.municipio,
+//                         colonia: $scope.coloniaActual.colonia,
+//                         cp: $scope.cpActual,
+//                         calle: $scope.calle,
+//                         exterior: $scope.exterior,
+//                         interior: $scope.interior,
+//                         referencia: $scope.referencia,
+//                         nombre1: $scope.nombre1,
+//                         apaterno1: $scope.apaterno1,
+//                         amaterno1: $scope.amaterno1,
+//                         rfc1: $scope.rfc1,
+//                         lada1: $scope.lada1,
+//                         tel1_1: $scope.tel1_1,
+//                         tel2_1: $scope.tel2_1,
+//                         correo1: $scope.correo1,
+//                         nombre2: $scope.nombre2,
+//                         apaterno2: $scope.apaterno2,
+//                         amaterno2: $scope.amaterno2,
+//                         rfc2: $scope.rfc2,
+//                         lada2: $scope.lada2,
+//                         tel1_2: $scope.tel1_2,
+//                         tel2_2: $scope.tel2_2,
+//                         correo2: $scope.correo2,
+//                         correoGeneral: $scope.correoGeneral,
+//                         archivo: $scope.archivoComprobante,
+//                         comprobante: $scope.comprobante
+//                     };
+
+//                     direccionRepository.postUpdateDireccion(datos).then(function(result) {
+
+//                         $scope.empresaActual = $scope.empresas[0];
+//                         $scope.sucursalActual = {};
+//                         $scope.estadoActual = {};
+//                         $scope.ciudadActual = {};
+//                         $scope.municipioActual = {};
+//                         $scope.coloniaActual = {};
+//                         $scope.cpActual = '';
+
+//                         $scope.calle = '';
+//                         $scope.exterior = '';
+//                         $scope.interior = '';
+//                         $scope.referencia = '';
+
+//                         $scope.nombre1 = '';
+//                         $scope.apaterno1 = '';
+//                         $scope.amaterno1 = '';
+//                         $scope.rfc1 = '';
+//                         $scope.lada1 = '';
+//                         $scope.tel1_1 = '';
+//                         $scope.tel2_1 = '';
+//                         $scope.correo1 = '';
+
+//                         $scope.nombre2 = '';
+//                         $scope.apaterno2 = '';
+//                         $scope.amaterno2 = '';
+//                         $scope.rfc2 = '';
+//                         $scope.lada2 = '';
+//                         $scope.tel1_2 = '';
+//                         $scope.tel2_2 = '';
+//                         $scope.correo2 = '';
+//                         $scope.correoGeneral = '';
+//                         resolve(result.data);
+//                     });
+
+//                 }).then(function(respuesta) {
+
+//                     if (respuesta.estatus = 'ok') {
+//                         // $scope.guardarArchivo(respuesta.idDireccion, $scope.user.per_idpersona);
+
+//                         bootbox.alert("<h4> Dirección actualizada exitosamente. </h4>",
+//                             function() {
+//                                 $('.modal-aprobacion').modal('hide')
+//                             });
+
+//                     } //if respuesta.estatus = 0k
+//                     else { //error al guardar
+
+//                         console.log('error al guardar')
+
+//                         bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
+//                             function() {
+//                                 $('.modal-aprobacion').modal('hide')
+//                                 //$state.go("user.aprobacion")
+//                             });
+//                     }
+
+//                 });
+
+//             }); //fin promise  
+
+//         }
+
+
+
+//     }; // fin actualiza direccion
+// // 
 
 
 });
