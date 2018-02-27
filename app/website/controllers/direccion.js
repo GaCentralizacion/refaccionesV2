@@ -556,19 +556,63 @@ direccion.prototype.get_direccionesRuta = function(req, res, next) {
     var params = [];
     var self = this;
 
-     params.push({
+    params.push({
         name: 'ruta',
         value: req.query.idRuta,
         type: self.model.types.INT
     });
 
-self.model.query('SEL_PEDIDOS_X_RUTA_SP', params, function(error, result) {
+    self.model.query('SEL_PEDIDOS_X_RUTA_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
 };
+// Update a Direccion in the DB
+direccion.prototype.post_updateDireccion = function(req, res, next) {
+    var self = this;
+    var params = [{ name: 'idDireccion', value: req.body.idDireccion, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
+        { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT },
+        { name: 'estado', value: req.body.estado, type: self.model.types.STRING },
+        { name: 'ciudad', value: req.body.ciudad, type: self.model.types.STRING },
+        { name: 'municipio', value: req.body.municipio, type: self.model.types.STRING },
+        { name: 'colonia', value: req.body.colonia, type: self.model.types.STRING },
+        { name: 'cp', value: req.body.cp, type: self.model.types.STRING },
+        { name: 'calle', value: req.body.calle, type: self.model.types.STRING },
+        { name: 'exterior', value: req.body.exterior, type: self.model.types.STRING },
+        { name: 'interior', value: req.body.interior, type: self.model.types.STRING },
+        { name: 'referencia', value: req.body.referencia, type: self.model.types.STRING },
+        { name: 'nombre1', value: req.body.nombre1, type: self.model.types.STRING },
+        { name: 'apaterno1', value: req.body.apaterno1, type: self.model.types.STRING },
+        { name: 'amaterno1', value: req.body.amaterno1, type: self.model.types.STRING },
+        { name: 'rfc1', value: req.body.rfc1, type: self.model.types.STRING },
+        { name: 'lada1', value: req.body.lada1, type: self.model.types.STRING },
+        { name: 'tel1_1', value: req.body.tel1_1, type: self.model.types.STRING },
+        { name: 'tel2_1', value: req.body.tel2_1, type: self.model.types.STRING },
+        { name: 'correo1', value: req.body.correo1, type: self.model.types.STRING },
+        { name: 'nombre2', value: req.body.nombre2, type: self.model.types.STRING },
+        { name: 'apaterno2', value: req.body.apaterno2, type: self.model.types.STRING },
+        { name: 'amaterno2', value: req.body.amaterno2, type: self.model.types.STRING },
+        { name: 'rfc2', value: req.body.rfc2, type: self.model.types.STRING },
+        { name: 'lada2', value: req.body.lada2, type: self.model.types.STRING },
+        { name: 'tel1_2', value: req.body.tel1_2, type: self.model.types.STRING },
+        { name: 'tel2_2', value: req.body.tel2_2, type: self.model.types.STRING },
+        { name: 'correo2', value: req.body.correo2, type: self.model.types.STRING },
+        { name: 'correoGeneral', value: req.body.correoGeneral, type: self.model.types.STRING },
+        { name: 'comprobante', value: req.body.comprobante, type: self.model.types.INT }
+    ];
 
+    //console.log('SEL_DIRECCION_CLIENTE_SP')
+    //console.log(params)
+    self.model.query('UPD_DIRECCION_CLIENTE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 module.exports = direccion;

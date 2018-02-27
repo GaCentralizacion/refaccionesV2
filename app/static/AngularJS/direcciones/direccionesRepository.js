@@ -128,7 +128,17 @@ registrationModule.factory('direccionRepository', function($http) {
             return $http({
                 url: direccionURL + 'direccionesRuta/',
                 method: "GET",
-                 params: { idRuta: idRuta },
+                params: { idRuta: idRuta },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        postUpdateDireccion: function(direccion) {
+            return $http({
+                url: direccionURL + 'updateDireccion/',
+                method: "POST",
+                data: direccion,
                 headers: {
                     'Content-Type': 'application/json'
                 }
