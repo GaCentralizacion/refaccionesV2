@@ -1,6 +1,8 @@
 registrationModule.controller('despachoController', function($sce, $http, $scope, $rootScope, $location, $timeout, alertFactory, direccionRepository, despachoRepository, filterFactory, userFactory, globalFactory) {
 
 
+$scope.gridRutas = false;
+
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();

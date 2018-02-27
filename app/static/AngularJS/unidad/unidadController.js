@@ -19,8 +19,11 @@ registrationModule.controller('unidadController', function($sce, $http, $scope, 
         unidadRepository.getPesoUni().then(function(result) {
 
             $scope.pesos = result.data; //[{idTipoCarga:1,tipo:'camion'},{idTipoCarga:2,tipo:'tracktor'}];
-            $scope.pesos.unshift({ descripcion: "Seleccioné Tipo de Peso..." });
+            $scope.pesos.unshift({idPesoUnidad:0, descpeso: "Seleccioné Tipo de Peso..." });
+            
             $scope.pesoActual = $scope.pesos[0];
+            console.log($scope.pesos)
+            console.log($scope.pesos[0])
         });
 
     };
@@ -80,7 +83,7 @@ registrationModule.controller('unidadController', function($sce, $http, $scope, 
         });
         $scope.getMarca();
         $scope.getTipoCarga();
-
+        $scope.getPesoUni();
         
 
     };
@@ -119,16 +122,18 @@ registrationModule.controller('unidadController', function($sce, $http, $scope, 
                 };
                 console.log(datos);
 
-                if ($scope.add == true)
+                if ($scope.add == true){
+                    console.log(datos);
                     unidadRepository.postCreate(datos).then(function(result) {
-                        // $scope.limpaValores();
+                       
                         resolve(result.data);
                     });
-                else {
+                }else {
                     datos.idUnidad = $scope.idUnidad;
                     datos.estatus = $scope.tipo;
+                    console.log(datos);
                     unidadRepository.postUpdate(datos).then(function(result) {
-                        //    $scope.limpaValores();
+                      
                         resolve(result.data);
                     });
                 }
@@ -200,7 +205,7 @@ registrationModule.controller('unidadController', function($sce, $http, $scope, 
             $("#marca").val(unidad.idMarca);
             //  $scope.marcaActual = $scope.pedEmpresa[0][0]; //$scope.empresas;
             $("#tipo").val(unidad.idTipoCarga);
-            $("#peso").val(unidad.idPesoUnidad);
+            $("#pesos").val(unidad.idPesoUnidad);
             //  $scope.tipoActual = $scope.pedEmpresa[0][0]; //$scope.empresas;
             $scope.marcaActual.idMarca = unidad.idMarca;
             $scope.tipoActual.idTipoCarga = unidad.idTipoCarga;
@@ -219,7 +224,7 @@ registrationModule.controller('unidadController', function($sce, $http, $scope, 
 
     $scope.cambioEmpresa = function() {
 
- $scope.getPesoUni();
+ 
 
         $('#tblUnidades').DataTable().destroy();
         $scope.listUnidades = [];

@@ -75,12 +75,12 @@ registrationModule.controller('operadorController', function($sce,$http,$scope, 
                                            
                                           };
 
-                            if($scope.add==true) 
+                            if($scope.add==true) {
                                 operadorRepository.postCreate(datos).then(function(result){ 
                                     // $scope.limpaValores();
                                     resolve(result.data);
                                 });  
-                                  else {
+                                  }else {
                                          datos.idOperador=$scope.idOperador;
                                          datos.estatus=$scope.tipo;
                                     operadorRepository.postUpdate(datos).then(function(result){

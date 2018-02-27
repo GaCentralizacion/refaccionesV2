@@ -38,7 +38,10 @@
                                 <thead>
                                     <tr>
                                         <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
-                                            Folio
+                                            Ruta
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descrip">
+                                            Descripción
                                         </th>
                                         <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
                                             Operador
@@ -61,7 +64,10 @@
                                 <tbody>
                                     <tr ng-repeat="ruta in rutas">
                                         <td>
-                                            <span>{{ruta.folio}}</span>
+                                            <span>{{ruta.ruta}}</span>
+                                        </td>
+                                         <td>
+                                            <span>{{ruta.descripcion}}</span>
                                         </td>
                                         <td>
                                             <span>{{ruta.operador}}</span>
@@ -160,12 +166,11 @@
                         <table id="tblUnidades">
                             <thead>
                                 <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
-                                        Marca
-                                    </th>
+                                 
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="modelo">
                                         Modelo
                                     </th>
+                                   
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
                                         Color
                                     </th>
@@ -176,10 +181,10 @@
                                         Tipo
                                     </th>
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="capacidad">
-                                        capacidad
+                                        Capacidad
                                     </th>
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
-                                        metrosCubicos
+                                        m3
                                     </th>
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
                                         Seleccionar
@@ -188,12 +193,11 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="unidad in listUnidades">
+                                 
                                     <td>
-                                        <span>{{unidad.descripcion}}</span>
+                                        <span>{{unidad.descripcion}} {{unidad.modelo}}  {{unidad.anio}}</span>
                                     </td>
-                                    <td>
-                                        <span>{{unidad.modelo}}</span>
-                                    </td>
+                                    
                                     <td>
                                         <span>{{unidad.color}}</span>
                                     </td>
@@ -204,7 +208,7 @@
                                         <span>{{unidad.Tipo}}</span>
                                     </td>
                                     <td>
-                                        <span>{{unidad.capacidad}}</span>
+                                        <span>{{unidad.capacidad}} {{unidad.descripcionP}}</span>
                                     </td>
                                     <td>
                                         <span>{{unidad.metrosCubicos}}</span>

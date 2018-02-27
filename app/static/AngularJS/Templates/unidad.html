@@ -37,9 +37,6 @@
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="modelo">
                                         Modelo
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="anio">
-                                        Año
-                                    </th>
                                   <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
                                         Color
                                     </th>
@@ -50,10 +47,10 @@
                                         Tipo
                                     </th>
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="capacidad">
-                                        capacidad
+                                        Capacidad
                                     </th>
                                   <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
-                                        metrosCubicos
+                                        m3
                                     </th>
                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
                                     Editar
@@ -69,10 +66,7 @@
                                         <span>{{unidad.descripcion}}</span>
                                     </td>
                                      <td>
-                                        <span>{{unidad.modelo}}</span>
-                                    </td>
-                                      <td>
-                                        <span>{{unidad.anio}}</span>
+                                        <span>{{unidad.modelo}} {{unidad.anio}}</span>
                                     </td>
                                      <td>
                                         <span>{{unidad.color}}</span>
@@ -160,14 +154,15 @@
              <!--    <label >Apellido Materno:</label> -->
                  <select  ng-disabled="bloquea"  id="tipo" class="form-control" ng-options="tipo as tipo.Descripcion for tipo in tipos track by tipo.idTipoCarga" ng-model="tipoActual"></select>
             </div>
-              <div class="form-group">
+              <div class="form-group" style="overflow: hidden;">
              <!--    <label >Apellido Materno:</label> -->
-                <div >
+                <div class="col-sm-8">
                     <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="Capacidad" id="capacidad" type="text" class="form-control">
                 </div>
-               
+                <div class="col-sm-4">
              <!--    <label >Apellido Materno:</label> -->
-                 <select  ng-disabled="bloquea"  id="pesos" class="form-control" ng-options="peso as peso.descripcion for peso in pesos track by peso.idPesoUnida" ng-model="pesoActual"></select>
+                 <select  ng-disabled="bloquea"  id="pesos" class="form-control" ng-options="peso as peso.descpeso for peso in pesos track by peso.idPesoUnidad" ng-model="pesoActual"></select>
+                  </div>
             
             </div>
               <div class="form-group">

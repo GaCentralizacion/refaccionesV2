@@ -253,6 +253,7 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
         unidadRepository.getUnidades($scope.empresaActual.emp_idempresa).then(function(result) {
             if (result.data.length > 0) {
                 $scope.listUnidades = result.data;
+                console.log($scope.listUnidades)
                 setTimeout(function() {
                     $scope.setTablePaging('tblUnidades');
 

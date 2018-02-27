@@ -3,7 +3,7 @@
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
             <div id="">
-                <h1 class="page-header text-overflow">Despacho</h1>
+                <h1 class="page-header text-overflow">Despacho Pedidos / Ruta</h1>
                 </h1>
             </div>
         </div>
@@ -21,7 +21,18 @@
                         </div>
                     </div>
                           <div class="row  col-sm-12  recuadro" ng-show="gridRutas" style="margin-top: 50PX">
-                     
+                     <div class="col-sm-4  col-xs-12" >
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                    <div class="col-sm-11 control-label">
+                                        <a class="form-control btn btn-block btn-primary" ng-click="verModalRuta(true,1);" style="font-size: 11px">Crear Reparto</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                         <div class="col-sm-12  mar-top">
                             <table id="tblOperadoresUnidadesRutas">
                                 <thead>
