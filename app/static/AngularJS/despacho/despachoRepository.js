@@ -3,11 +3,11 @@ var despachoURL = global_settings.urlCORS + 'api/despacho/';
 
 registrationModule.factory('despachoRepository', function ($http) {
     return {
-          postCreate: function(ruta) {
+          postCreate: function(despacho) {
             return $http({
                 url: despachoURL + 'create/',
                 method: "POST",
-                data: ruta,
+                data: despacho,
                 headers: {
                     'Content-Type': 'application/json'
                 }
