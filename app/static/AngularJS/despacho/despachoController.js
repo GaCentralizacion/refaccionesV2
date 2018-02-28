@@ -121,15 +121,14 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
         if (tipo == 2) {
             $scope.add = false;
             $scope.bloquea = false;
+               $scope.editarR(despacho);
 
         } else if (tipo == 3) {
             $scope.add = false;
             $scope.bloquea = true;
+               $scope.editarR(despacho);
         }
-        if (despacho != null) {
-          $scope.editarR(despacho);
-
-        }
+      
     };
 
     $scope.verDirecciones = function() {

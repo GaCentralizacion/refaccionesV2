@@ -86,7 +86,7 @@ despacho.prototype.get_rutasShow = function(req, res, next) {
 
     var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
  
-    self.model.query('SEL_RUTAS_EMRPESA_SP ', params, function(error, result) {
+    self.model.query('SEL_DESPACHO_PEDIDOS_RUTA_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
