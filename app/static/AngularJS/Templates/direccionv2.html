@@ -58,8 +58,10 @@
                                             <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="total" style="text-align:right">
                                                 Calle
                                             </th>
-                                            <th style="width: 5%;text-align: center;">
-                                            </th>
+                                            <th>Ver</th>
+                                            <th>Editar</th>
+                                            <!-- <th style="width: 5%;text-align: center;">
+                                            </th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -82,11 +84,15 @@
                                             <td align="right">
                                                 {{direccion.RTD_CALLE1}}
                                             </td>
-                                            <td style="width: 15%;text-align: center;">
-                                                <a ng-click="verTabs(1,direccion)" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                            <td class="text-center">
                                                 <a class="btn btn-info btn-icon" ng-click="verDetalleDireccion(direccion)">
-                                        <i class="ti-search"></i></a>
+                                                <i class="ti-search"></i></a>
                                             </td>
+                                            <td class="text-center">
+                                                <a ng-click="verTabs(1,direccion)" class="btn btn-success btn-icon"><i class="fa fa-pencil"></i></a>
+                                            </td>
+                                            <!-- <td style="width: 15%;text-align: center;">
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -108,7 +114,9 @@
             </div>
             <div class="modal-body">
                 <div class="col-sm-12">
-                    <h4 class="panel-title">Datos de domicilio</h4>
+                    <p>
+                        <h4>Datos de domicilio</h4> </p>
+                    <!-- class="panel-title" -->
                 </div>
                 <hr>
                 <div class="row">
@@ -227,10 +235,11 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <h4 class="panel-title">Datos de contacto</h4>
+                    <p>
+                        <h4>Datos de contacto</h4> </p>
                 </div>
                 <hr>
-                <form name="mainForm" >
+                <form name="mainForm">
                     <div class="row">
                         <div class="col-sm-12">
                             <p class="text-main text-bold">Contacto 1</p>
@@ -361,7 +370,289 @@
                 </form>
             </div>
             <div class="panel-footer text-right">
+                <button class="finish btn btn-success" ng-click="actualizaDireccion()" ng-show="mostrarActualizar">Actualizar Dirección</button>
                 <button type="submit" class="finish btn btn-info" ng-show="mostrarGuardar" ng-click="guardaDireccion()">Guardar Dirección</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-direccion" tabindex="-1" role="dialog" id="modal-direccion">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header headerModal">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 style="text-align:center;color:#fff">Dirección de Entrega </h3>
+            </div>
+            <div id="imprimeme">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <p>
+                                            <h4>Datos de domicilio</h4> </p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!--Estado-->
+                                            <div class="form-group">
+                                                <label class="control-label">Estado</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.Estado" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Ciudad-->
+                                            <div class="form-group">
+                                                <label class="control-label">Ciudad</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_CIUDAD" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Municipio-->
+                                            <div class="form-group">
+                                                <label class="control-label">Municipio</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_DELEGAC" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Colonia-->
+                                            <div class="form-group">
+                                                <label class="control-label">Colonia:</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_COLONIA" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!--Calle-->
+                                            <div class="form-group">
+                                                <label class="control-label">Calle:</label>
+                                                <input type="text" class="form-control" placeholder="Calle" ng-model="direccion.RTD_CALLE1" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--No. Ext.-->
+                                            <div class="form-group">
+                                                <label class="control-label">No. Ext.:</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_NUMEXTER" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--No. Int.-->
+                                            <div class="form-group">
+                                                <label class="control-label">No. Int.:</label>
+                                                <input type="text" class="form-control" placeholder="Número Interior" ng-model="direccion.RTD_NUMINER" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!--Cp-->
+                                            <div class="form-group">
+                                                <label class="control-label">C.P.:</label>
+                                                <input type="text" class="form-control" placeholder="Número Exterior" ng-model="direccion.RTD_CODPOS" readonly="true">
+                                                <small class="help-block"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <!--Referencia-->
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label" for="demo-textarea-input">Referencia:</label>
+                                                <div class="col-md-10">
+                                                    <textarea id="demo-textarea-input" rows="2" class="form-control" placeholder="Referencia del domicilio" ng-model="direccion.RTD_OBSERVACIONES" readonly="true"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" ng-show="direccion.comprobante == 1">
+                                            <!--div class="form-group">
+                                                <label class="col-md-6 control-label">Comprobante de domicilio</label>
+                                                <div class="col-md-6" ng-click="muestraComprobante()">
+                                                    <span class="pull-left btn btn-primary btn-file">
+                                                        <i class="fa fa-search"></i>
+                                            </span>
+                                                </div>
+                                            </div-->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading" style="background-color: #FFFFFF; height: 20px; padding: 0px;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <p>
+                                            <h4>Datos de contacto</h4> </p>
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <p class="text-main text-bold">Contacto 1</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_NOMPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_PATPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_MATPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">R.F.C.</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_RFCPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">Lada</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_LADAPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL1PER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Celular</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL2PER1" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electrónico</label>
+                                                <input type="email" class="form-control" ng-model="direccion.RTD_EMAILPER1" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <p class="text-main text-bold">Contacto 2</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_NOMPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Paterno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_PATPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Apellido Materno</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_MATPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">R.F.C.</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_RFCPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">Lada</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_LADAPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Telefono</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL1PER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Celular</label>
+                                                <input type="text" class="form-control" ng-model="direccion.RTD_TEL2PER2" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label" for="demo-email-input">Correo electrónico</label>
+                                                <input type="email" class="form-control" ng-model="direccion.RTD_EMAILPER2" readonly="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form name="mainForm" ng-submit="Procesar(2)">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="demo-email-input">Correo electrónico general de sucursal</label>
+                                                    <input type="email" class="form-control" ng-model="direccion.RTD_EMAILGENERAL" readonly="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div class="form-group">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <!--button type="submit" class="finish btn btn-info" onclick="document.pressed=this.value" value="Aprobar">Aprobar </button-->
+                                                    <!--button type="submit" class="finish btn btn-danger" onclick="document.pressed=this.value" value="Rechazar">Rechazar ggg</button-->
+                                                    <!--a ng-click="Procesar(2)" type="button" class="finish btn btn-info">Aprobar</a-->
+                                                    <!--a ng-click="Procesar(3)" type="button" class="finish btn btn-danger">Eliminar</a-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="panel-footer text-right" style="background-color: #FFFFFF;">
+                                    </div>
+                                </div>
+                                <form class="panel-body form-horizontal form-padding">
+                                    <div class="panel-body">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
