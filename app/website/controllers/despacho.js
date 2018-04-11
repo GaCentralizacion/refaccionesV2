@@ -108,4 +108,21 @@ despacho.prototype.get_catalogoRutas = function(req, res, next) {
 };
 
 
+despacho.prototype.get_busquedaPedidoUsuarioDEtalle = function(req, res, next) {
+   var self = this;
+
+   var params = [
+        { name: 'idPedido', value: req.query.pedido, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.query.usuario, type: self.model.types.INT }
+    ];
+ 
+    self.model.query('SEL_PEDIDO_USUARIODETALLE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
 module.exports = despacho;

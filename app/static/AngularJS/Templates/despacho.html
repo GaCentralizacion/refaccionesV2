@@ -25,7 +25,18 @@
                             <div class="form-group">
                                 <div class="col-sm-8">
                                     <div class="col-sm-11 control-label">
-                                        <a class="form-control btn btn-block btn-primary" ng-click="modalDespacho(true,1);" style="font-size: 11px">Crear Reparto</a>
+                                        <a class="form-control btn btn-block btn-primary" ng-click="modalDespacho(true,1);" style="font-size: 11px">Crear Despacho</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-sm-4  col-xs-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                    <div class="col-sm-11 control-label">
+                                        <a class="form-control btn btn-block btn-primary" ng-click="verRepartos(true,1);" style="font-size: 11px">Ver Despachos</a>
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +307,7 @@
                         <div class="panel panel-default ">
                             <div class="panel-body fondoInfoOtr ">
                                 <div class="col-sm-6 ">
-                                    <label>Folio: </label><span class=" "> {{rutaDetalle.folio}} </span>
+                                    <label>Folio: </label><span class=" "> 0123 </span>
                                 </div>
                                 <div class="col-sm-6 ">
                                     <label>Ruta: </label><span class=" "> {{rutaDetalle.ruta}} </span>
@@ -368,7 +379,7 @@
             </div>
             </div>
             <div class="modal-footer ">
-                <button type="button " class="btn btn-primary " data-dismiss="modal " ng-click="imprimir(1) ">Imprimir</button>
+                <button type="button " class="btn btn-primary " data-dismiss="modal " ng-click="imprimir() ">Imprimir</button>
             </div>
         </div>
     </div>

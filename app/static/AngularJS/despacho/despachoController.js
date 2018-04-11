@@ -15,6 +15,43 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
     };
 
 
+    $scope.imprimir=function(){
+        $scope.rutaDetalle.numDirRut=$scope.numDirRut;
+        $scope.rutaDetalle.pedidos=$scope.pedidoDireccionesRuta;
+
+
+         var rptStructure = {};
+         rptStructure = $scope.rutaDetalle;
+        var jsonData = {
+            "template": { "name": "despachoRutaRefacciones_rpt" },
+            "data": rptStructure
+        }
+
+      //  console.log(rptStructure);
+
+        $scope.generarPDF(jsonData);
+    };
+
+
+    $scope.generarPDF = function(jsonData) {
+        new Promise(function(resolve, reject) {
+        resolve(jsonData);
+        }).then(function(jsonData) {
+            despachoRepository.getReportePdf(jsonData).then(function(result) {
+                var file = new Blob([result.data], { type: 'application/pdf' });
+                var fileURL = URL.createObjectURL(file);
+                $scope.rptResumenConciliacion = $sce.trustAsResourceUrl(fileURL);
+                window.open($scope.rptResumenConciliacion);
+                //    $('#reporteModalPdf').modal('show'); 
+            });
+        });
+
+
+
+    };
+
+
+
    $scope.editarR = function(elementoRuta) {
 
       
