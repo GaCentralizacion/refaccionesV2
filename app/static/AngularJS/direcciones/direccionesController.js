@@ -622,6 +622,8 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
     $scope.nuevaDireccion = function() {
         $scope.clearFormulario();
         $scope.clearQuery();
+        $scope.mostrarGuardar = true;
+        $scope.mostrarActualizar = false;
         $('#modalAltaDirecciones').modal('show')
     }
 
