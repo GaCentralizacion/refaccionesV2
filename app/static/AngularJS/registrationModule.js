@@ -18,7 +18,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/historial.html',
             controller: 'historialController'
         });
-         $routeProvider.when('/direccion', {
+         $routeProvider.when('/direccionv2', {
             templateUrl: 'AngularJS/Templates/direccion.html',
             controller: 'direccionesController'
         });
@@ -44,7 +44,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'despachoController'
         });
 
-          $routeProvider.when('/direccionv2', {
+          $routeProvider.when('/direccion', {
             templateUrl: 'AngularJS/Templates/direccionv2.html',
             controller: 'direccionesController'
         });

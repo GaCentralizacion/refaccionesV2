@@ -42,6 +42,7 @@
     <!-- <link href="plugins/iCheck/custom.css" rel="stylesheet"> -->
     <!--Magic Checkbox [ OPTIONAL ]-->
     <!-- <link href="plugins/magic-check/css/magic-check.min.css" rel="stylesheet"> -->
+    <link href="css/main.css" rel="stylesheet" />
 </head>
 
 <body ng-app="registrationModule" ng-controller="mainController" ng-init="init()">
@@ -86,16 +87,23 @@
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
                         <li class="dropdown">
-                            <a  data-toggle="dropdown" class="dropdown-toggle text-right" data-target="#demo">
+                            <a  data-toggle="dropdown" class="dropdown-toggle text-right cursor" >
                                 <i class="pci-ver-dots"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default" id="demo">
-                                Dropdown footer
-                                <div class="pad-all text-right">
-                                    <a href="pages-login.html" class="btn btn-primary" ng-click="salir()">
+                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
+                                <ul class="head-list">
+                                    <li>
+                                        <a class="cursor" ng-click="salir()">
+                                            <i class="demo-pli-unlock icon-lg icon-fw"></i> Salir
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- <div class="pad-all text-right">
+                                    <a href="" class="btn btn-primary">
                                         <i class="demo-pli-unlock"></i> Salir
                                     </a>
-                                </div>
+                                </div> -->
+
                             </div>
                         </li> 
                       
@@ -254,7 +262,7 @@
     <!-- Bower components -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>

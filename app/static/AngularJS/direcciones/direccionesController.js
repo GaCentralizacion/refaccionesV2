@@ -5,11 +5,11 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
-        $scope.verTabD = false;
-        $scope.verTabP = true;
+        // $scope.verTabD = false;
+        // $scope.verTabP = true;
         $scope.mostrarGuardar = true;
         $scope.mostrarActualizar = false;
-        $scope.actD = 'active';
+        // $scope.actD = 'active';
         $scope.mostrarFormulario = false;
         $scope.existeColonia = '';
 
@@ -119,10 +119,11 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
 
     $scope.verTabs = function(tipo, direccion) {
         if (tipo == 1) {
-            $scope.verTabP = true;
-            $scope.verTabD = false;
-            $scope.actD = 'active';
-            $scope.actP = '';
+            // $scope.verTabP = true;
+            // $scope.verTabD = false;
+            // $scope.actD = 'active';
+            // $scope.actP = '';
+            $('#modalAltaDirecciones').modal('show')
             $scope.mostrarGuardar = true;
             $scope.mostrarActualizar = false;
             $scope.clearFormulario();
@@ -159,10 +160,10 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                 console.log('SOY LA DIRECCION', direccion)
             }
         } else {
-            $scope.verTabP = false;
-            $scope.verTabD = true;
-            $scope.actP = 'active';
-            $scope.actD = '';
+            // $scope.verTabP = false;
+            // $scope.verTabD = true;
+            // $scope.actP = 'active';
+            // $scope.actD = '';
         }
     };
     $scope.clearFormulario = function() {
@@ -619,6 +620,10 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         });
     }; //end setTablePaging
     $scope.nuevaDireccion = function() {
+        $scope.clearFormulario();
+        $scope.clearQuery();
+        $scope.mostrarGuardar = true;
+        $scope.mostrarActualizar = false;
         $('#modalAltaDirecciones').modal('show')
     }
 
