@@ -1,9 +1,9 @@
 var despachoURL = global_settings.urlCORS + 'api/despacho/';
 
 
-registrationModule.factory('despachoRepository', function ($http) {
+registrationModule.factory('despachoRepository', function($http) {
     return {
-          postCreate: function(despacho) {
+        postCreate: function(despacho) {
             return $http({
                 url: despachoURL + 'create/',
                 method: "POST",
@@ -23,7 +23,7 @@ registrationModule.factory('despachoRepository', function ($http) {
                 }
             });
         },
-         postUpdate: function(ruta) {
+        postUpdate: function(ruta) {
             return $http({
                 url: despachoURL + 'update/',
                 method: "POST",
@@ -33,9 +33,19 @@ registrationModule.factory('despachoRepository', function ($http) {
                 }
             });
         },
-         getCatalogoRutas: function(idEmpresa) {
+        postDelete: function(ruta) {
             return $http({
-                url: despachoURL + 'catalogoRutas/',
+                url: despachoURL + 'delete/',
+                method: "POST",
+                data: ruta,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getPedidos: function(idEmpresa) {
+            return $http({
+                url: despachoURL + 'pedidosShow/',
                 method: "GET",
                 params: { idEmpresa: idEmpresa },
                 headers: {
@@ -43,7 +53,7 @@ registrationModule.factory('despachoRepository', function ($http) {
                 }
             });
         },
-            getReportePdf: function(jsondata) {
+        getReportePdf: function(jsondata) {
             return $http({
                 url: 'http://192.168.20.89:5488/api/report',
                 method: "POST",
@@ -57,7 +67,39 @@ registrationModule.factory('despachoRepository', function ($http) {
                 responseType: 'arraybuffer'
             });
         },
-      
-       
+        getBusquedaPedidoDetalle: function(pedido, usuario) {
+            return $http({
+                url: despachoURL + 'busquedaPedidoDetalle/',
+                method: "GET",
+                params: {
+                    pedido: pedido
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        postGnrDespacho: function(despacho) {
+            return $http({
+                url: despachoURL + 'gnrDespacho/',
+                method: "POST",
+                data: despacho,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        // getCatalogoRutas: function(idEmpresa) {
+        //     return $http({
+        //         url: despachoURL + 'catalogoRutas/',
+        //         method: "GET",
+        //         params: { idEmpresa: idEmpresa },
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     });
+        // },
+
+
     };
 });

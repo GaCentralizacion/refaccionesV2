@@ -1,5 +1,6 @@
+<link href="css/modales.css" rel="stylesheet">
 <link href="css/ruta.css" rel="stylesheet">
-<div ng-init="init()">
+<div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
             <div id="">
@@ -18,97 +19,273 @@
                                     <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4  col-xs-12">
-                        <div class="form-horizontal">
                             <div class="form-group">
+                                <label class="col-sm-3 ">Sucursal: </label>
                                 <div class="col-sm-8">
-                                    <div class="col-sm-11 control-label">
-                                        <a class="form-control btn btn-block btn-primary" ng-click="modalDespacho(true,1);" style="font-size: 11px">Crear Despacho</a>
-                                    </div>
+                                    <select id="selSucursales" ng-change="cambioSucursal(empresaActual,sucursalActual,fecha,fechaFin)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="NDespachos">
+                                <label class="col-sm-3 ">Ruta:</label>
+                                <div class="col-sm-8">
+                                    <select ng-change="cambioPlantillaRuta() " id="selPlantRutas " class="form-control " ng-options="ruta as ruta.ruta for ruta in rutas track by ruta.idRuta " ng-model="rutaActual " ng-disabled="habilita"></select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                     <div class="col-sm-4  col-xs-12">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <div class="col-sm-8">
-                                    <div class="col-sm-11 control-label">
-                                        <a class="form-control btn btn-block btn-primary" ng-click="verRepartos(true,1);" style="font-size: 11px">Ver Despachos</a>
+                    <div class="col-sm-6  col-xs-12" ng-show="btnNewDespacho" ng-hide="empresaActual.emp_idempresa  == 0">
+                        <div class="col-sm-11 control-label">
+                            <a class="form-control btn btn-block btn-primary" ng-click="despacho(true,1);" style="font-size: 11px">Nuevo Despacho</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6  col-xs-12" ng-show="btnVerDespacho">
+                        <div class="col-sm-11 control-label">
+                            <a class="form-control btn btn-block btn-primary" ng-click="verDespachos();" style="font-size: 11px">Regresar</a>
+                        </div>
+                    </div>
+                    <!--  <div class="col-sm-8">
+                        <div class="col-xs-8">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 ">Empresa:</label>
+                                    <div class="col-sm-8">
+                                        <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row  col-sm-12  recuadro" ng-show="gridDespachos" style="margin-top: 50PX">
+                    </div> -->
+                    <!-- <div class="col-sm-4">
+                        <div class="col-xs-12" ng-show="btnNewDespacho">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-8">
+                                        <div class="col-sm-11 control-label">
+                                            <a class="form-control btn btn-block btn-primary" ng-click="despacho(true,1);" style="font-size: 11px">Nuevo Despacho</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-xs-12" ng-show="btnVerDespacho">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-8">
+                                        <div class="col-sm-11 control-label">
+                                            <a class="form-control btn btn-block btn-primary" ng-click="verDespachos();" style="font-size: 11px">Regresar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row  col-sm-12  " ng-show="NDespachos">
                         <div class="col-sm-12  mar-top">
-                            <table id="tblDespachos">
-                                <thead>
-                                    <tr>
-                                        <th st-class-ascent=" fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
-                                            Folio
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
-                                            # Pedidos
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
-                                            Operador
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="unidad ">
-                                            Unidad
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="situacion ">
-                                            Situación
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="editar ">
-                                            Editar
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="ver ">
-                                            Ver
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="eliminar ">
-                                            Eliminar
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="elemento in OperadoresUnidadesRutas ">
-                                        <td>
-                                            <span>{{elemento.folio}}</span>
-                                        </td>
-                                        <td>
-                                            <span>5</span>
-                                        </td>
-                                        <td>
-                                            <span>{{elemento.operador}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{elemento.unidad}}</span>
-                                        </td>
-                                        <td>
-                                            <div class="label label-table " ng-style="{ 'background-color': '{{elemento.colorsit}}' } ">{{elemento.situacion}}</div>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-success btn-icon " ng-click="modalDespacho(elemento,2) ">
+                            <div class="col-sm-12" ng-hide="hideListCatRut ">
+                                <!-- <div class="col-sm-12 col-sm-8 col-sm-6">
+                                    <label class="col-sm-2 "> Rutas:</label>
+                                    <div class="col-sm-7 ">
+                                        <select ng-change="cambioPlantillaRuta() " id="selPlantRutas " class="form-control " ng-options="ruta as ruta.ruta for ruta in rutas track by ruta.idRuta " ng-model="rutaActual " ng-disabled="habilita"></select>
+                                    </div>
+                                </div> -->
+                                <div class="form-horizontal col-sm-6" ng-show="spanInfo">
+                                    <div class="form-group" ng-hide="hideListCatRut ">
+                                        <label class="col-sm-3 ">Operador:</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mar-btm">
+                                                <input type="text" placeholder="" class="form-control" value="{{operador}}" ng-disabled="true">
+                                                <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button" ng-click="getOperadores();"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-horizontal col-sm-6" ng-show="spanInfo">
+                                    <div class="form-group" ng-hide="hideListCatRut ">
+                                        <label class="col-sm-3 ">Unidad:</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mar-btm">
+                                                <input type="text" placeholder="" value="{{unidad}}" class="form-control" ng-disabled="true">
+                                                <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button" ng-click="getUnidades();"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  <div class="col-sm-6">
+                                    <div class="input-group mar-btm">
+                                        <input type="text" placeholder="Search" class="form-control">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-mint" type="button"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group mar-btm">
+                                        <input type="text" placeholder="Search" class="form-control">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-mint" type="button"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-sm-3" ng-show="spanInfo">
+                                    <div class="btnM">
+                                        <a class="form-control btn btn-block btn-primary " ng-click="getOperadores();" style="font-size: 11px;text-align: center;padding: 3px;">+</a></div>
+                                    <div class="col-sm-10"> <span>Operador:<br> {{operador}}</span></div>
+                                </div>
+                                <div class="col-sm-3" ng-show="spanInfo">
+                                    <div class="btnM"> <a class="form-control btn btn-block btn-primary" ng-click="getUnidades();" style="font-size: 11px;text-align: center; padding: 3px;">+</a></div>
+                                    <div class="col-sm-10"><span>Unidad:<br> {{unidad}}</span> </div>
+                                </div> -->
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-12 mar-top" ng-show="dirForadd.length> 0">
+                                    <table id="tblpedidos">
+                                        <thead>
+                                            <tr>
+                                                <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="pedidoF">
+                                                    IdCliente
+                                                </th>
+                                                <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="pedidoF">
+                                                    Pedido
+                                                </th>
+                                                <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cotizacionF">
+                                                    Cotización
+                                                </th>
+                                                <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cotizacion">
+                                                    Fecha
+                                                </th>
+                                                <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cotizacion">
+                                                    Importe
+                                                </th>
+                                                <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="dirF">
+                                                    Dirección
+                                                </th>
+                                                <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="dirF">
+                                                    Cp.
+                                                </th>
+                                                <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="sele" style="margin-right: 15px">
+                                                    Selecciona
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="direPedido in dirForadd">
+                                                <td>
+                                                    <span>{{direPedido.idCliente}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{direPedido.pedidobpro}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{direPedido.idcotizacion}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{direPedido.fecha}}</span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span>{{direPedido.importe | currency}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{direPedido.dir}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{direPedido.cp}}</span>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-danger btn-icon " ng-click="elimina(direPedido)">
+                                            <i class="fa fa-trash-o "></i>
+                                        </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="col-sm-9 " ng-show="divsinPedidos " style="font-size: 45px;color: #e9e9e9; ">
+                                        &nbsp; No hay Pedidos para agregar..
+                                    </div> -->
+                                <!--  <div class="col-sm-3 float-right mar-top " ng-show="spanInfo">
+                                        <div class="col-sm-11 control-label mar-top ">
+                                            <a class="form-control btn btn-primary pull-right" ng-click="verDirecciones() " style="font-size: 11px ">Agregar Pedidos</a>
+                                        </div>
+                                    </div> -->
+                            </div>
+                            <div class="col-sm-12 mar-top">
+                                <button type="button" class="btn btn-primary pull-right" ng-click="verDirecciones()" ng-show="rutaActual.idRuta > 0">Agregar Pedidos</button>
+                                <button type="button" class="btn btn-success pull-right mar-rgt" ng-click="gnraDespacho(1)" ng-show="dirForadd.length > 0 && rutaActual.idRuta > 0 && unidad != '' && operador != ''">{{texto}} Despacho</button>
+                            </div>
+                            <!-- <div class=" " ng-show="dirForadd.length>0">
+                                <button type="button" class="btn btn-primary pull-right" ng-click="gnraDespacho(1) ">{{texto}} Despacho</button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mar-top" ng-hide="NDespachos">
+                        <table id="tblDespachos" ng-show="OperadoresUnidadesRutas.length>0">
+                            <thead>
+                                <tr>
+                                    <th class="inputId" st-class-ascent=" fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
+                                        Folio
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
+                                        Cantidad Pedidos
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
+                                        Operador
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="unidad ">
+                                        Unidad
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="situacion ">
+                                        Situación
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="editar ">
+                                        Editar
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="ver ">
+                                        Ver
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="eliminar ">
+                                        Eliminar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="elemento in OperadoresUnidadesRutas ">
+                                    <td>
+                                        <span>{{elemento.folio}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{elemento.total}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{elemento.operador}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{elemento.unidad}}</span>
+                                    </td>
+                                    <td>
+                                        <div class="label label-table " ng-style="{ 'background-color': '{{elemento.color}}' } ">{{elemento.situacion}}</div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success btn-icon " ng-click="editar(elemento,2)" ng-hide="{{elemento.situacionDespacho  == 2 ? true : false}}">
                                                 <i class="fa fa-pencil "></i>
                                             </a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-info btn-icon " ng-click="ver(elemento) ">
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-icon " ng-click="ver(elemento)">
                                                 <i class="fa fa-search "></i>
                                             </a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger btn-icon ">
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger btn-icon " ng-click="eliminaDespacho(elemento)" ng-hide="{{elemento.situacionDespacho  == 2 ? true : false}}">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -116,134 +293,41 @@
     </div>
 </div>
 <!--modalAddPEdidos-->
-<div class="modal fade " id="modalAddDespacho" tabindex="-1 " role="dialog ">
-    <div class="modal-dialog modal-lg ">
-        <div class="modal-content ">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Despacho Pedidos / Ruta</h4>
-                <button type="button " class="close " data-dismiss="modal ">&times;</button>
-            </div>
-            <br>
-            <div class="modal-body ">
-                <div class="col-sm-6 " style="margin-bottom: 20px " ng-hide="hideListCatRut ">
-                    <label class="col-sm-3 "> Rutas:</label>
-                    <div class="col-sm-8 ">
-                        <select ng-change="cambioPlantillaRuta() " id="selPlantRutas " class="form-control " ng-options="ruta as ruta.nombreRuta for ruta in rutas track by ruta.idRuta " ng-model="rutaActual "></select>
-                    </div>
-                </div>
-                <div class="col-sm-12 ">
-                    <div class="row mar-top recuadro ">
-                        <table id="tbldireccSel " ng-show="verdir " class="mar-top " style="width: 100%; ">
-                            <thead>
-                                <tr>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
-                                        Empresa
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="unidad ">
-                                        Sucursal
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="editar ">
-                                        Pedido
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="editar ">
-                                        Fecha
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="operador ">
-                                        Cliente
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="unidad ">
-                                        Dirección
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc " st-class-descent="fa fa-sort-desc " st-skip-natural="true " st-sort="editar ">
-                                        Eliminar
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="pedidoDireccion in dirForadd ">
-                                    <td>
-                                        <span>{{pedidoDireccion.emp_nombre}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{pedidoDireccion.suc_nombre}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{pedidoDireccion.pre_pedidobpro}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{pedidoDireccion.fechaalta}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{pedidoDireccion.cliente}}</span>
-                                    </td>
-                                    <td>
-                                        <span>
-                                            &nbsp; {{pedidoDireccion.RTD_CALLE1}}
-                                            &nbsp; {{pedidoDireccion.RTD_NUMEXTER}}
-                                            &nbsp; Col. {{pedidoDireccion.RTD_COLONIA}}
-                                            <br>
-                                            &nbsp; Delg. {{pedidoDireccion.RTD_DELEGAC}}
-                                            &nbsp; Cp. {{pedidoDireccion.RTD_CODPOS}}
-                                            &nbsp; {{pedidoDireccion.RTD_CIUDAD}}
-                                            </span>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-danger btn-icon " ng-click="dirForadd.splice($index, 1);rowC(pedidoDireccion) ">
-                                                <i class="fa fa-trash-o "></i>
-                                            </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="col-sm-9 " ng-hide="verdir " style="font-size: 45px;color: #e9e9e9; ">
-                            &nbsp; Sin Elegir
-                        </div>
-                        <div class="col-sm-3 float-right mar-top " style="float: right; ">
-                            <div class="col-sm-11 control-label mar-top ">
-                                <a class="form-control btn btn-block btn-primary " ng-click="verDirecciones() " style="font-size: 11px ">Agregar Pedidos</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer ">
-                <button type="button " class="btn btn-primary " data-dismiss="modal " ng-click="despacho(1) ">Crear Despacho</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade " id="modalDirecc" tabindex="-1 " role="dialog " style="overflow: scroll; ">
+<div class="modal fade " id="modalDirecc" tabindex="-1 " role="dialog " style="overflow: scroll; " data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg ">
         <div class="modal-content ">
             <div class="modal-header ">
                 <h4 class="modal-title ">Selecciona Pedidos para agregar:</h4>
-                <button type="button " class="close " ng-click="salirDir() ">&times;</button>
+                <button type="button " class="close" ng-click="salir()">&times;</button>
             </div>
             <div class="modal-body ">
-                <div class="col-sm-12 ">
-                    <div ng-show="direcciones.length> 0" class="col-xs-12">
+                <div class="row">
+                    <div ng-show="direcciones.length> 0" class="panel-body">
                         <table id="tblDirecc">
                             <thead>
                                 <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
-                                        Empresa
+                                    <th class="inputId" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="pedido">
+                                        IdCliente
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
-                                        Sucursal
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                    <th class="inputId" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="pedido">
                                         Pedido
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                    <th class="inputId" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cotizacion">
+                                        Cotización
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cotizacion">
                                         Fecha
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
-                                        Cliente
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cotizacion">
+                                        Importe
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="dir">
                                         Dirección
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar" style="margin-right: 15px">
+                                    <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="cp">
+                                        Cp.
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar" style="margin-right: 15px">
                                         Seleciona
                                     </th>
                                 </tr>
@@ -251,136 +335,366 @@
                             <tbody>
                                 <tr ng-repeat="direccionPe in direcciones">
                                     <td>
-                                        <span>{{direccionPe.emp_nombre}}</span>
+                                        <span>{{direccionPe.idCliente}}</span>
                                     </td>
                                     <td>
-                                        <span>{{direccionPe.suc_nombre}}</span>
+                                        <span>{{direccionPe.pedidobpro}}</span>
                                     </td>
                                     <td>
-                                        <span>{{direccionPe.pre_pedidobpro}}</span>
+                                        <span>{{direccionPe.idcotizacion}}</span>
                                     </td>
                                     <td>
-                                        <span>{{direccionPe.fechaalta}}</span>
+                                        <span>{{direccionPe.fecha}}</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span>{{direccionPe.importe | currency}}</span>
                                     </td>
                                     <td>
-                                        <span>{{direccionPe.cliente}}</span>
+                                        <span>{{direccionPe.dir}}</span>
                                     </td>
                                     <td>
-                                        <span>
-                                                &nbsp; {{direccionPe.RTD_CALLE1}}
-                                                &nbsp; {{direccionPe.RTD_NUMEXTER}}
-                                                &nbsp; Col. {{direccionPe.RTD_COLONIA}}
-                                                <br>
-                                                &nbsp; Delg. {{direccionPe.RTD_DELEGAC}}
-                                                &nbsp; Cp. {{direccionPe.RTD_CODPOS}}
-                                                &nbsp; {{direccionPe.RTD_CIUDAD}}
-                                                </span>
+                                        <span>{{direccionPe.cp}}</span>
                                     </td>
                                     <td>
-                                        <input type="checkbox" ng-init="(direccionPe.seleccionada == 1)?direccionPe.seleccionada=true:direccionPe.seleccionada=false" ng-model="direccionPe.seleccionada" aria-label="Checkbox for following text input" ng-checked="{{ direccionPe.seleccionada }}">
+                                        <input type="checkbox" ng-init="(direccionPe.seleccionada == 1)?direccionPe.seleccionada=true:direccionPe.seleccionada=false" ng-model="direccionPe.seleccionada" ng-checked="{{ direccionPe.seleccionada }}">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-sm-9 " ng-show="divsinPedidos " style="font-size: 45px;color: #e9e9e9; ">
+                        &nbsp; No hay Pedidos para agregar..
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="direccionParaRuta(direccionPe);">Aceptar</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="revisaSeleccion(direccionPe);">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- aqui -->
-
 <div class="modal fade " id="modalDetalleDespacho" tabindex="-1 " role="dialog ">
     <div class="modal-dialog modal-lg ">
         <div class="modal-content ">
-            <div class="modal-header ">
-                <h4 class="modal-title "> Ruta / Pedidos</h4>
-                <button type="button " class="close " data-dismiss="modal ">&times;</button>
+            <div class="modal-header headerModal">
+                <h4 class="modal-title">Despacho de Pedidos Ford</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-     
             <div class="modal-body ">
-             <div class="row ">
-                    <div class="col-sm-12 ">
-                        <div class="panel panel-default ">
-                            <div class="panel-body fondoInfoOtr ">
-                                <div class="col-sm-6 ">
-                                    <label>Folio: </label><span class=" "> 0123 </span>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>Ruta: </label><span class=" "> {{rutaDetalle.ruta}} </span>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>Operador: </label><span class=" "> {{rutaDetalle.operador}} </span>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>Descripción: </label><span class=" "> {{rutaDetalle.descripcion}} </span>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>Unidad: </label><span class=" "> {{rutaDetalle.unidad}} </span>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label># Direcciones: </label><span class=" "> {{numDirRut}} </span>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label>Fecha: </label><span class=" "> 23/02/2018</span>
-                                </div>
+                <div class="row">
+                    <div class="panel-body">
+                        <div class="col-sm-12 ">
+                            <div class="col-sm-6 text-left">
+                                <label class="text-bold">Folio: </label><span> {{rutaDetalle.folio}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <label class="text-bold">Ruta: </label><span> {{rutaDetalle.ruta}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left ">
+                                <label class="text-bold">Operador: </label><span> {{rutaDetalle.operador}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <label class="text-bold">Descripción: </label><span> {{rutaDetalle.descripcion}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left ">
+                                <label class="text-bold">Unidad: </label><span> {{rutaDetalle.unidad}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left ">
+                                <label class="text-bold">Número Económico: </label><span> {{rutaDetalle.economico}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left ">
+                                <label class="text-bold">Número de Serie: </label><span> {{rutaDetalle.numeroSerie}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <label class="text-bold">Cantidad Pedidos: </label><span> {{numDirRut}} </span>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <label class="text-bold">Fecha: </label><span> {{rutaDetalle.fechaCreacion}}</span>
                             </div>
                         </div>
-                    </div>
-                       <div class="col-sm-12 ">
-                        <div class="table-responsive ">
-                            <table class="table table-condensed table-hover otrasFact ">
+                        <div class="col-sm-12 mar-top">
+                            <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Empresa: </th>
-                                        <th>Sucursal: </th>
-                                        <th>Pedido: </th>
-                                        <th>Fecha: </th>
-                                        <th>Cliente: </th>
-                                        <th>Direccion: </th>
+                                        <th>IdCliente </th>
+                                        <th>Pedido </th>
+                                        <th>Cotizacion </th>
+                                        <th>Fecha </th>
+                                        <th>Importe </th>
+                                        <th>Direccion </th>
+                                        <th>Ver </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="pedidoDireccion in pedidoDireccionesRuta " class="puntero ">
                                         <td>
-                                            <span>{{pedidoDireccion.emp_nombre}}</span>
+                                            <span>{{pedidoDireccion.idCliente}}</span>
                                         </td>
                                         <td>
-                                            <span>{{pedidoDireccion.suc_nombre}}</span>
+                                            <span>{{pedidoDireccion.pedidobpro}}</span>
                                         </td>
                                         <td>
-                                            <span>{{pedidoDireccion.pre_pedidobpro}}</span>
+                                            <span>{{pedidoDireccion.idcotizacion}}</span>
                                         </td>
                                         <td>
-                                            <span>{{pedidoDireccion.fechaalta}}</span>
+                                            <span>{{pedidoDireccion.fecha}}</span>
                                         </td>
-                                        <td>
-                                            <span>{{pedidoDireccion.cliente}}</span>
+                                        <td class="text-right">
+                                            <span>{{pedidoDireccion.importe | currency}}</span>
                                         </td>
                                         <td>
                                             <span>
-                                            &nbsp; {{pedidoDireccion.RTD_CALLE1}}
-                                            &nbsp; {{pedidoDireccion.RTD_NUMEXTER}}
-                                            &nbsp; Col. {{pedidoDireccion.RTD_COLONIA}}
-                                            <br>
-                                            &nbsp; Delg. {{pedidoDireccion.RTD_DELEGAC}}
-                                            &nbsp; Cp. {{pedidoDireccion.RTD_CODPOS}}
-                                            &nbsp; {{pedidoDireccion.RTD_CIUDAD}}
+                                            &nbsp; {{pedidoDireccion.dir}}
+                                           
                                             </span>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-info btn-icon " ng-click="detalleCot(pedidoDireccion) ">
+                                                <i class="fa fa-search "></i>
+                                         </td>        
+                                          
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button " class="btn btn-success " ng-click="despachoAlta() " ng-show="rutaDetalle.situacionDespacho == 1"> Despachar</button>
+                <button type="button " class="btn btn-primary "  ng-click="imprimir(1) ">Imprimir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="modalOperador" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header headerModal">
+                <h4 class="modal-title">Selecciona Operador:</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+          
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div ng-show="listOperadores.length > 0" class="col-xs-12">
+                        <table id="tblOperadores">
+                            <thead>
+                                <tr>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
+                                        Nombre
+                                    </th>
+                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
+                                        Telefono
+                                    </th>
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        Seleciona
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="operador in listOperadores">
+                                    <td>
+                                        <span>{{operador.nombre}}&nbsp;{{operador.apellidoPaterno}}&nbsp;{{operador.apellidoMaterno}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{operador.telefono}}</span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-icon" ng-click="seleccionaOpe(operador);">
+                                             <i class="ti-export"></i>
+                                        </a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-            </div>
-            </div>
-            <div class="modal-footer ">
-                <button type="button " class="btn btn-primary " data-dismiss="modal " ng-click="imprimir() ">Imprimir</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="modal fade " id="modalUnidad" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Selecciona Unidad:</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div ng-show="listUnidades.length > 0" class="col-xs-12">
+                                <table id="tblUnidades">
+                                    <thead>
+                                        <tr>
+                                            <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="economico">
+                                                Económico
+                                            </th>
+                                            <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="numeroSerie">
+                                                # de Serie
+                                            </th>
+                                            <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="modelo">
+                                                Modelo
+                                            </th>
+                                            <!-- <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
+                                                Color
+                                            </th> -->
+                                            <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
+                                                Placas
+                                            </th>
+                                            <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="tipo">
+                                                Tipo
+                                            </th>
+                                            <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="capacidad">
+                                                Capacidad
+                                            </th>
+                                            <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
+                                                m3
+                                            </th>
+                                            <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                                Seleccionar
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="unidad in listUnidades">
+                                            <td>
+                                                <span>{{unidad.economico}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{unidad.numeroSerie}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{unidad.descripcion}} {{unidad.modelo}}  {{unidad.anio}}</span>
+                                            </td>
+                                            <!-- <td>
+                                                <span>{{unidad.color}}</span>
+                                            </td> -->
+                                            <td>
+                                                <span>{{unidad.placas}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{unidad.Tipo}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{unidad.capacidad}} {{unidad.descripcionP}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{unidad.metrosCubicos}}</span>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-info btn-icon" ng-click="seleccionaUni(unidad)">
+                                                <i class="ti-export" ></i>
+                                            </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!--modal detalle-->
+    <div class="modal fade " id="modalDetalleCot" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="salirDetalleCot()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="modificaCotizacionDireccionModalLabel">Detalle de la cotización Ford: {{cotizacionDetalle.cotizacionNumber}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>Dirección de entrega</h4>
+                            <b>{{direccionEntrega}}</b>
+                        </div>
+                        <div class="col-xs-12">
+                            <h4>Lista de refacciones</h4>
+                        </div>
+                        <div class="col-xs-12">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            No serie
+                                        </th>
+                                        <th>
+                                            Descripción
+                                        </th>
+                                        <th class="text-right">
+                                            Precio
+                                        </th>
+                                        <th class="text-right">
+                                            Cantidad
+                                        </th>
+                                        <th class="text-right">
+                                            SubTotal
+                                        </th>
+                                </thead>
+                                <tbody>
+                                    <tr class="list-group-item-custom" ng-repeat="refaccion in detalles">
+                                        <td>
+                                            {{refaccion.PTS_IDPARTE}}
+                                        </td>
+                                        <td>
+                                            {{refaccion.PTS_DESPARTE}}
+                                        </td>
+                                        <td class="text-right">
+                                            {{refaccion.Precio | currency}}
+                                        </td>
+                                        <td class="text-right">
+                                            {{refaccion.Cantidad}}
+                                        </td>
+                                        <td class="text-right">
+                                            {{refaccion.Precio * refaccion.Cantidad | currency}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right" colspan="4">
+                                            <strong>Subtotal:</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong>{{ subtotal | currency}}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right" colspan="4">
+                                            <strong>IVA:</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong>{{ subtotal * 0.16 | currency}}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right" colspan="4">
+                                            <strong>Total:</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong>{{subtotal + (subtotal  * 0.16) | currency}}</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="salirDetalleCot()">Salir</button>
+                </div>
+            </div>
+        </div>
+    </div>
