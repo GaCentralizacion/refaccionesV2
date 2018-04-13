@@ -18,179 +18,262 @@
                                     <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Sucursal: </label>
+                                <div class="col-sm-8">
+                                    <select id="selSucursales" ng-change="cambioSucursal(empresaActual,sucursalActual,fecha,fechaFin)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
-                    <div class="col-sm-6  col-xs-12">
+                    <div class="col-sm-6  col-xs-12" ng-show="verBtn">
                         <div class="col-sm-11 control-label">
-                          <a  class="form-control btn btn-block btn-primary" ng-click="modalUnidad(null,1);" >Nuevo Unidad </a>
+                            <a class="form-control btn btn-block btn-primary" ng-click="modalUnidad(null,1);">Nueva Unidad </a>
                         </div>
                     </div>
                     <div class="col-xs-12  mar-top">
-                     <div ng-show="listUnidades.length > 0" class="col-xs-12">
-                        <table id="tblUnidades" >
-                            <thead>
-                                <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion" >
-                                        Marca
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="modelo">
-                                        Modelo
-                                    </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
-                                        Color
-                                    </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
-                                        Placas
-                                    </th>
-                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="tipo">
-                                        Tipo
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true"  st-sort="capacidad">
-                                        Capacidad
-                                    </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
-                                        m3
-                                    </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
-                                    Editar
-                                    </th>
-                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
-                                      Eliminar
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="unidad in listUnidades">
-                                    <td>
-                                        <span>{{unidad.descripcion}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.modelo}} {{unidad.anio}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.color}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.placas}}</span>
-                                    </td>
-                                  
-                                     <td>
-                                        <span>{{unidad.Tipo}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.capacidad}} {{unidad.descripcionP}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{unidad.metrosCubicos}}</span>
-                                    </td>
-                                   <td>
-                                       <a class="btn btn-info btn-icon">
-                                            <i class="ti-pencil-alt" ng-click="modalUnidad(unidad,2);"></i>
+                        <div ng-show="listUnidades.length > 0" class="col-xs-12">
+                            <table id="tblUnidades">
+                                <thead>
+                                    <tr>
+                                        <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                            Económico
+                                        </th>
+                                        <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="numeroSerie">
+                                            # Serie
+                                        </th>
+                                        <!-- <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="modelo">
+                                            Modelo
+                                        </th> -->
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
+                                            Unidad
+                                        </th>
+                                        <!-- <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
+                                            Color
+                                        </th> -->
+                                        <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
+                                            Placas
+                                        </th>
+                                        <th class="oculta " st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="tipo">
+                                            Tipo
+                                        </th>
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="capacidad">
+                                            Capacidad
+                                        </th>
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
+                                            m3
+                                        </th>
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                            Editar
+                                        </th>
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
+                                            Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="unidad in listUnidades">
+                                        <!-- <td>
+                                            <span>{{unidad.descripcion}}</span>
+                                        </td> -->
+                                        <td>
+                                            <span>{{unidad.economico}}</span>
+                                            <!-- {{unidad.descripcion}} {{unidad.modelo}} {{unidad.anio}} -->
+                                        </td>
+                                        <td>
+                                            <span>{{unidad.numeroSerie}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{unidad.descripcion}} {{unidad.modelo}} {{unidad.anio}}</span>
+                                        </td>
+                                        <!-- <td>
+                                            <span>{{unidad.color}}</span>
+                                        </td> -->
+                                        <td>
+                                            <span>{{unidad.placas}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{unidad.Tipo}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{unidad.capacidad}} {{unidad.descripcionP}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{unidad.metrosCubicos}}</span>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-success btn-icon" ng-click="modalUnidad(unidad,2);">
+                                            <i class="ti-pencil-alt"></i>
                                         </a>
-                                    </td>   
-                                    <td>                                 
-                                       <a class="btn btn-info btn-icon">
-                                            <i class="ti-eraser" ng-click="modalUnidad(unidad,3)"></i>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-icon" ng-click="modalUnidad(unidad,3)">
+                                            <i class="ti-eraser"></i>
                                         </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    </div>
-                 </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade "  id="modalAddUnidad" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" >
+<div class="modal fade " id="modalAddUnidad" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog  modal-lg ">
         <div class="modal-content">
             <div class="modal-header headerModal">
-          <h4 class="modal-title">Unidad:</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="row"> 
-         <div class="col-sm-12">
-            <div class="form-group">
-                <label >Seleccione Marca:</label>
-                 <select  ng-disabled="bloquea"  id="marca" class="form-control" ng-options="marca as marca.descripcion for marca in marcas track by marca.idMarca" ng-model="marcaActual"></select>
+                <h4 class="modal-title ">Unidad </h4>
+                <button type="button" class="close" ng-click="salir()" style="color:white">&times;</button>
             </div>
-            
-            <div class="form-group" >
-                <label >Modelo:</label>
-                <div>
-                    <input  ng-disabled="bloquea" ng-model="modelo" placeholder="" id="modelo" type="text" class="form-control">
+            <div class="modal-body">
+                <!--Horizontal Form-->
+                <!--===================================================-->
+                <div class="row">
+                    <form class="form-horizontal" ng-submit="unidad(1)">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="marca">Marca:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <select ng-disabled="bloquea" required="true" id="marca" class="form-control redondeo glyphicon-pencil" ng-options="marca as marca.descripcion for marca in marcas track by marca.idMarca" ng-model="marcaActual"></select>
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="modelo">Modelo:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-truck"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="modelo" required="true" placeholder="" id="modelo" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="anio">Año:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="anio" placeholder="" required="true" id="anio" type="text" class="form-control redondeo" calendar-year>
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="numeroSerie">Número de Serie:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="numserie" required="true" placeholder="" id="numserie" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="anio">Tarjeta Circulación:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="tarjeta" required="true" placeholder="" id="tarjeta" type="text" class="form-control redondeo" title="Tarjeta de Circulación">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="numeroSerie">N° Motor:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-gear"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="motor" required="true" placeholder="" id="motor" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="anio">Color:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="ti-palette"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="color" required="true" placeholder="" id="color" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="numeroSerie">Placas:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="placas" required="true" placeholder="" id="placas" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="anio">Tipo de Carga:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <select ng-disabled="bloquea" id="tipo" class="form-control redondeo" ng-options="tipo as tipo.Descripcion for tipo in tipos track by tipo.idTipoCarga" ng-model="tipoActual"></select>
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="numeroSerie">Capacidad:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="ti-bag"></i></span>
+                                        <input numbers-only ng-disabled="bloquea" required="true" ng-model="capacidad" placeholder="" id="capacidad" type="text" class="form-control">
+                                        <div class="input-group-btn">
+                                            <p class="btn btn-default cursorNormal">{{pesoActual.descpeso}}</p>
+                                            <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-icon" type="button">
+                                                <i class="dropdown-caret"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li ng-repeat="peso in pesos" ng-click="unidadCapacidad(peso)" class="cursorPoint"><a>{{peso.descpeso}}</a></li>
+                                            </ul>
+                                        </div>
+                                        <!-- <select ng-disabled="bloquea" id="pesos" class="form-control" ng-options="peso as peso.descpeso for peso in pesos track by peso.idPesoUnidad" ng-model="pesoActual"></select> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- <label class="col-sm-2 control-label" for="anio">Peso:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <select ng-disabled="bloquea" id="pesos" class="form-control redondeo" ng-options="peso as peso.descpeso for peso in pesos track by peso.idPesoUnidad" ng-model="pesoActual"></select>
+                                    </div>
+                                </div> -->
+                                <label class="col-sm-2 control-label" for="m3">m3:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="ti-bag"></i></span>
+                                        <input numbers-only ng-disabled="bloquea" required="true" ng-model="metroscu" placeholder="m3" id="metroscu" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="anio">Combustible:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <select ng-disabled="bloquea" id="tipoC" class="form-control redondeo" ng-options="tipoC as tipoC.nombre for tipoC in tiposC track by tipoC.idCombustible" ng-model="tipoCActual"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="m3">Economico:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="ti-pencil"></i></span>
+                                        <input ng-disabled="bloquea" required="true" ng-model="economico" placeholder="" id="economico" type="text" class="form-control redondeo">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label" for="anio">Combustible:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <select ng-disabled="bloquea" id="tipoC" class="form-control redondeo" ng-options="tipoC as tipoC.nombre for tipoC in tiposC track by tipoC.idCombustible" ng-model="tipoCActual"></select>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary redondeo" name="signup" value="guardar"> {{texto}} Unidad</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+                <!--===================================================-->
+                <!--End Horizontal Form-->
             </div>
-            <div class="form-group">
-                <label >Año:</label>
-                <div>
-                    <input  ng-disabled="bloquea" ng-model="anio" placeholder="" id="anio" type="text" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label >Número de Serie:</label>
-                <div >
-                    <input  ng-disabled="bloquea" ng-model="numserie" placeholder="" id="numserie" type="text" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label >Color:</label>
-                <div >
-                    <input  ng-disabled="bloquea" ng-model="color" placeholder="" id="color" type="text" class="form-control">
-                </div>
-            </div>
-              <div class="form-group">
-                <label >Placas:</label>
-                <div >
-                    <input ng-disabled="bloquea"  ng-model="placas" placeholder="" id="placas" type="text" class="form-control">
-                </div>
-            </div>
-              <div class="form-group">
-                <label >Tipo de Carga:</label>
-                 <select  ng-disabled="bloquea"  id="tipo" class="form-control" ng-options="tipo as tipo.Descripcion for tipo in tipos track by tipo.idTipoCarga" ng-model="tipoActual"></select>
-            </div>
-
-              <div class="form-group" style="overflow: hidden;">
-             <!--    <label >Apellido Materno:</label> -->
-                <div class="col-sm-8">
-                    <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="Capacidad" id="capacidad" type="text" class="form-control">
-                </div>
-                <div class="col-sm-4">
-             <!--    <label >Apellido Materno:</label> -->
-                 <select  ng-disabled="bloquea"  id="pesos" class="form-control" ng-options="peso as peso.descpeso for peso in pesos track by peso.idPesoUnidad" ng-model="pesoActual"></select>
-                  </div>
-
-         <!--      <div class="form-group">
-                <label >Capacidad:</label>
-                <div >
-                    <input ng-disabled="bloquea"  ng-model="capacidad" placeholder="" id="capacidad" type="text" class="form-control">
-                </div>
-               
-                <label >Peso:</label>
-                 <select  ng-disabled="bloquea"  id="pesos" class="form-control" ng-options="peso as peso.descripcion for peso in pesos track by peso.idPesoUnida" ng-model="pesoActual"></select>
-
-            
-            </div> -->
-              <div class="form-group">
-                <label >m3:</label>
-                <div >
-                    <input ng-disabled="bloquea"  ng-model="metroscu" placeholder="m3" id="metroscu" type="text" class="form-control">
-                </div>
-            </div>
-        </div>
-        </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="unidad(1)">Aceptar</button>
-        </div>
-        
         </div>
     </div>
 </div>
-

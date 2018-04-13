@@ -1,7 +1,7 @@
 .headerModal {
     background-color: #2b425b;
-    text-align:center;
-    color:#fff;
+    text-align: center;
+    color: #fff;
 }
 
 
@@ -19,9 +19,78 @@
 .close {
     font-size: 30px;
 }
+
 .modal-dialog {
     margin-top: 1%;
 }
+
 .modal-title {
     color: #ffffff;
 }
+
+.cursorPoint {
+    cursor: pointer;
+}
+
+.cursorNormal {
+    cursor: default;
+}
+
+.modal-header {
+    background-color: #2b425b;
+    text-align: center;
+    color: #fff;
+}
+
+.iconoExito {
+
+    padding: 12px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    font-size: 13px;
+    line-height: 1.42857;
+    vertical-align: middle;
+    transition: all .25s;
+    background-color: #fafafa;
+    border-color: #86c042;
+    color: #86c042;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    touch-action: manipulation;
+    user-select: none;
+    background-image: none;
+}
+
+.iconoError {
+    padding: 12px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    font-size: 13px;
+    line-height: 1.42857;
+    vertical-align: middle;
+    transition: all .25s;
+    background-color: #fafafa;
+    border-color: #ee4a47;
+    color: #ee4a47;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    touch-action: manipulation;
+    user-select: none;
+    background-image: none;
+}
+
+
+table.dataTable thead th, table.dataTable thead td {padding: 17px 18px ;}
+.oculta input{display: none}
+.oculta{padding-top: 0px !important;}
+.inputWitd input{width: 100%}
+.inputId input{width: 40px}
+.inputWhite{background-color: white !important;}
+
+

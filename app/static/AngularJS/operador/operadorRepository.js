@@ -1,9 +1,9 @@
 var operadorURL = global_settings.urlCORS + 'api/operador/';
 
 
-registrationModule.factory('operadorRepository', function ($http) {
+registrationModule.factory('operadorRepository', function($http) {
     return {
-    	  postCreate: function(operador) {
+        postCreate: function(operador) {
             return $http({
                 url: operadorURL + 'create/',
                 method: "POST",
@@ -13,17 +13,20 @@ registrationModule.factory('operadorRepository', function ($http) {
                 }
             });
         },
-        getOperadores: function(idEmpresa) {
+        getOperadores: function(idEmpresa, idSucursal) {
             return $http({
                 url: operadorURL + 'operadoresShow/',
                 method: "GET",
-                params: { idEmpresa: idEmpresa },
+                params: {
+                    idEmpresa: idEmpresa,
+                    idSucursal: idSucursal
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-         postUpdate: function(operador) {
+        postUpdate: function(operador) {
             return $http({
                 url: operadorURL + 'update/',
                 method: "POST",
@@ -33,7 +36,7 @@ registrationModule.factory('operadorRepository', function ($http) {
                 }
             });
         },
-      
-       
+
+
     };
 });

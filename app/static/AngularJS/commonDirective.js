@@ -37,7 +37,18 @@ registrationModule.directive('calendar', function() {
         }
     };
 });
-
+registrationModule.directive('calendarYear', function() {
+    return {
+        link: function(scope, el, attr, ngModel) {
+            $(el).datepicker({
+                language: "es",
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
+            });
+        }
+    };
+});
 registrationModule.directive('icheck', function() {
     return {
         restrict: 'A',

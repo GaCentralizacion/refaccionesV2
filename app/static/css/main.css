@@ -1,3 +1,11 @@
-.cursor{
-	cursor: pointer;
+.cursor {
+    cursor: pointer;
+}
+
+.form-control {
+    border: 1px solid #cfd4da;
+}
+
+.input-group-addon {
+    border: 1px solid #cfd4da;
 }

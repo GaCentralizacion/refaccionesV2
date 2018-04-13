@@ -1,4 +1,5 @@
 <link href="css/modales.css" rel="stylesheet">
+<link href="css/operador.css" rel="stylesheet">
 <div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
@@ -18,106 +19,262 @@
                                     <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Sucursal: </label>
+                                <div class="col-sm-8">
+                                    <select id="selSucursales" ng-change="cambioSucursal(empresaActual,sucursalActual,fecha,fechaFin)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
-                    <div class="col-sm-6  col-xs-12">
+                    <div class="col-sm-6  col-xs-12" ng-show="empresaActual.emp_idempresa  != 0 ">
                         <div class="col-sm-11 control-label">
-                          <a  class="form-control btn btn-block btn-primary" ng-click="modalOperador(true,1);" >Nuevo operador </a>
+                            <a class="form-control btn btn-block btn-primary" ng-click="modalOperador(true,1);">Nuevo operador </a>
                         </div>
                     </div>
                     <div class="col-xs-12  mar-top">
-                     <div ng-show="listOperadores.length > 0" class="col-xs-12">
-                        <table id="tblOperadores" >
-                            <thead>
-                                <tr>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
-                                        Nombre
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
-                                        Telefono
-                                    </th>
-                                  <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
-                                        Editar
-                                    </th>
-                                       <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
-                                        Eliminar
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="operador in listOperadores">
-                                    <td>
-                                        <span>{{operador.nombre}}&nbsp;{{operador.apellidoPaterno}}&nbsp;{{operador.apellidoMaterno}}</span>
-                                    </td>
-                                     <td>
-                                        <span>{{operador.telefono}}</span>
-                                    </td>
-                                   <td>
-                                       <a class="btn btn-info btn-icon">
-                                            <i class="ti-pencil-alt" ng-click="modalOperador(operador,2);"></i>
+                        <div ng-show="listOperadores.length > 0" class="col-xs-12">
+                            <table id="tblOperadores">
+                                <thead>
+                                    <tr>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="nombre" st-sort="nombre">
+                                            Nombre
+                                        </th>
+                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
+                                            Teléfono
+                                        </th>
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                            Editar
+                                        </th>
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
+                                            Eliminar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="operador in listOperadores">
+                                        <td>
+                                            <span>{{operador.nombre}}&nbsp;{{operador.apellidoPaterno}}&nbsp;{{operador.apellidoMaterno}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{operador.telefono}}</span>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-success btn-icon" ng-click="modalOperador(operador,2);">
+                                            <i class="ti-pencil-alt"></i>
                                         </a>
-                                    </td>   
-                                    <td>                                 
-                                       <a class="btn btn-info btn-icon">
-                                            <i class="ti-eraser" ng-click="modalOperador(operador,3)"></i>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-icon" ng-click="modalOperador(operador,3)">
+                                            <i class="ti-eraser"></i>
                                         </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    </div>
-                 </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade "  id="modalAddOperador" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" >
+<div class="modal fade " id="modalAddOperador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header headerModal">
-          
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Operador</h3>
-        </div>
-        <div class="modal-body"> 
-            <div class="row">   
-         <div class="col-sm-12">
-            <div class="form-group">
-                <label >Nombre:</label>
-                <div >
-                    <input  ng-disabled="bloquea" ng-model="nombre" placeholder="" id="nombre" type="text" class="form-control">
-                </div>
+                <button type="button" class="close" ng-click="salir()">&times;</button>
+                <h3 class="modal-title">Operador</h3>
             </div>
-            <div class="form-group">
-                <label >Apellido Paterno:</label>
-                <div>
-                    <input  ng-disabled="bloquea" ng-model="apPaterno" placeholder="" id="apPaterno" type="text" class="form-control">
+            <div class="modal-body">
+                <!--Horizontal Form-->
+                <!--===================================================-->
+                <div class="row">
+                    <form class="form-horizontal" ng-submit="operador(1)">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="">Nombre:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="nombre" placeholder="Nombre" id="nombre" type="text" class="form-control" ng-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input ng-disabled="bloquea" ng-model="apPaterno" placeholder="Apellido Paterno" id="apPaterno" type="text" class="form-control" ng-required="true">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input ng-disabled="bloquea" ng-model="apMaterno" placeholder="Apellido Materno" id="apMaterno" type="text" class="form-control" ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="calle">Domicilio:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="calle" placeholder="Calle" id="calle" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input ng-disabled="bloquea" ng-model="exterior" placeholder="Número Exterior" id="exterior" type="text" class="form-control">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input ng-disabled="bloquea" ng-model="interior" placeholder="Número Interior" id="interior" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    <label>Colonia:</label>
+                                    <select id="selColonia" ng-change="cambioColonia()" class="form-control" ng-options="col as col.colonia for col in Colonias track by col.idColonia" ng-model="coloniaActual" value="Colonia"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Municipio:</label>
+                                    <select id="selMunicipio" ng-change="cambioMunicipio()" class="form-control" ng-options="municipio as municipio.municipio for municipio in Municipios track by municipio.idMunicipio" ng-model="municipioActual"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Ciudad:</label>
+                                    <select id="selCiudad" ng-change="cambioCiudad()" class="form-control" ng-options="ciudad as ciudad.d_ciudad for ciudad in Ciudades track by ciudad.idCiudad" ng-model="ciudadActual"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    <label>Estado:</label>
+                                    <select id="selEstado" ng-change="cambioEstado()" class="form-control" ng-options="edo as edo.descripcion for edo in Estados track by edo.idEdo" ng-model="estadoActual"></select>
+                                </div>
+                                <!-- <label class="col-sm-1 control-label">C.P.:</label> -->
+                                <div class="col-sm-offset-3 col-sm-3">
+                                    <div class="input-group  cp">
+                                        <input autocomplete="off" ng-change="buscarCP()" ng-model="cpActual" placeholder="C.P." id="inputCp" type="text" class="form-control" numbers-only>
+                                        <span class="input-group-btn">
+                                            <button ng-click="clearQuery()" class="btn btn-primary btn-small" type="button"><i class="fa fa-angle-double-left"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: -15px;" class="col-xs-3 col-md-offset-9">
+                                <div ng-show="busquedaActual.length > 0 && busquedaActual.length > 1" class="form-group query-container  ">
+                                    <table style="margin-top:35px;" class="table table-hover ">
+                                        <tbody>
+                                            <tr class="list-group-item-custom" ng-repeat="cp in busquedaActual">
+                                                <td style="width:20%" ng-click="seleccionCp(cp.d_codigo)" class="cursor">
+                                                    {{cp.d_codigo}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="rfc">R.F.C.:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-list-alt"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="rfc" placeholder="" id="rfc" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="telefono">Teléfono:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="telefono" placeholder="" id="telefono" type="text" class="form-control" numbers-only ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="numeroLicencia">Número de Licencia:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="numeroLicencia" placeholder="" id="numeroLicencia" type="text" class="form-control" numbers-only ng-required="true">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 control-label" for="numeroLicencia">Vigencia:</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group mar-btm date" calendar>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="vigencia" placeholder="" id="vigencia" type="text" class="form-control" ng-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary redondeo" name="signup" value="guardar"> {{texto}} Operador</button>
+                            </div>
+                            <!-- <div class="text-right">
+                                <button type="submit" class="btn btn-primary" name="signup" value="guardar">Guardar</button>
+                            </div> -->
+                        </div>
+                    </form>
                 </div>
+                <!--===================================================-->
+                <!--End Horizontal Form-->
+                <!-- <div class="row">
+                    <div class="col-sm-4">
+                        <label>Nombre:</label>
+                        <div>
+                            <input ng-disabled="bloquea" ng-model="nombre" placeholder="" id="nombre" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Apellido Paterno:</label>
+                        <div>
+                            <input ng-disabled="bloquea" ng-model="apPaterno" placeholder="" id="apPaterno" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Apellido Materno:</label>
+                        <div>
+                            <input ng-disabled="bloquea" ng-model="apMaterno" placeholder="" id="apMaterno" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>R.F.C.:</label>
+                        <div>
+                            <input ng-disabled="bloquea" ng-model="rfc" placeholder="" id="rfc" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Número de Licencia:</label>
+                        <div>
+                            <input ng-disabled="bloquea" ng-model="numeroLicencia" placeholder="" id="numeroLicencia" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Fecha Creación:</label>
+                        <div>
+                            <input ng-disabled="bloquea" ng-model="numeroLicencia" placeholder="" id="numeroLicencia" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            <div>
+                                <input ng-disabled="bloquea" ng-model="nombre" placeholder="" id="nombre" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido Paterno:</label>
+                            <div>
+                                <input ng-disabled="bloquea" ng-model="apPaterno" placeholder="" id="apPaterno" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido Materno:</label>
+                            <div>
+                                <input ng-disabled="bloquea" ng-model="apMaterno" placeholder="" id="apMaterno" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefono:</label>
+                            <div>
+                                <input ng-disabled="bloquea" ng-model="telefono" placeholder="" id="telefono" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
             </div>
-            <div class="form-group">
-                <label >Apellido Materno:</label>
-                <div >
-                    <input  ng-disabled="bloquea" ng-model="apMaterno" placeholder="" id="apMaterno" type="text" class="form-control">
-                </div>
-            </div>
-              <div class="form-group">
-                <label >Telefono:</label>
-                <div >
-                    <input ng-disabled="bloquea"  ng-model="telefono" placeholder="" id="telefono" type="text" class="form-control">
-                </div>
-            </div>
-        </div>
-        </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="operador(1)">Aceptar</button>
-        </div>
-        
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="operador(1)">Guardar</button>
+            </div> -->
         </div>
     </div>
 </div>
-

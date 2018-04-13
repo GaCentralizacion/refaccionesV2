@@ -1,10 +1,10 @@
 var unidadURL = global_settings.urlCORS + 'api/unidad/';
 
 
-registrationModule.factory('unidadRepository', function ($http) {
+registrationModule.factory('unidadRepository', function($http) {
     return {
-    	  postCreate: function(unidad) {
-          
+        postCreate: function(unidad) {
+
             return $http({
                 url: unidadURL + 'create/',
                 method: "POST",
@@ -14,17 +14,20 @@ registrationModule.factory('unidadRepository', function ($http) {
                 }
             });
         },
-        getUnidades: function(idEmpresa) {
+        getUnidades: function(idEmpresa, idSucursal) {
             return $http({
                 url: unidadURL + 'unidadesShow/',
                 method: "GET",
-                params: { idEmpresa: idEmpresa },
+                params: {
+                    idEmpresa: idEmpresa,
+                    idSucursal: idSucursal
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-         postUpdate: function(unidad) {
+        postUpdate: function(unidad) {
             return $http({
                 url: unidadURL + 'update/',
                 method: "POST",
@@ -34,8 +37,8 @@ registrationModule.factory('unidadRepository', function ($http) {
                 }
             });
         },
-       getMarcas: function(idEmpresa) {
-       
+        getMarcas: function(idEmpresa) {
+
             return $http({
                 url: unidadURL + 'marcas/',
                 method: "GET",
@@ -44,7 +47,7 @@ registrationModule.factory('unidadRepository', function ($http) {
                 }
             });
         },
-         getTiposUnidades: function() {
+        getTiposUnidades: function() {
 
             return $http({
                 url: unidadURL + 'tipoUnidades/',
@@ -64,5 +67,15 @@ registrationModule.factory('unidadRepository', function ($http) {
                 }
             });
         },
+        getTiposCombustibles: function() {
+
+            return $http({
+                url: unidadURL + 'tiposCombustibles/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 });

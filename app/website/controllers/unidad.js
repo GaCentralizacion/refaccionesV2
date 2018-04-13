@@ -16,12 +16,12 @@ var unidad = function(conf) {
 };
 
 unidad.prototype.post_create = function(req, res, next) {
-   var self = this;
+    var self = this;
 
 
     var params = [
         { name: 'numSerie', value: req.body.numserie, type: self.model.types.STRING },
-        { name: 'idMarca', value:  req.body.idMarca, type: self.model.types.STRING },
+        { name: 'idMarca', value: req.body.idMarca, type: self.model.types.STRING },
         { name: 'modelo', value: req.body.modelo, type: self.model.types.STRING },
         { name: 'color', value: req.body.color, type: self.model.types.STRING },
         { name: 'placas', value: req.body.placas, type: self.model.types.STRING },
@@ -31,10 +31,16 @@ unidad.prototype.post_create = function(req, res, next) {
         { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
         { name: 'anio', value: req.body.anio, type: self.model.types.STRING },
         { name: 'pesoUnidad', value: req.body.peso, type: self.model.types.STRING },
-        ];
+        { name: 'idCombustible', value: req.body.combustible, type: self.model.types.INT },
+        { name: 'tarjetaCirculacion', value: req.body.tarjeta, type: self.model.types.STRING },
+        { name: 'numeroMotor', value: req.body.motor, type: self.model.types.STRING },
+        { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
+        { name: 'economico', value: req.body.economico, type: self.model.types.STRING },
+        { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT }
+    ];
 
     self.model.query('INS_UNIDAD_SP', params, function(error, result) {
-                 console.log('error:::')
+        console.log('error:::')
         console.log(error)
         console.log('result:::')
         console.log(result)
@@ -45,12 +51,12 @@ unidad.prototype.post_create = function(req, res, next) {
     });
 };
 unidad.prototype.post_update = function(req, res, next) {
-   var self = this;
+    var self = this;
 
 
     var params = [
         { name: 'numSerie', value: req.body.numserie, type: self.model.types.STRING },
-        { name: 'idMarca', value:  req.body.idMarca, type: self.model.types.STRING },
+        { name: 'idMarca', value: req.body.idMarca, type: self.model.types.STRING },
         { name: 'modelo', value: req.body.modelo, type: self.model.types.STRING },
         { name: 'color', value: req.body.color, type: self.model.types.STRING },
         { name: 'placas', value: req.body.placas, type: self.model.types.STRING },
@@ -61,10 +67,10 @@ unidad.prototype.post_update = function(req, res, next) {
         { name: 'estatu', value: req.body.estatus, type: self.model.types.INT },
         { name: 'anio', value: req.body.anio, type: self.model.types.STRING },
         { name: 'pesoUnidad', value: req.body.peso, type: self.model.types.STRING },
-        ];
-  console.log(params);
+    ];
+    console.log(params);
     self.model.query('UPD_UNIDAD_SP', params, function(error, result) {
-    console.log('error:::')
+        console.log('error:::')
         console.log(error)
         console.log('result:::')
         console.log(result)
@@ -77,10 +83,12 @@ unidad.prototype.post_update = function(req, res, next) {
 
 
 unidad.prototype.get_unidadesShow = function(req, res, next) {
-   var self = this;
+    var self = this;
 
-    var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
- 
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT }
+    ];
+
     self.model.query('SEL_UNIDADES_SP ', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
@@ -90,12 +98,12 @@ unidad.prototype.get_unidadesShow = function(req, res, next) {
 };
 
 unidad.prototype.get_marcas = function(req, res, next) {
-   var self = this;
- 
-  
+    var self = this;
+
+
     self.model.query('SEL_MARCAS_SP ', true, function(error, result) {
 
-      
+
         self.view.expositor(res, {
             error: error,
             result: result
@@ -104,10 +112,10 @@ unidad.prototype.get_marcas = function(req, res, next) {
 };
 
 unidad.prototype.get_tipoUnidades = function(req, res, next) {
-   var self = this;
-  //  var params = [  { name: 'idEmpresa', value: 1, type: self.model.types.INT}];
- // console.log('llega:::')
-    self.model.query('SEL_TIPO_CARGA_SP ', true ,function(error, result) {
+    var self = this;
+    //  var params = [  { name: 'idEmpresa', value: 1, type: self.model.types.INT}];
+    // console.log('llega:::')
+    self.model.query('SEL_TIPO_CARGA_SP ', true, function(error, result) {
         //   console.log('error:::')
         // console.log(error)
         // console.log('result:::')
@@ -121,12 +129,22 @@ unidad.prototype.get_tipoUnidades = function(req, res, next) {
 
 
 unidad.prototype.get_pesoUni = function(req, res, next) {
-   var self = this;
- 
-  
+    var self = this;
+
+
     self.model.query('SEL_PESO_UNIDAD_SP', true, function(error, result) {
-console.log(error)
-      
+        console.log(error)
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+unidad.prototype.get_tiposCombustibles = function(req, res, next) {
+    var self = this;
+    self.model.query('SEL_COMBUSTIBLES_SP', true, function(error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
