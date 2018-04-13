@@ -1,9 +1,9 @@
 var rutaURL = global_settings.urlCORS + 'api/ruta/';
 
 
-registrationModule.factory('rutaRepository', function ($http) {
+registrationModule.factory('rutaRepository', function($http) {
     return {
-    	  postCreate: function(ruta) {
+        postCreate: function(ruta) {
             return $http({
                 url: rutaURL + 'create/',
                 method: "POST",
@@ -13,17 +13,20 @@ registrationModule.factory('rutaRepository', function ($http) {
                 }
             });
         },
-        getRutas: function(idEmpresa) {
+        getRutas: function(idEmpresa, idSucursal) {
             return $http({
                 url: rutaURL + 'rutasShow/',
                 method: "GET",
-                params: { idEmpresa: idEmpresa },
+                params: {
+                    idEmpresa: idEmpresa,
+                    idSucursal: idSucursal
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-         postUpdate: function(ruta) {
+        postUpdate: function(ruta) {
             return $http({
                 url: rutaURL + 'update/',
                 method: "POST",
@@ -33,7 +36,7 @@ registrationModule.factory('rutaRepository', function ($http) {
                 }
             });
         },
-         getCatalogoRutas: function(idEmpresa) {
+        getCatalogoRutas: function(idEmpresa) {
             return $http({
                 url: rutaURL + 'catalogoRutas/',
                 method: "GET",
@@ -43,7 +46,7 @@ registrationModule.factory('rutaRepository', function ($http) {
                 }
             });
         },
-      
-       
+
+
     };
 });

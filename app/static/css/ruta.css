@@ -1,3 +1,8 @@
+.sinBorde {
+    border: 0px;
+    background-color: white !important;
+}
+
 .recuadro {
     padding-bottom: 10px;
     border: 1px solid #e9e9e9;
@@ -5,24 +10,21 @@
     margin-bottom: 40px;
 }
 
-.encab {
-    font-weight: 700;
-    color: #42a5f5;
-
-    border-top-left-radius: 7px;
-
-    border-top-right-radius: 7px;
-    padding-top: 8px;
-}
 
 
 .fondoInfoOtr {
     background-color: #2b425b;
     border-color: #2b425b;
+    color: white;
+}
+#modalDetalleDespacho .panel-default{border:0px;}
+
+
+
+.otrasFact input {
+    display: none
 }
 
-
-.otrasFact input{display: none}
 .wizard {
     margin: 20px auto;
     background: #fff;
@@ -171,4 +173,15 @@ span.round-tab:hover {
         position: absolute;
         left: 35%;
     }
+}
+
+.mbtn label {
+    margin-bottom: 3px;
+}
+
+
+.btnM {
+    width: 24px;
+    float: left;
+    margin-right: 5px
 }

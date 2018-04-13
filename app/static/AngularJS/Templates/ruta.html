@@ -19,9 +19,15 @@
                                     <select ng-change="cambioEmpresa()" id="selEmpresas" class="form-control" ng-options="empresa as empresa.emp_nombre for empresa in empresas track by empresa.emp_idempresa" ng-model="empresaActual"></select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 ">Sucursal: </label>
+                                <div class="col-sm-8">
+                                    <select id="selSucursales" ng-change="cambioSucursal(empresaActual,sucursalActual,fecha,fechaFin)" ng-disabled="empresaActual.emp_idempresa==0" class="form-control" ng-options="sucursal.NOMBRE_AGENCIA for sucursal in sucursales track by sucursal.AGENCIA" ng-model="sucursalActual"></select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-2  col-xs-12">&nbsp;</div>
+                    <!--    <div class="col-sm-2  col-xs-12">&nbsp;</div>
                     <div class="col-sm-4  col-xs-12" ng-hide="newRuta">
                         <div class="form-horizontal">
                             <div class="form-group">
@@ -32,6 +38,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
+                    <div class="col-sm-6  col-xs-12" ng-show="empresaActual.emp_idempresa  != 0 ">
+                        <div class="col-sm-11 control-label">
+                            <a class="form-control btn btn-block btn-primary" ng-click="verModalRuta(true,1);">Nueva Ruta </a>
+                        </div>
                     </div>
                     <div class="row  col-sm-12  recuadro" ng-show="gridRutas" style="margin-top: 50PX">
                         <div class="col-sm-12  mar-top">
@@ -41,7 +52,7 @@
                                         <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
                                             Ruta
                                         </th>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descrip">
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descrip">
                                             Descripción
                                         </th>
                                         <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="operador">
@@ -50,14 +61,10 @@
                                         <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="unidad">
                                             Unidad
                                         </th>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="situacion">
-                                            Situación
-                                        </th>
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
                                             Editar
                                         </th>
-                                       
-                                        <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
+                                        <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="eliminar">
                                             Eliminar
                                         </th>
                                     </tr>
@@ -67,7 +74,7 @@
                                         <td>
                                             <span>{{ruta.ruta}}</span>
                                         </td>
-                                         <td>
+                                        <td>
                                             <span>{{ruta.descripcion}}</span>
                                         </td>
                                         <td>
@@ -77,14 +84,10 @@
                                             <span>{{ruta.unidad}}</span>
                                         </td>
                                         <td>
-                                            <div class="label label-table" ng-style="{ 'background-color':'{{ruta.colorsit}}' }">{{ruta.situacion}}</div>
-                                        </td>
-                                        <td>
                                             <a class="btn btn-success  btn-icon" ng-click="verModalRuta(ruta,2)">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                         </td>
-                                       
                                         <td>
                                             <a class="btn btn-danger btn-icon" ng-click="verModalRuta(ruta,3)">
                                                 <i class="fa fa-trash-o"></i>
@@ -100,10 +103,66 @@
         </div>
     </div>
 </div>
+<!--Ruta crea la ruta-->
+<div class="modal fade " id="modalAddRuta" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header headerModal">
+                <button type="button" class="close" ng-click="salir()">&times;</button>
+                <h3 class="modal-title">Ruta / Operador / Unidad</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" ng-submit="ruta(1)">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="nombreRuta">Nombre:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="nombreRuta" placeholder="" id="nombre" type="text" class="form-control" required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="descripcion">Descripción:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <input ng-disabled="bloquea" ng-model="descripcion" placeholder="" id="descripcion" class="form-control" required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="operador">Operador:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mar-btm">
+                                        <input ng-disabled="true" ng-model="nombreOperador" placeholder="" id="nombreOperador" type="text" class="form-control inputWhite" required="true">
+                                        <span class="input-group-btn"> <button class="btn btn-mint" type="button"  ng-click="getOperadores();" ng-disabled="bloquea" ><i class="fa fa-plus"></i></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="unidad">Unidad:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mar-btm">
+                                        <input ng-disabled="true" ng-model="unidad" placeholder="" id="unidad" type="text" class="form-control inputWhite" required="true">
+                                        <span class="input-group-btn"> <button class="btn btn-mint" type="button"  ng-click="getUnidades();" ng-disabled="bloquea" ><i class="fa fa-plus"></i></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary redondeo" name="signup" value="guardar"> {{texto}} Ruta </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--wizard-->
-
-
-<div class="modal fade " id="modalOperador" tabindex="-1" role="dialog">
+<div class="modal fade " id="modalOperador" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header headerModal">
@@ -112,7 +171,7 @@
             </div>
             <br>
             <div class="modal-body">
-                <div class="col-sm-12">
+                <div class="row">
                     <div ng-show="listOperadores.length > 0" class="col-xs-12">
                         <table id="tblOperadores">
                             <thead>
@@ -123,8 +182,8 @@
                                     <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="telefono" st-sort="telefono">
                                         Telefono
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
-                                        Seleciona
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                        Selecciona
                                     </th>
                                 </tr>
                             </thead>
@@ -147,13 +206,10 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
         </div>
     </div>
 </div>
-<div class="modal fade " id="modalUnidad" tabindex="-1" role="dialog">
+<div class="modal fade " id="modalUnidad" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -162,46 +218,55 @@
             </div>
             <br>
             <div class="modal-body">
-                <div class="col-sm-12">
+                <div class="row">
                     <div ng-show="listUnidades.length > 0" class="col-xs-12">
                         <table id="tblUnidades">
                             <thead>
                                 <tr>
-                                 
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="modelo">
+                                    <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="descripcion">
+                                        Económico
+                                    </th>
+                                    <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="numeroSerie">
+                                        # Serie
+                                    </th>
+                                    <!-- <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="modelo">
                                         Modelo
-                                    </th>
-                                   
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
+                                    </th> -->
+                                    <!-- <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="color">
                                         Color
-                                    </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
+                                    </th> -->
+                                    <th class="inputWitd" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="placas">
                                         Placas
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="tipo">
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="tipo">
                                         Tipo
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="capacidad">
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="capacidad">
                                         Capacidad
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="metrosCubicos">
                                         m3
                                     </th>
-                                    <th st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
+                                    <th class="oculta" st-class-ascent="fa fa-sort-asc" st-class-descent="fa fa-sort-desc" st-skip-natural="true" st-sort="editar">
                                         Seleccionar
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="unidad in listUnidades">
-                                 
                                     <td>
+                                        <span>{{unidad.economico}}</span>
+                                        <!-- {{unidad.descripcion}} {{unidad.modelo}} {{unidad.anio}} -->
+                                    </td>
+                                    <td>
+                                        <span>{{unidad.numeroSerie}}</span>
+                                    </td>
+                                    <!--  <td>
                                         <span>{{unidad.descripcion}} {{unidad.modelo}}  {{unidad.anio}}</span>
-                                    </td>
-                                    
-                                    <td>
+                                    </td> -->
+                                    <!-- <td>
                                         <span>{{unidad.color}}</span>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <span>{{unidad.placas}}</span>
                                     </td>
@@ -225,16 +290,10 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
         </div>
     </div>
 </div>
-
-
-<!--Ruta crea la ruta-->
-<div class="modal fade " id="modalAddRuta" tabindex="-1" role="dialog">
+<!-- <div class="modal fade " id="modalAddRuta" tabindex="-1" role="dialog">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header headerModal">
@@ -242,41 +301,45 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <br>
-            <div class="modal-body">
-                <div class="row">
-                <div class="col-sm-12" style="margin-top: 25px">
-                    <div class="form-group" >
-                        <label>Nombre:</label>
-                        <div>
-                            <input ng-disabled="bloquea" ng-model="nombreRuta" placeholder="" id="nombre" type="text" class="form-control" required>
+            <form class="" ng-submit="ruta(1)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="nombreRuta">Nombre:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mar-btm">
+                                <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                <input ng-disabled="bloquea" ng-model="nombreRuta" placeholder="" id="nombre" type="text" class="form-control" required="true">
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label" for="descripcion">Descripción:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mar-btm">
+                                <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                <input ng-disabled="bloquea" ng-model="descripcion" placeholder="" id="descripcion" class="form-control" required="true">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" ng-show="inputNewRuta">
-                        <label>Descripción:</label>
-                        <div>
-                            <input ng-disabled="bloquea" ng-model="descripcion" placeholder="" id="apPaterno" class="form-control" rows="5">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="nombreRuta">Operador:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mar-btm">
+                                <span class="input-group-addon" ng-click="getOperadores();"><i class="fa fa-plus"></i></span>
+                                <input ng-disabled="bloquea" ng-model="nombreOperador" placeholder="" id="nombreOperador" type="text" class="form-control " required="true">
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label" for="descripcion">Unidad:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mar-btm">
+                                <span class="input-group-addon" ng-click="getUnidades();"><i class="fa fa-plus"></i></span>
+                                <input ng-disabled="bloquea" ng-model="unidad" placeholder="" id="unidad" class="form-control " required="true">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" style="overflow: hidden;">
-                        <div class="col-sm-2 control-label" style="float: right;">
-                            <a class="form-control btn btn-block btn-primary ti-plus" ng-click="getOperadores();" style="font-size: 11px"></a>
-                        </div>
-                        <label>Operador:</label>
-                        <div> &nbsp; &nbsp; {{nombreOperador}}</div>
-                    </div>
-                    <div class="form-group" style="overflow: hidden;">
-                        <div class="col-sm-2 control-label" style="float: right;">
-                            <a class="form-control btn btn-block btn-primary ti-plus" ng-click="getUnidades();" style="font-size: 11px"></a>
-                        </div>
-                        <label>Unidad:</label>
-                        <div> &nbsp; &nbsp;{{descripcionUni}} &nbsp; {{modelo}} </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary redondeo" name="signup" value="guardar"> Aceptar </button>
                     </div>
                 </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="ruta(1)">Aceptar</button>
-            </div>
+            </form>
         </div>
     </div>
-</div>
+</div> -->
