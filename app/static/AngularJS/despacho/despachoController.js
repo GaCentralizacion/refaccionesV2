@@ -1,4 +1,4 @@
-registrationModule.controller('despachoController', function($sce, $http, $scope, $rootScope, $location, $timeout, alertFactory, rutaRepository, direccionRepository, despachoRepository, filterFactory, userFactory, globalFactory) {
+registrationModule.controller('despachoController', function($sce, $http, $scope, $rootScope, $location, $timeout, alertFactory, rutaRepository, direccionRepository, despachoRepository, filterFactory, userFactory, globalFactory, operadorRepository, unidadRepository) {
 
 
     $scope.despachoAlta = function() {
@@ -176,7 +176,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
         } else {
             if ($scope.temp1.length == 0 && $scope.flag == false) {
 
-                despachoRepository.getPedidos($scope.empresaActual.emp_idempresa).then(function(result) {
+                despachoRepository.getPedidos($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
                     if (result.data.length > 0) {
                         $scope.direcciones = result.data;
                         $scope.flag = true;
@@ -421,6 +421,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
                     direcciones: $scope.dirForadd,
                     //  idOperadorUnidadRuta:$scope.rutaActual.idOperadorUnidadRuta,
                     idEmpresa: $scope.empresaActual.emp_idempresa,
+                    idSucursal: $scope.sucursalActual.AGENCIA,
                     idUsuario: $scope.Usuario.idUsuario,
                 };
 
@@ -635,7 +636,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
             $scope.btnNewDespacho = true;
             $scope.catalogoRutas();
 
-            despachoRepository.getRutas($scope.empresaActual.emp_idempresa).then(function(result) {
+            despachoRepository.getRutas($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
                 if (result.data.length > 0) {
                     $scope.gridDespachos = true;
                     console.log(result.data)
@@ -738,7 +739,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
     };
 
     $scope.catalogoRutas = function() {
-        rutaRepository.getRutas($scope.empresaActual.emp_idempresa).then(function(result) {
+        rutaRepository.getRutas($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
 
             if (result.data.length > 0) {
                 $scope.rutas = result.data;
@@ -774,7 +775,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
         $('#tblOperadores').DataTable().destroy();
         $scope.listOperadores = [];
 
-        operadorRepository.getOperadores($scope.empresaActual.emp_idempresa).then(function(result) {
+        operadorRepository.getOperadores($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
             if (result.data.length > 0) {
                 $scope.listOperadores = result.data;
                 setTimeout(function() {
@@ -803,7 +804,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
         //$('#tblUnidades').DataTable().destroy();
         $scope.listUnidades = [];
 
-        unidadRepository.getUnidades($scope.empresaActual.emp_idempresa).then(function(result) {
+        unidadRepository.getUnidades($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
             if (result.data.length > 0) {
                 $scope.listUnidades = result.data;
 

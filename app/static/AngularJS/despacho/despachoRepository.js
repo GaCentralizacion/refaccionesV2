@@ -13,11 +13,14 @@ registrationModule.factory('despachoRepository', function($http) {
                 }
             });
         },
-        getRutas: function(idEmpresa) {
+        getRutas: function(idEmpresa, idSucursal) {
             return $http({
                 url: despachoURL + 'rutasShow/',
                 method: "GET",
-                params: { idEmpresa: idEmpresa },
+                params: {
+                    idEmpresa: idEmpresa,
+                    idSucursal: idSucursal
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -43,11 +46,14 @@ registrationModule.factory('despachoRepository', function($http) {
                 }
             });
         },
-        getPedidos: function(idEmpresa) {
+        getPedidos: function(idEmpresa, idSucursal) {
             return $http({
                 url: despachoURL + 'pedidosShow/',
                 method: "GET",
-                params: { idEmpresa: idEmpresa },
+                params: {
+                    idEmpresa: idEmpresa,
+                    idSucursal: idSucursal
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }

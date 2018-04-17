@@ -17,8 +17,8 @@ var despacho = function(conf) {
 };
 
 despacho.prototype.post_create = function(req, res, next) {
-   var self = this;
-      for (var i = 0; i < req.body.direcciones.length; i++) {
+    var self = this;
+    for (var i = 0; i < req.body.direcciones.length; i++) {
         req.body.direcciones[i] = {
             direccion: req.body.direcciones[i]
         }
@@ -26,6 +26,12 @@ despacho.prototype.post_create = function(req, res, next) {
 
     var params = [
         { name: 'idRuta', value: req.body.idRuta, type: self.model.types.INT },
+        { name: 'idOperador', value: req.body.idOperador, type: self.model.types.INT },
+        { name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },
+        { name: 'idOperadorUnidadRuta', value: req.body.idOperadorUnidadRuta, type: self.model.types.INT },
+        { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT },
+        { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
         {
             name: 'direcciones',
             value: jsonxml({
@@ -34,10 +40,10 @@ despacho.prototype.post_create = function(req, res, next) {
             type: self.model.types.STRING
         }
     ];
-   
-console.log(params);
-    self.model.query('UPD_DESPACHO_SP', params, function(error, result) {
-        console.log(result);
+
+    console.log(params);
+    self.model.query('INS_DESPACHO_PEDIDO_RUTA_SP', params, function(error, result) {
+
         self.view.expositor(res, {
             error: error,
             result: result
@@ -45,8 +51,8 @@ console.log(params);
     });
 };
 despacho.prototype.post_update = function(req, res, next) {
-   var self = this;
-      for (var i = 0; i < req.body.direcciones.length; i++) {
+    var self = this;
+    for (var i = 0; i < req.body.direcciones.length; i++) {
         req.body.direcciones[i] = {
             direccion: req.body.direcciones[i]
         }
@@ -70,11 +76,11 @@ despacho.prototype.post_update = function(req, res, next) {
             type: self.model.types.STRING
         }
     ];
-   
- console.log(params);
+
+    console.log(params);
     self.model.query('UPD_RUTA_SP ', params, function(error, result) {
         console.log(result);
-         console.log(error);
+        console.log(error);
         self.view.expositor(res, {
             error: error,
             result: result
@@ -82,10 +88,12 @@ despacho.prototype.post_update = function(req, res, next) {
     });
 };
 despacho.prototype.get_rutasShow = function(req, res, next) {
-   var self = this;
+    var self = this;
 
-    var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
- 
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT }
+    ];
+
     self.model.query('SEL_DESPACHO_PEDIDOS_RUTA_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
@@ -95,10 +103,10 @@ despacho.prototype.get_rutasShow = function(req, res, next) {
 };
 
 despacho.prototype.get_catalogoRutas = function(req, res, next) {
-   var self = this;
+    var self = this;
 
-    var params = [  { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
- 
+    var params = [{ name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT }];
+
     self.model.query('SEL_RUTAS_SP ', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
@@ -109,13 +117,13 @@ despacho.prototype.get_catalogoRutas = function(req, res, next) {
 
 
 despacho.prototype.get_busquedaPedidoUsuarioDEtalle = function(req, res, next) {
-   var self = this;
+    var self = this;
 
-   var params = [
+    var params = [
         { name: 'idPedido', value: req.query.pedido, type: self.model.types.INT },
         { name: 'idUsuario', value: req.query.usuario, type: self.model.types.INT }
     ];
- 
+
     self.model.query('SEL_PEDIDO_USUARIODETALLE_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
@@ -123,6 +131,20 @@ despacho.prototype.get_busquedaPedidoUsuarioDEtalle = function(req, res, next) {
         });
     });
 };
+despacho.prototype.get_pedidosShow = function(req, res, next) {
+    var self = this;
 
+    var params = [
+        { name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT },
+        { name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT }
+    ];
+
+    self.model.query('SEL_PEDIDOS_DIRECCIONES_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 module.exports = despacho;
