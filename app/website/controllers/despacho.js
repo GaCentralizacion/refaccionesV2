@@ -28,7 +28,6 @@ despacho.prototype.post_create = function(req, res, next) {
         { name: 'idRuta', value: req.body.idRuta, type: self.model.types.INT },
         { name: 'idOperador', value: req.body.idOperador, type: self.model.types.INT },
         { name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },
-        { name: 'idOperadorUnidadRuta', value: req.body.idOperadorUnidadRuta, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
         { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT },
         { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
@@ -42,7 +41,7 @@ despacho.prototype.post_create = function(req, res, next) {
     ];
 
     console.log(params);
-    self.model.query('INS_DESPACHO_PEDIDO_RUTA_SP', params, function(error, result) {
+    self.model.query('INS_DESPACHO_PEDIDO_RUTA_SP_2', params, function(error, result) {
 
         self.view.expositor(res, {
             error: error,
