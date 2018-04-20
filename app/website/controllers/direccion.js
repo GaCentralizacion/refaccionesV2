@@ -557,12 +557,12 @@ direccion.prototype.get_direccionesRuta = function(req, res, next) {
     var self = this;
 
     params.push({
-        name: 'ruta',
-        value: req.query.idRuta,
+        name: 'idDespacho',
+        value: req.query.idDespacho,
         type: self.model.types.INT
     });
 
-    self.model.query('SEL_PEDIDOS_X_RUTA_SP', params, function(error, result) {
+    self.model.query('SEL_PEDIDOS_DESPACHO_SP', params, function(error, result) {
       
         self.view.expositor(res, {
             error: error,

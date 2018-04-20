@@ -419,7 +419,6 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
                     idOperador: $scope.idOperador,
                     idUnidad: $scope.idUnidad,
                     direcciones: $scope.dirForadd,
-                    //  idOperadorUnidadRuta:$scope.rutaActual.idOperadorUnidadRuta,
                     idEmpresa: $scope.empresaActual.emp_idempresa,
                     idSucursal: $scope.sucursalActual.AGENCIA,
                     idUsuario: $scope.Usuario.idUsuario,
@@ -427,18 +426,18 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
 
 
                 if ($scope.edita == false) {
+                    console.log('inserta NUEVO');
+                    console.log(datos);
                     despachoRepository.postCreate(datos).then(function(result) {
-
                         resolve(result.data);
-                        //  $scope.limpiar();
                     });
                 } else {
+                    console.log('inserta UPD');
+                    console.log(datos);
                     datos.idDespacho = $scope.idDespacho;
                     console.log(datos);
                     despachoRepository.postUpdate(datos).then(function(result) {
-
-                        resolve(result.data);
-                        //  $scope.limpiar();
+                            resolve(result.data);
                     });
                 }
             }).then(function(respuesta) {
@@ -447,10 +446,6 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
                     $scope.clean();
                     $scope.cambioEmpresa();
                     $scope.limpiaTemporalres();
-                    // bootbox.alert("<h4> Operacion realizada!!. </h4>",
-                    //     function() {
-                    //         $('#modal-panelRuta').modal('hide')
-                    //     });
                     bootbox.alert({
                         title: 'Operacion realizada!!.',
                         message: '<div class="col-sm-12 text-center"><div class="iconoExito"><i class="fa fa-check icon-circle icon-3x"></i></div></div>',

@@ -124,11 +124,11 @@ registrationModule.factory('direccionRepository', function($http) {
                 }
             });
         },
-        getDireccionesRuta: function(idRuta) {
+        getDireccionesRuta: function(idDespacho) {
             return $http({
                 url: direccionURL + 'direccionesRuta/',
                 method: "GET",
-                params: { idRuta: idRuta },
+                params: { idDespacho: idDespacho },
                 headers: {
                     'Content-Type': 'application/json'
                 }
