@@ -176,5 +176,54 @@ despacho.prototype.get_pedidosShow = function(req, res, next) {
         });
     });
 };
+despacho.prototype.get_busquedaPedidoDetalle = function(req, res, next) {
+   var self = this;
 
+    var params = [  { name: 'idCotizacion', value: req.query.pedido, type: self.model.types.INT}];
+ 
+    self.model.query('SEL_PEDIDO_DETALLE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+despacho.prototype.post_gnrDespacho = function(req, res, next) {
+   var self = this;
+
+    var params = [  { name: 'idDespacho', value: req.body.idDespacho, type: self.model.types.INT},
+                    { name: 'situacion', value: req.body.situacion, type: self.model.types.INT}];
+  console.log(params);
+ 
+    self.model.query('UPD_DESPACHO_SITUACION_SP', params, function(error, result) {
+ console.log(result);
+        console.log(error);
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+despacho.prototype.post_delete = function(req, res, next) {
+   var self = this;
+
+
+    var params = [
+        { name: 'idOperador', value: req.body.idOperador, type: self.model.types.INT },
+        { name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },    
+        { name: 'idDespacho', value: req.body.idDespacho, type: self.model.types.INT },
+    ];
+   
+ console.log(params);
+    self.model.query('DEL_DESPACHO_PEDIDO_RUTA_SP ', params, function(error, result) {
+        console.log(result);
+         console.log(error);
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 module.exports = despacho;

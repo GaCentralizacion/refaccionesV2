@@ -57,7 +57,7 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
     $scope.detalleCot = function(pedido) {
 
         $scope.direccionEntrega = pedido.dir;
-        despachoRepository.getBusquedaPedidoDetalle(pedido.idcotizacion).then(function(result) {
+        despachoRepository.getBusquedaPedidoDetalle(pedido.pedidobpro).then(function(result) {
 
             if (result.data.length > 0) {
                 $scope.detalles = result.data;
@@ -842,12 +842,14 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
 
 
     $scope.imprimir = function() {
+        $scope.rutaDetalle.agencia = $scope.empresaActual.emp_nombre;
+        $scope.rutaDetalle.sucursal= $scope.sucursalActual.NOMBRE_AGENCIA;
         $scope.rutaDetalle.numDirRut = $scope.numDirRut;
         $scope.rutaDetalle.pedidos = $scope.pedidoDireccionesRuta;
         var rptStructure = {};
         rptStructure = $scope.rutaDetalle;
         var jsonData = {
-            "template": { "name": "despachoRutaRefacciones_rpt" },
+            "template": { "name": "DespachoCentralizado_rpt" },
             "data": rptStructure
         }
 

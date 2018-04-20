@@ -73,7 +73,7 @@ registrationModule.factory('despachoRepository', function($http) {
                 responseType: 'arraybuffer'
             });
         },
-        getBusquedaPedidoDetalle: function(pedido, usuario) {
+        getBusquedaPedidoDetalle: function(pedido) {
             return $http({
                 url: despachoURL + 'busquedaPedidoDetalle/',
                 method: "GET",
