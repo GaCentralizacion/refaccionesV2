@@ -292,7 +292,7 @@ direccion.prototype.get_estado = function(req, res, next) {
     })
 
 
-
+    console.log(params)
     self.model.query('SEL_ESTADOS_SP', params, function(error, result) {
 
         self.view.expositor(res, {

@@ -59,12 +59,12 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                 //$scope.histEmpresa = localStorage.getItem('histEmpresa')
                 $scope.tempHistSuc = localStorage.getItem('histSucursal')
                 $scope.histSucursal.push(JSON.parse($scope.tempHistSuc))
-
+                //$scope.consultaEstado();
                 setTimeout(function() {
 
                     $("#selSucursales").val($scope.histSucursal[0][0].AGENCIA);
                     $scope.sucursalActual = $scope.histSucursal[0][0]; //$scope.empresas;                            
-
+                    $scope.consultaEstado();
                 }, 100);
 
             } //SET SUCURSAL DESDE LOCALSTORAGE   END
