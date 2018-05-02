@@ -5,13 +5,6 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
-        //Consigue la fecha actual
-        var f = new Date();
-        $scope.fechaFin = ('0' + f.getDate()).slice(-2) + "/" + ('0' + (f.getMonth() + 1)).slice(-2) + "/" + f.getFullYear();
-        //Consigue 30 dias antes de la fecha actual
-        var fI = new Date();
-        fI.setDate(fI.getDate() - 30);
-        $scope.fecha = ('0' + fI.getDate()).slice(-2) + "/" + ('0' + (fI.getMonth() + 1)).slice(-2) + "/" + fI.getFullYear();
     };
 
 
@@ -52,8 +45,9 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
 
 
     $scope.consultaSucursales = function() {
+        $scope.$apply();
         $scope.muestraAgencia = false;
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa,  $scope.Usuario.rol).then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
                 $scope.sucursalActual = $scope.sucursales[0];
@@ -75,7 +69,14 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
 
                         $("#selSucursales").val($scope.pedSucursal[0][0].AGENCIA);
                         $scope.sucursalActual = $scope.pedSucursal[0][0]; //$scope.empresas;
-
+                        //$scope.$apply();
+                        //Consigue la fecha actual
+                        var f = new Date();
+                        $scope.fechaFin = ('0' + f.getDate()).slice(-2) + "/" + ('0' + (f.getMonth() + 1)).slice(-2) + "/" + f.getFullYear();
+                        //Consigue 30 dias antes de la fecha actual
+                        var fI = new Date();
+                        fI.setDate(fI.getDate() - 30);
+                        $scope.fecha = ('0' + fI.getDate()).slice(-2) + "/" + ('0' + (fI.getMonth() + 1)).slice(-2) + "/" + fI.getFullYear();
                         $scope.consultaPedidos($scope.empresaActual, $scope.sucursalActual, $scope.fecha, $scope.fechaFin);
 
                     }, 100);

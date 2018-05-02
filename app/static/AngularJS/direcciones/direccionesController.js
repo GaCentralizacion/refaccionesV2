@@ -480,8 +480,8 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                 console.log('archivo:')
                 console.log($scope.archivoComprobante)
 
-                var files = $('#avatar').prop("files"); //$(ele).get(0).files;
-
+                //var files = $('#avatar').prop("files"); //$(ele).get(0).files;
+                 var files = $('#file-5').prop("files"); //$(ele).get(0).files;
                 $scope.comprobante = 0;
 
                 if (files.length > 0)
