@@ -130,6 +130,12 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
                         $("#selSucursales").val($scope.histSucursal[0][0].AGENCIA);
                         $scope.sucursalActual = $scope.histSucursal[0][0]; //$scope.empresas;
 
+                        var f = new Date();
+                        $scope.fechaFin = ('0' + f.getDate()).slice(-2) + "/" + ('0' + (f.getMonth() + 1)).slice(-2) + "/" + f.getFullYear();
+                        //Consigue 30 dias antes de la fecha actual
+                        var fI = new Date();
+                        fI.setDate(fI.getDate() - 30);
+                        $scope.fecha = ('0' + fI.getDate()).slice(-2) + "/" + ('0' + (fI.getMonth() + 1)).slice(-2) + "/" + fI.getFullYear();
                         $scope.consultaPedidos($scope.empresaActual, $scope.sucursalActual, $scope.fecha, $scope.fechaFin);
 
                     }, 100);
@@ -142,20 +148,16 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
     $scope.consultaPedidos = function(empresa, sucursal, fecha, fechaFin) {
 
 
-        $scope.pedidos = [
-            { color: '#003744', folioPedido: 'AA-00-01', total: 10000, estatus: 'P', factura: 'A01222', PMM_FECHA: '29/01/2018', fechaEntrega: '30/02/2018', diasEntrega: 5, notaCredito: '01-01' },
-            { color: '#003744', folioPedido: 'AA-00-02', total: 3000, estatus: 'P', factura: 'A01200', PMM_FECHA: '20/01/2018', fechaEntrega: '15/02/2018', diasEntrega: 9, notaCredito: '01-02' },
-            { color: '#003744', folioPedido: 'AA-00-03', total: 8000, estatus: 'P', factura: 'A01255', PMM_FECHA: '25/01/2018', fechaEntrega: '20/03/2018', diasEntrega: 5, notaCredito: '01-03' },
-            { color: '#003744', folioPedido: 'AA-00-04', total: 900, estatus: 'P', factura: 'A01333', PMM_FECHA: '22/01/2018', fechaEntrega: '10/05/2018', diasEntrega: 9, notaCredito: '01-04' }
-        ];
+      
+        var modifechaInic = fecha.split('/') //'07/10/2016'.split('/');//nuevocontrato.fechaInicio.split('/');
+        var newDateIni = modifechaInic[2] + modifechaInic[1] + modifechaInic[0] //modifechaInic[1] + '/' + modifechaInic[0] + '/' + modifechaInic[2];
+        var modifechaTerm = fechaFin.split('/') //'10/10/2016'.split('/');//nuevocontrato.fechaTermino.split('/');
+        var newDateterm = modifechaTerm[2] + modifechaTerm[1] + modifechaTerm[0] 
 
-        $scope.listaPedidos = [$scope.pedidos];
-
-        // pedidoRepository.busquedaPedido($scope.Usuario.idUsuario,2, empresa.emp_idempresa,sucursal.AGENCIA,fecha,fechaFin).then(function(result) {
-        //      if (result.data.length > 0) { 
-        //              $scope.listaPedidos =result.data
-        //console.log(data)
-
+        pedidoRepository.busquedaPedido($scope.Usuario.idUsuario,2, empresa.emp_idempresa,sucursal.AGENCIA,newDateIni,newDateterm).then(function(result) {
+             if (result.data.length > 0) { 
+                     $scope.listaPedidos = result.data
+console.log(  $scope.listaPedidos )
         $('#tblHistoricoFiltros').DataTable().destroy();
 
         setTimeout(function() {
@@ -165,65 +167,74 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
             $("#tblHistoricoFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
 
         }, 1);
-        //      }else{
-        //         alertFactory.historial('No se encontraron resultados'); 
-        //     }
-        // });
+
+             }else{
+                alertFactory.historial('No se encontraron resultados');
+                $scope.listaPedidos=[]; 
+                 $('#tblHistoricoFiltros').DataTable().destroy();
+            }
+        });
     }; //fin consultaPedido
 
 
 
-    $scope.detalleHistorial = function() {
+    $scope.detalleHistorial = function(pedido) {
+        console.log('Seleccionado');
+        console.log($scope.Usuario);
 
 
-        pedidoRepository.busquedaPedidoUsuarioDetalle().then(function(result) {
-            console.log(result.data);
+         pedidoRepository.busquedaPedidoUsuarioDetalle(pedido.idPedidoRef,$scope.Usuario.idUsuario).then(function(result) {
+        //     console.log(result.data);
 
-            // if(result.data.length>0)
-            // {
+            if(result.data.data.length>0)
+            {
 
-            //     $scope.detalles = result.data;
-            //     $scope.empresa = data;
+                $scope.detalles = result.data.data;
+                $scope.empresa =result.data
 
-            //     var i = 0;
-            //     $scope.subtotal = 0;
-            //     angular.forEach($scope.detalles, function(value, key) {
-            //         $scope.subtotal += $scope.detalles[i].totalItem;
-            //         i++;
-            //     });
+                console.log($scope.detalles);
+                console.log('-----------------------------------------')
+                console.log($scope.empresa)
 
-            //     $scope.idpedido = $stateParams.idpedido;
-            //     console.log($scope.detalles.length);
+                var i = 0;
+                $scope.subtotal = 0;
+                angular.forEach($scope.detalles, function(value, key) {
+                    $scope.subtotal += $scope.detalles[i].totalItem;
+                    i++;
+                });
 
-            //     $scope.totalPedido = 0;
+               $scope.idpedido = pedido.idPedidoRef;
+                //console.log($scope.detalles.length);
 
-            //     data.data.forEach(function(entry) {
-            //         $scope.totalPedido += entry.totalItem;
-            //     }, this);
+                $scope.totalPedido = 0;
 
-            // }
+                result.data.data.forEach(function(entry) {
+                    $scope.totalPedido += entry.totalItem;
+                }, this);
 
-
-            $scope.empresa = {
-                Nombre: 'Andrade',
-                FECHAPEDIDO: '30/01/2018',
-                DIRECCION: 'Calle X Numero #45',
-                TELEFONO: 123456,
-                DIRCLIENTE: 'calle Y #70',
-                CORREOCLIENTE: 'p@gmail.com',
-                TELCLIENTE: 987654
-            };
-            $scope.detalles = [
-                { PTS_IDPARTE: 10151111, PTS_DESPARTE: 'Sensor de estacionamiento', PTS_PCOLISTA: 10000, prd_cantidadsolicitada: 1, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0056, totalItem: 10000 },
-                { PTS_IDPARTE: 20000002, PTS_DESPARTE: 'Bobina', PTS_PCOLISTA: 400, prd_cantidadsolicitada: 1, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0057, totalItem: 400 },
-                { PTS_IDPARTE: 34444555, PTS_DESPARTE: 'Bujia', PTS_PCOLISTA: 100, prd_cantidadsolicitada: 4, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0058, totalItem: 400 },
-            ];
+            }
 
 
-            $('#modalDetalleHistorial').modal('show');
+            // $scope.empresa = {
+            //     Nombre: 'Andrade',
+            //     FECHAPEDIDO: '30/01/2018',
+            //     DIRECCION: 'Calle X Numero #45',
+            //     TELEFONO: 123456,
+            //     DIRCLIENTE: 'calle Y #70',
+            //     CORREOCLIENTE: 'p@gmail.com',
+            //     TELCLIENTE: 987654
+            // };
+            // $scope.detalles = [
+            //     { PTS_IDPARTE: 10151111, PTS_DESPARTE: 'Sensor de estacionamiento', PTS_PCOLISTA: 10000, prd_cantidadsolicitada: 1, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0056, totalItem: 10000 },
+            //     { PTS_IDPARTE: 20000002, PTS_DESPARTE: 'Bobina', PTS_PCOLISTA: 400, prd_cantidadsolicitada: 1, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0057, totalItem: 400 },
+            //     { PTS_IDPARTE: 34444555, PTS_DESPARTE: 'Bujia', PTS_PCOLISTA: 100, prd_cantidadsolicitada: 4, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0058, totalItem: 400 },
+            // ];
 
 
-        });
+           $('#modalDetalleHistorial').modal('show');
+
+
+       });
     };
 
 
@@ -231,37 +242,13 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
     $scope.imprimir = function() {
 
         var rptStructure = {};
+ rptStructure.refacciones = $scope.detalles;
 
-        rptStructure.refacciones = [
-            { PTS_IDPARTE: 10151111, PTS_DESPARTE: 'Sensor de estacionamiento', PTS_PCOLISTA: 10000, prd_cantidadsolicitada: 1, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0056, totalItem: 10000 },
-            { PTS_IDPARTE: 20000002, PTS_DESPARTE: 'Bobina', PTS_PCOLISTA: 400, prd_cantidadsolicitada: 1, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0057, totalItem: 400 },
-            { PTS_IDPARTE: 34444555, PTS_DESPARTE: 'Bujia', PTS_PCOLISTA: 100, prd_cantidadsolicitada: 4, color: '#003744', estatusPieza: 'SURTIDO', idPedidoBPRO: 0058, totalItem: 400 },
-        ];
-
-        // rptStructure.empresa =[{ 'idpedido':$stateParams.id,'FECHAPEDIDO':$scope.empresa.FECHAPEDIDO,'NOMBRE':$scope.empresa.NOMBRE,
-        //                          'DIRECCION':$scope.empresa.DIRECCION,'name':$scope.user.name,'TELEFONO': $scope.empresa.TELEFONO,
-        //                          'DIRCLIENTE':$scope.empresa.DIRCLIENTE,'CORREOCLIENTE':$scope.empresa.CORREOCLIENTE,
-        //                          'TELCLIENTE': $scope.empresa.TELCLIENTE,'subtotal': $scope.subtotal,'iva':($scope.subtotal * .16),
-        //                          'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.colorEstatus,'estatus':$scope.estatus}];
-
-
-
-        rptStructure.empresa = [{
-            'idpedido': 1,
-            'FECHAPEDIDO': '30/01/2018',
-            'NOMBRE': 'Andrade',
-            'DIRECCION': 'Calle X Numero #45',
-            'name': 'Andrade',
-            'TELEFONO': 987654,
-            'DIRCLIENTE': 'Calle X Numero #45',
-            'CORREOCLIENTE': 'p@gmail.com',
-            'TELCLIENTE': 987654,
-            'subtotal': 10800,
-            'iva': 1728,
-            'total': 12528,
-            'colorEstatus': '#003744',
-            'estatus': 'SURTIDO'
-        }];
+                rptStructure.empresa =[{ 'idpedido': $scope.idpedido,'FECHAPEDIDO':$scope.empresa.FECHAPEDIDO,'NOMBRE':$scope.empresa.NOMBRE,
+                                         'DIRECCION':$scope.empresa.DIRECCION,'name':$scope.Usuario.nombreUsuario,'TELEFONO': $scope.empresa.TELEFONO,
+                                         'DIRCLIENTE':$scope.empresa.DIRCLIENTE,'CORREOCLIENTE':$scope.empresa.CORREOCLIENTE,
+                                         'TELCLIENTE': $scope.empresa.TELCLIENTE,'subtotal': $scope.subtotal,'iva':($scope.subtotal * .16),
+                                         'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.colorEstatus,'estatus':'HISTORICO'}];
 
 
         var jsonData = {
