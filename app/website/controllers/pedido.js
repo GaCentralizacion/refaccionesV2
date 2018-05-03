@@ -20,7 +20,7 @@ pedido.prototype.get_busquedaPedido = function(req, res, next) {
 
     var params = [
         { name: 'idUsuario', value: req.query.usuario, type: self.model.types.INT },
-        { name: 'estatus', value: 1, type: self.model.types.INT },
+        { name: 'estatus', value: req.query.status, type: self.model.types.INT },
         { name: 'idEmpresa', value: req.query.empresa, type: self.model.types.INT },
         { name: 'idSucursal', value: req.query.sucursal, type: self.model.types.INT },
         { name: 'fechaInicio', value: req.query.fechaInicio, type: self.model.types.STRING },
