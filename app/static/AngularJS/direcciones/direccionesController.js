@@ -20,8 +20,31 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             if (result.data.length > 0) {
                 $scope.empresas = result.data;
                 $scope.empresaActual = $scope.empresas[0];
+                //SET EMPRESA LOCALSTORAGE   BEGIN
+                if (localStorage.getItem('pedEmpresa') !== null) {
+
+                    $scope.pedEmpresa = []
+
+                    $scope.tempPedEmp = localStorage.getItem('pedEmpresa')
+                    $scope.pedEmpresa.push(JSON.parse($scope.tempPedEmp))
+
+                    console.log('$scope.pedEmpresa')
+                    console.log($scope.pedEmpresa[0][0])
+
+                    setTimeout(function() {
+
+                        $("#selEmpresas").val($scope.pedEmpresa[0][0].emp_idempresa);
+                        $scope.empresaActual = $scope.pedEmpresa[0][0]; //$scope.empresas;
+
+                        $scope.consultaSucursales();
+                    }, 100);
+
+                }
+                //SET EMPRESA LOCALSTORAGE   END
             } else {
                 alertFactory.success('No se encontraron empresas');
+                localStorage.removeItem('pedEmpresa')
+                localStorage.removeItem('pedSucursal')
             }
 
         });
@@ -34,6 +57,15 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
             //$scope.histEmpresa = []
             console.log('empresa actual')
             console.log($scope.empresaActual)
+            $scope.pedEmpresa = []
+
+            $scope.pedEmpresa.push({
+                emp_idempresa: $scope.empresaActual.emp_idempresa,
+                emp_nombre: $scope.empresaActual.emp_nombre,
+                emp_nombrecto: $scope.empresaActual.emp_nombrecto
+            })
+            //$scope.histEmpresa.push($scope.empresaActual);
+            localStorage.setItem('pedEmpresa', JSON.stringify($scope.pedEmpresa));
 
 
             $scope.consultaSucursales();
@@ -65,6 +97,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                     $("#selSucursales").val($scope.histSucursal[0][0].AGENCIA);
                     $scope.sucursalActual = $scope.histSucursal[0][0]; //$scope.empresas;                            
                     $scope.consultaEstado();
+                    $scope.cambioSucursal();
                 }, 100);
 
             } //SET SUCURSAL DESDE LOCALSTORAGE   END
@@ -465,23 +498,44 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
         } else {
             new Promise(function(resolve, reject) {
 
-                $scope.cadenaConfirma = "<h4>Está a punto de registrar esta dirección ¿Desea continuar?</h4>"
 
-                bootbox.confirm($scope.cadenaConfirma,
-                    function(result) {
+                bootbox.confirm({
+                    title: "Está a punto de registrar esta dirección",
+                    message: "¿Desea continuar?",
+                    size: 'large',
+                    buttons: {
+                        confirm: {
+                            label: 'Sí',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function(result) {
                         if (result)
                             resolve(1)
                         else
                             reject(2)
                     }
-                )
+                })
+                // $scope.cadenaConfirma = "<h4>Está a punto de registrar esta dirección ¿Desea continuar?</h4>"
+                // bootbox.confirm($scope.cadenaConfirma,
+                //     function(result) {
+                //         if (result)
+                //             resolve(1)
+                //         else
+                //             reject(2)
+                //     }
+                // )
             }).then(function(operacion) {
 
                 console.log('archivo:')
                 console.log($scope.archivoComprobante)
 
                 //var files = $('#avatar').prop("files"); //$(ele).get(0).files;
-                 var files = $('#file-5').prop("files"); //$(ele).get(0).files;
+                var files = $('#file-5').prop("files"); //$(ele).get(0).files;
                 $scope.comprobante = 0;
 
                 if (files.length > 0)
@@ -568,6 +622,7 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
                                 $('.modal-aprobacion').modal('hide')
                                 $('#modalAltaDirecciones').modal('hide')
                             });
+                        $scope.init();
 
                     } //if respuesta.estatus = 0k
                     else { //error al guardar

@@ -45,7 +45,7 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
 
 
     $scope.consultaSucursales = function() {
-        $scope.$apply();
+        //$scope.$apply();
         $scope.muestraAgencia = false;
         filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
