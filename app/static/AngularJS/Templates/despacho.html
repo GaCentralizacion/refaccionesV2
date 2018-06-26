@@ -269,7 +269,7 @@
                                         <div class="label label-table " ng-style="{ 'background-color': '{{elemento.color}}' } ">{{elemento.situacion}}</div>
                                     </td>
                                     <td>
-                                        <a class="btn btn-success btn-icon " ng-click="editar(elemento,2)" ng-hide="{{elemento.situacionDespacho  == 2 ? true : false}}">
+                                        <a class="btn btn-success btn-icon " ng-click="editar(elemento,2)" ng-hide="{{elemento.situacionDespacho  >= 2 ? true : false}}">
                                                 <i class="fa fa-pencil "></i>
                                             </a>
                                     </td>
@@ -279,7 +279,7 @@
                                             </a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger btn-icon " ng-click="eliminaDespacho(elemento)" ng-hide="{{elemento.situacionDespacho  == 2 ? true : false}}">
+                                        <a class="btn btn-danger btn-icon " ng-click="eliminaDespacho(elemento)" ng-hide="{{elemento.situacionDespacho  >= 2 ? true : false}}">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                     </td>
@@ -423,6 +423,7 @@
                                         <th>Fecha </th>
                                         <th>Importe </th>
                                         <th>Direccion </th>
+                                        <th>Situación </th>
                                         <th>Ver </th>
                                     </tr>
                                 </thead>
@@ -449,6 +450,11 @@
                                            
                                             </span>
                                         </td>
+                                        <td>
+                                           <div class="label label-table " ng-style="{ 'background-color': '{{pedidoDireccion.color}}' } ">
+                                                {{pedidoDireccion.nombre}}
+                                            </div>
+                                       </td>
                                         <td>
                                             <a class="btn btn-info btn-icon " ng-click="detalleCot(pedidoDireccion) ">
                                                 <i class="fa fa-search "></i>

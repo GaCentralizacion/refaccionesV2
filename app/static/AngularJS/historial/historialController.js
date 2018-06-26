@@ -5,13 +5,6 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
-        //Consigue la fecha actual
-        var f = new Date();
-        $scope.fechaFin = ('0' + f.getDate()).slice(-2) + "/" + ('0' + (f.getMonth() + 1)).slice(-2) + "/" + f.getFullYear();
-        //Consigue 30 dias antes de la fecha actual
-        var fI = new Date();
-        fI.setDate(fI.getDate() - 30);
-        $scope.fecha = ('0' + fI.getDate()).slice(-2) + "/" + ('0' + (fI.getMonth() + 1)).slice(-2) + "/" + fI.getFullYear();
     };
 
 
@@ -181,7 +174,10 @@ console.log(  $scope.listaPedidos )
     $scope.detalleHistorial = function(pedido) {
         console.log('Seleccionado');
         console.log($scope.Usuario);
-
+         $scope.color = pedido.color;
+        $scope.colorEstatus = {
+            "background-color": pedido.color
+        }
 
          pedidoRepository.busquedaPedidoUsuarioDetalle(pedido.idPedidoRef,$scope.Usuario.idUsuario).then(function(result) {
         //     console.log(result.data);
@@ -248,7 +244,7 @@ console.log(  $scope.listaPedidos )
                                          'DIRECCION':$scope.empresa.DIRECCION,'name':$scope.Usuario.nombreUsuario,'TELEFONO': $scope.empresa.TELEFONO,
                                          'DIRCLIENTE':$scope.empresa.DIRCLIENTE,'CORREOCLIENTE':$scope.empresa.CORREOCLIENTE,
                                          'TELCLIENTE': $scope.empresa.TELCLIENTE,'subtotal': $scope.subtotal,'iva':($scope.subtotal * .16),
-                                         'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.colorEstatus,'estatus':'HISTORICO'}];
+                                         'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.color,'estatus':'HISTORICO'}];
 
 
         var jsonData = {

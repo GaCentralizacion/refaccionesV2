@@ -111,9 +111,9 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
                 var fechaVigencia = fechaInicio[2] + '/' + fechaInicio[1] + '/' + fechaInicio[0];
                 console.log(fechaVigencia, 'TOMATELA')
                 var datos = {
-                    nombre: $scope.nombre,
-                    apPaterno: $scope.apPaterno,
-                    apMaterno: $scope.apMaterno,
+                    nombre: $scope.nombre.toUpperCase(),
+                    apPaterno: $scope.apPaterno.toUpperCase(),
+                    apMaterno: $scope.apMaterno.toUpperCase(),
                     calle: $scope.calle,
                     exterior: $scope.exterior,
                     interior: $scope.interior,
@@ -122,7 +122,7 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
                     ciudad: $scope.ciudadActual.d_ciudad,
                     estado: $scope.estadoActual.descripcion,
                     cp: $scope.cpActual,
-                    rfc: $scope.rfc,
+                    rfc: $scope.rfc.toUpperCase(),
                     telefono: $scope.telefono,
                     numeroLicencia: $scope.numeroLicencia,
                     vigencia: fechaVigencia,

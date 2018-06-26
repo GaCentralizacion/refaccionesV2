@@ -684,138 +684,138 @@ registrationModule.controller('direccionesController', function($sce, $scope, $r
 
 
     //     // Actualiza la dirección  actualizaDireccion
-    //         $scope.actualizaDireccion = function(direccion) {
-    //         if ($scope.estadoActual.idEdo == $scope.Estados[0].idEdo) {
-    //             $scope.mensajeEstado = true;
+        //     $scope.actualizaDireccion = function(direccion) {
+        //     if ($scope.estadoActual.idEdo == $scope.Estados[0].idEdo) {
+        //         $scope.mensajeEstado = true;
 
-    //         } else {
-    //             new Promise(function(resolve, reject) {
+        //     } else {
+        //         new Promise(function(resolve, reject) {
 
-    //                 $scope.cadenaConfirma = "<h4>Está a punto de actualizar esta dirección ¿Desea continuar?</h4>"
+        //             $scope.cadenaConfirma = "<h4>Está a punto de actualizar esta dirección ¿Desea continuar?</h4>"
 
-    //                 bootbox.confirm($scope.cadenaConfirma,
-    //                     function(result) {
-    //                         if (result)
-    //                             resolve(1)
-    //                         else
-    //                             reject(2)
-    //                     }
-    //                 )
-    //             }).then(function(operacion) {
+        //             bootbox.confirm($scope.cadenaConfirma,
+        //                 function(result) {
+        //                     if (result)
+        //                         resolve(1)
+        //                     else
+        //                         reject(2)
+        //                 }
+        //             )
+        //         }).then(function(operacion) {
 
-    //                 console.log('archivo:')
-    //                 console.log($scope.archivoComprobante)
+        //             console.log('archivo:')
+        //             console.log($scope.archivoComprobante)
 
-    //                 var files = $('#avatar').prop("files"); //$(ele).get(0).files;
+        //             var files = $('#avatar').prop("files"); //$(ele).get(0).files;
 
-    //                 $scope.comprobante = 0;
+        //             $scope.comprobante = 0;
 
-    //                 if (files.length > 0)
-    //                     $scope.comprobante = 1;
+        //             if (files.length > 0)
+        //                 $scope.comprobante = 1;
 
-    //                 new Promise(function(resolve, reject) {
-    //                     var datos = {
-    //                         idDireccion : direccion.idDireccion
-    //                         idUsuario: $scope.Usuario.idUsuario,
-    //                         idEmpresa: $scope.empresaActual.emp_idempresa,
-    //                         idSucursal: $scope.sucursalActual.AGENCIA,
-    //                         estado: $scope.estadoActual.idEdo,
-    //                         ciudad: $scope.ciudadActual.d_ciudad,
-    //                         municipio: $scope.municipioActual.municipio,
-    //                         colonia: $scope.coloniaActual.colonia,
-    //                         cp: $scope.cpActual,
-    //                         calle: $scope.calle,
-    //                         exterior: $scope.exterior,
-    //                         interior: $scope.interior,
-    //                         referencia: $scope.referencia,
-    //                         nombre1: $scope.nombre1,
-    //                         apaterno1: $scope.apaterno1,
-    //                         amaterno1: $scope.amaterno1,
-    //                         rfc1: $scope.rfc1,
-    //                         lada1: $scope.lada1,
-    //                         tel1_1: $scope.tel1_1,
-    //                         tel2_1: $scope.tel2_1,
-    //                         correo1: $scope.correo1,
-    //                         nombre2: $scope.nombre2,
-    //                         apaterno2: $scope.apaterno2,
-    //                         amaterno2: $scope.amaterno2,
-    //                         rfc2: $scope.rfc2,
-    //                         lada2: $scope.lada2,
-    //                         tel1_2: $scope.tel1_2,
-    //                         tel2_2: $scope.tel2_2,
-    //                         correo2: $scope.correo2,
-    //                         correoGeneral: $scope.correoGeneral,
-    //                         archivo: $scope.archivoComprobante,
-    //                         comprobante: $scope.comprobante
-    //                     };
+        //             new Promise(function(resolve, reject) {
+        //                 var datos = {
+        //                     idDireccion : direccion.idDireccion
+        //                     idUsuario: $scope.Usuario.idUsuario,
+        //                     idEmpresa: $scope.empresaActual.emp_idempresa,
+        //                     idSucursal: $scope.sucursalActual.AGENCIA,
+        //                     estado: $scope.estadoActual.idEdo,
+        //                     ciudad: $scope.ciudadActual.d_ciudad,
+        //                     municipio: $scope.municipioActual.municipio,
+        //                     colonia: $scope.coloniaActual.colonia,
+        //                     cp: $scope.cpActual,
+        //                     calle: $scope.calle,
+        //                     exterior: $scope.exterior,
+        //                     interior: $scope.interior,
+        //                     referencia: $scope.referencia,
+        //                     nombre1: $scope.nombre1,
+        //                     apaterno1: $scope.apaterno1,
+        //                     amaterno1: $scope.amaterno1,
+        //                     rfc1: $scope.rfc1,
+        //                     lada1: $scope.lada1,
+        //                     tel1_1: $scope.tel1_1,
+        //                     tel2_1: $scope.tel2_1,
+        //                     correo1: $scope.correo1,
+        //                     nombre2: $scope.nombre2,
+        //                     apaterno2: $scope.apaterno2,
+        //                     amaterno2: $scope.amaterno2,
+        //                     rfc2: $scope.rfc2,
+        //                     lada2: $scope.lada2,
+        //                     tel1_2: $scope.tel1_2,
+        //                     tel2_2: $scope.tel2_2,
+        //                     correo2: $scope.correo2,
+        //                     correoGeneral: $scope.correoGeneral,
+        //                     archivo: $scope.archivoComprobante,
+        //                     comprobante: $scope.comprobante
+        //                 };
 
-    //                     direccionRepository.postUpdateDireccion(datos).then(function(result) {
+        //                 direccionRepository.postUpdateDireccion(datos).then(function(result) {
 
-    //                         $scope.empresaActual = $scope.empresas[0];
-    //                         $scope.sucursalActual = {};
-    //                         $scope.estadoActual = {};
-    //                         $scope.ciudadActual = {};
-    //                         $scope.municipioActual = {};
-    //                         $scope.coloniaActual = {};
-    //                         $scope.cpActual = '';
+        //                     $scope.empresaActual = $scope.empresas[0];
+        //                     $scope.sucursalActual = {};
+        //                     $scope.estadoActual = {};
+        //                     $scope.ciudadActual = {};
+        //                     $scope.municipioActual = {};
+        //                     $scope.coloniaActual = {};
+        //                     $scope.cpActual = '';
 
-    //                         $scope.calle = '';
-    //                         $scope.exterior = '';
-    //                         $scope.interior = '';
-    //                         $scope.referencia = '';
+        //                     $scope.calle = '';
+        //                     $scope.exterior = '';
+        //                     $scope.interior = '';
+        //                     $scope.referencia = '';
 
-    //                         $scope.nombre1 = '';
-    //                         $scope.apaterno1 = '';
-    //                         $scope.amaterno1 = '';
-    //                         $scope.rfc1 = '';
-    //                         $scope.lada1 = '';
-    //                         $scope.tel1_1 = '';
-    //                         $scope.tel2_1 = '';
-    //                         $scope.correo1 = '';
+        //                     $scope.nombre1 = '';
+        //                     $scope.apaterno1 = '';
+        //                     $scope.amaterno1 = '';
+        //                     $scope.rfc1 = '';
+        //                     $scope.lada1 = '';
+        //                     $scope.tel1_1 = '';
+        //                     $scope.tel2_1 = '';
+        //                     $scope.correo1 = '';
 
-    //                         $scope.nombre2 = '';
-    //                         $scope.apaterno2 = '';
-    //                         $scope.amaterno2 = '';
-    //                         $scope.rfc2 = '';
-    //                         $scope.lada2 = '';
-    //                         $scope.tel1_2 = '';
-    //                         $scope.tel2_2 = '';
-    //                         $scope.correo2 = '';
-    //                         $scope.correoGeneral = '';
-    //                         resolve(result.data);
-    //                     });
+        //                     $scope.nombre2 = '';
+        //                     $scope.apaterno2 = '';
+        //                     $scope.amaterno2 = '';
+        //                     $scope.rfc2 = '';
+        //                     $scope.lada2 = '';
+        //                     $scope.tel1_2 = '';
+        //                     $scope.tel2_2 = '';
+        //                     $scope.correo2 = '';
+        //                     $scope.correoGeneral = '';
+        //                     resolve(result.data);
+        //                 });
 
-    //                 }).then(function(respuesta) {
+        //             }).then(function(respuesta) {
 
-    //                     if (respuesta.estatus = 'ok') {
-    //                         // $scope.guardarArchivo(respuesta.idDireccion, $scope.user.per_idpersona);
+        //                 if (respuesta.estatus = 'ok') {
+        //                     // $scope.guardarArchivo(respuesta.idDireccion, $scope.user.per_idpersona);
 
-    //                         bootbox.alert("<h4> Dirección actualizada exitosamente. </h4>",
-    //                             function() {
-    //                                 $('.modal-aprobacion').modal('hide')
-    //                             });
+        //                     bootbox.alert("<h4> Dirección actualizada exitosamente. </h4>",
+        //                         function() {
+        //                             $('.modal-aprobacion').modal('hide')
+        //                         });
 
-    //                     } //if respuesta.estatus = 0k
-    //                     else { //error al guardar
+        //                 } //if respuesta.estatus = 0k
+        //                 else { //error al guardar
 
-    //                         console.log('error al guardar')
+        //                     console.log('error al guardar')
 
-    //                         bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
-    //                             function() {
-    //                                 $('.modal-aprobacion').modal('hide')
-    //                                 //$state.go("user.aprobacion")
-    //                             });
-    //                     }
+        //                     bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
+        //                         function() {
+        //                             $('.modal-aprobacion').modal('hide')
+        //                             //$state.go("user.aprobacion")
+        //                         });
+        //                 }
 
-    //                 });
+        //             });
 
-    //             }); //fin promise  
+        //         }); //fin promise  
 
-    //         }
+        //     }
 
 
 
-    //     }; // fin actualiza direccion
+        // }; // fin actualiza direccion
     // // 
 
 

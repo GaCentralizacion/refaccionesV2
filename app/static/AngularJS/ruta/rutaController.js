@@ -289,8 +289,8 @@ registrationModule.controller('rutaController', function($sce, $http, $scope, $r
                 var datos = {
                     idUsuario: $scope.Usuario.idUsuario,
                     idEmpresa: $scope.empresaActual.emp_idempresa,
-                    nombreRuta: $scope.nombreRuta,
-                    descripcion: $scope.descripcion,
+                    nombreRuta: $scope.nombreRuta.toUpperCase(),
+                    descripcion: $scope.descripcion.toUpperCase(),
                     idOperador: $scope.idOperador,
                     idUnidad: $scope.idUnidad,
                     idSucursal: $scope.sucursalActual.AGENCIA

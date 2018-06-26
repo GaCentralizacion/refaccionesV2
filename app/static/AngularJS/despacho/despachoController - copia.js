@@ -71,7 +71,57 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
            
     };
 
-    
+    // $scope.despachoAlta = function() {
+    //     new Promise(function(resolve, reject) {
+    //         $scope.cadenaConfirma = "<h4>Está a punto de poner de generar el Despacho ¿Desea continuar?</h4>"
+
+    //         bootbox.confirm($scope.cadenaConfirma,
+    //             function(result) {
+    //                 if (result) resolve(1)
+    //                 else reject(2)
+    //             }
+    //         )
+
+    //     }).then(function() {
+    //         new Promise(function(resolve, reject) {
+
+
+    //             var datos = {
+    //                 idDespacho: $scope.rutaDetalle.idDespacho,
+    //                 situacion: 2
+    //             }
+
+    //             despachoRepository.postGnrDespacho(datos).then(function(result) {
+
+    //                 resolve(result.data);
+    //                 //  $scope.limpiar();
+    //             });
+
+
+    //         }).then(function(respuesta) {
+
+    //             if (respuesta.estatus = 'ok') {
+    //                 $scope.limpiaTemporalres();
+    //                 $scope.clean();
+    //                 $scope.cambioEmpresa();
+    //                 bootbox.alert("<h4> Operacion realizada!!. </h4>",
+    //                     function() {
+    //                         $('#modalDetalleDespacho').modal('hide')
+    //                     });
+
+    //             } else {
+    //                 bootbox.alert("<h4>" + respuesta.mensaje + " </h4>",
+    //                     function() {
+    //                         $('#modalDetalleDespacho').modal('hide')
+
+    //                     });
+    //             }
+
+
+    //         });
+
+    //     }); //fin promise     
+    // };
 
 
     $scope.detalleCot = function(pedido) {
@@ -318,6 +368,12 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
         new Promise(function(resolve, reject) {
             $scope.cadenaConfirma = "Está a punto de eliminar el Despacho"
 
+            // bootbox.confirm($scope.cadenaConfirma,
+            //     function(result) {
+            //         if (result) resolve(1)
+            //         else reject(2)
+            //     }
+            // )
             bootbox.confirm({
                 title: $scope.cadenaConfirma,
                 message: "<h4>¿Desea continuar?</h4>",
@@ -401,6 +457,12 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
 
             $scope.cadenaConfirma = "Está a punto de " + $scope.texto + " el Despacho de pedidos "
 
+            // bootbox.confirm($scope.cadenaConfirma,
+            //     function(result) {
+            //         if (result) resolve(1)
+            //         else reject(2)
+            //     }
+            // )
             bootbox.confirm({
                 title: $scope.cadenaConfirma,
                 message: "<h4>¿Desea continuar?</h4>",
@@ -509,12 +571,6 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
     };
 
 
-    $scope.restarDirecciones=function()
-    {
-        $scope.temp1 =[];
-        $scope.temp10 = [];
-        $scope.flag = false;
-    }
 
     $scope.cambioEmpresa = function() {
         if ($scope.empresaActual.emp_idempresa != 0) {
@@ -532,13 +588,35 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
 
         } else {
             $scope.sucursales = $scope.sucursalActual = null;
-            localStorage.removeItem('localEmpresa');
-            localStorage.removeItem('cotSucursal');
-            $scope.limpiaTemporalres();
-            $scope.spanInfo = false;
-            $scope.NDespachos = false;
+            localStorage.removeItem('localEmpresa')
+            localStorage.removeItem('cotSucursal')
         }
+        // $scope.OperadoresUnidadesRutas = [];
+        // $('#tblDespachos').DataTable().destroy();
+        // if ($scope.empresaActual.emp_idempresa > 0) {
+        //     $scope.btnNewDespacho = true;
+        //     $scope.catalogoRutas();
 
+        //     despachoRepository.getRutas($scope.empresaActual.emp_idempresa).then(function(result) {
+        //         if (result.data.length > 0) {
+        //             $scope.gridDespachos = true;
+        //             console.log(result.data)
+        //             $scope.OperadoresUnidadesRutas = result.data;
+        //             setTimeout(function() {
+        //                 $scope.setTablePaging('tblDespachos');
+        //                 $("#tblDespachos_length").removeClass("dataTables_info").addClass("hide-div");
+        //                 $("#tblDespachos_filter").removeClass("dataTables_info").addClass("pull-left");
+
+        //             }, 1);
+        //         } else $scope.gridDespachos = false;
+        //     });
+        // } else {
+        //     $scope.btnNewDespacho = false;
+        //     $scope.NDespachos = false;
+        //     $scope.gridDespachos = false;
+        //     $scope.btnVerDespacho = false;
+
+        // }
     };
 
     $scope.getEmpresas = function() {
@@ -608,14 +686,20 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
 
     $scope.cambioSucursal = function(empresa, sucursal, fecha) {
         $scope.mostrarFormulario = true;
-    
+        // var datos = {
+        //     idUsuario: $scope.Usuario.idUsuario,
+        //     idEmpresa: $scope.empresaActual.emp_idempresa,
+        //     idSucursal: $scope.sucursalActual.AGENCIA,
+        //     opcion: 2,
+        //     idEstatus: 1,
+        //     role: $scope.Usuario.rol
+        // }
+
         $scope.OperadoresUnidadesRutas = [];
         $('#tblDespachos').DataTable().destroy();
         if ($scope.empresaActual.emp_idempresa > 0) {
             $scope.btnNewDespacho = true;
             $scope.catalogoRutas();
-             $scope.spanInfo = false;
-             $scope.restarDirecciones();
 
             despachoRepository.getRutas($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
                 if (result.data.length > 0) {
@@ -668,23 +752,67 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
             $scope.btnVerDespacho = false;
 
         }
-        
+        // operadorRepository.getOperadores($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
+        //     if (result.data.length > 0) {
+        //         $scope.listOperadores = result.data;
+        //         $('#tblOperadores').DataTable().destroy();
+        //         setTimeout(function() {
+        //             $scope.setTablePaging('tblOperadores');
+
+        //             $("#tblOperadores_length").removeClass("dataTables_info").addClass("hide-div");
+        //             $("#tblOperadores_filter").removeClass("dataTables_info").addClass("pull-left");
+
+        //         }, 1);
+        //         // LOCALSTORAGE SUCURSAL
+        //         if ($scope.sucursalActual.AGENCIA != 0) {
+
+        //             //console.log($scope.sucursalActual)
+
+        //             $scope.localSucursal = []
+
+        //             $scope.localSucursal.push({
+        //                 IDSUC: $scope.sucursalActual.IDSUC,
+        //                 Con_LimCredito: $scope.sucursalActual.Con_LimCredito,
+        //                 NOMBRE_AGENCIA: $scope.sucursalActual.NOMBRE_AGENCIA,
+        //                 AGENCIA: $scope.sucursalActual.AGENCIA,
+        //                 suc_nombrecto: $scope.sucursalActual.suc_nombrecto,
+        //                 descuento: $scope.sucursalActual.descuento,
+        //                 importe: $scope.sucursalActual.importe,
+        //                 saldo: $scope.sucursalActual.saldo,
+        //                 rfcSuc: $scope.sucursalActual.rfcSuc,
+        //                 nombreSuc: $scope.sucursalActual.nombreSuc,
+        //                 telSuc: $scope.sucursalActual.suc_nombrecto,
+        //                 dirSuc: $scope.sucursalActual.dirSuc,
+        //                 nomVendedor: $scope.sucursalActual.nomVendedor,
+        //                 telVendedor: $scope.sucursalActual.telVendedor,
+        //                 mailVendedor: $scope.sucursalActual.mailVendedor
+        //             })
+
+        //             console.log('set sucursal coti local')
+        //             localStorage.setItem('localSucursal', JSON.stringify($scope.localSucursal));
+        //         } else {
+        //             localStorage.removeItem('localSucursal')
+        //         }
+        //         // LOCALSTORAGE SUCURSAL
+        //         $scope.consultaEstado();
+        //     } else {
+        //         alertFactory.info("No se encontraron resultados !!");
+        //         $scope.listOperadores = [];
+        //     }
+        // });
 
     };
 
     $scope.catalogoRutas = function() {
         rutaRepository.getRutas($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
-        
-            $scope.rutas=[];
 
             if (result.data.length > 0) {
-
                 $scope.rutas = result.data;
 
                 $scope.rutas.unshift({ ruta: "Seleccioné Ruta..." });
                 $scope.rutaActual = $scope.rutas[0];
                 $scope.hideListCatRut = false;
-            } else { $scope.hideListCatRut = true;  $scope.rutas.unshift({ ruta: "Agencia sin rutas ..." });}
+            } else { $scope.hideListCatRut = true; }
 
         });
     };

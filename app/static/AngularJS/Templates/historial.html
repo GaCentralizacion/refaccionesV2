@@ -1,3 +1,4 @@
+<link href="css/pedido.css" rel="stylesheet">
 <div id="page-content" ng-init="init()">
     <div class="row ">
         <div class="col-sm-10 col-sm-push-1 mar-top">
@@ -141,19 +142,133 @@
 </div>
 <div id="modal-historial-container" ui-view></div>
 
-<div class="modal fade modal-pedido"  id="modalDetalleHistorial" tabindex="-1" role="dialog">
+
+
+<div class="modal fade modal-pedido" id="modalDetalleHistorial" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" class="bg bg-mint" ng-style="colorEstatus">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3>PEDIDO {{estatus}} <i class="glyphicon glyphicon-print imprimir" ng-click="imprimir()" title="Imprimir"> </i></h3>
+            </div>
+         
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        
+                        <dl class="dl-horizontal">
+                            <dt>Empresa:</dt>
+                            <dd>{{empresa.NOMBRE}}</dd>
+                            <dt>Dirección:</dt>
+                            <dd class="text-capitalize">{{empresa.DIRECCION}}</dd>
+                            <dt>Teléfono:</dt>
+                            <dd>{{empresa.TELEFONO}}</dd>
+                        </dl>
+                        
+                    </div>
+                    <div class="col-sm-6">
+                        
+                        <dl class="dl-horizontal">
+                            <dt>Pedido:</dt>
+                            <dd>{{idpedido}} &nbsp;&nbsp; - &nbsp;&nbsp;<strong>Solicitado:</strong> {{empresa.FECHAPEDIDO}}</dd>
+                            <dt>Cliente:</dt>
+                            <dd></dd>
+                            <dt>Dirección:</dt>
+                            <dd class="text-capitalize">{{empresa.DIRCLIENTE}}</dd>
+                            <dt>Correo:</dt>
+                            <dd>{{empresa.CORREOCLIENTE}}</dd>
+                            <dt>Teléfono:</dt>
+                            <dd>{{empresa.TELCLIENTE}}</dd>
+                        </dl>
+                        
+                    </div>
+                    <div class="col-sm-12">
+                        <div id="imprimeme">
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                        <th>
+                                            No Serie
+                                        </th>
+                                        <th>
+                                            Descripción
+                                        </th>
+                                        <th>
+                                            Precio/Pz
+                                        </th>
+                                        <th>
+                                            No. Piezas
+                                        </th>   
+                                        <th width="15%" class="text-center">
+                                            Estatus
+                                        </th>
+                                        <th class="text-center">
+                                            Pedido
+                                        </th>
+                                        <th  class="text-right">
+                                            Subtotal
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="detalle in detalles">
+                                            <td>
+                                                <span>{{detalle.PTS_IDPARTE}}</span>
+                                            </td>
+                                            <td>
+                                                {{detalle.PTS_DESPARTE}}
+                                            </td>
+                                            <td>
+                                                <div>{{detalle.PTS_PCOLISTA | currency}}</div>
+                                            </td>
+                                            <td align="center">
+                                                {{detalle.prd_cantidadsolicitada}}
+                                            </td>
+                                            <td width="15%" style="text-align:center">
+                                                <div class="label label-table" ng-style="{ 'background-color':'{{detalle.color}}' }">
+                                                    {{detalle.estatusPieza}}
+                                                </div>
+                                            </td>
+                                            <td style="text-align:center">
+                                                {{detalle.idPedidoBPRO}}
+                                            </td>
+                                            <td align="right">
+                                                {{detalle.totalItem | currency}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                         <tr>
+                                            <td colspan="6" class="text-right">
+                                                <strong>Subtotal:</strong>
+                                                <br> <strong>Iva:</strong>
+                                                <br> <strong>Total:</strong>
+                                            </td>
+                                            <td  class="text-right">
+                                                {{subtotal| currency}}
+                                                <br> {{subtotal * .16 | currency}}
+                                                <br>{{subtotal + (subtotal*.16)| currency}}
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal fade modal-pedido"  id="modalDetalleHistorial" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" class="bg bg-mint" ng-style="{ 'background-color':'#003744' }">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 style="text-align:center;color:#fff">Historial {{estatus}} </h3>
                 <div class="glyphicon glyphicon-print" ng-click="imprimir()" title="Imprimir" style="padding-left: 96%; width: 135px; font-size: 25px; cursor: pointer;"> </div>
-                <!--a href="#" onClick="window.open('/invoice', '_blank')">OOOO</a-->
+                
             </div>
-            <div ng-style="{ 'background-color':'#003744' }">
-                <!--a href="{{'/invoice/'+detalle.idPedidoBPRO}}" class="btn btn-info btn-icon"><i class="fa fa-search">Print Invoice</i></a>
-                    <a href="invoice_print.html" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a-->
-            </div>
+          
             <br>
             <div id="imprimeme">
                 <div>
@@ -212,7 +327,7 @@
                 <br>
                 <br>
                 <div>
-                    <!--class="modal-body"-->
+                    
                     <table width="100%" class="table">
                         <thead>
                             <th style="text-align:left;">
@@ -239,7 +354,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="detalle in detalles">
-                                <!-- ng-class="{'info': detalle.estatus == 0,'success': detalle.estatus == 1,'warning':detalle.estatus == 2}" -->
+                              
                                 <td>
                                     <span>{{detalle.PTS_IDPARTE}}</span>
                                 </td>
@@ -286,3 +401,4 @@
         </div>
     </div>
 </div>
+ -->
