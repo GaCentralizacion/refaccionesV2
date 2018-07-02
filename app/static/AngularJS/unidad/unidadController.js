@@ -117,16 +117,18 @@ registrationModule.controller('unidadController', function($sce, $http, $scope, 
         //     idEstatus: 1,
         //     role: $scope.Usuario.rol
         // }
+        $scope.listUnidades = [];
+        $('#tblUnidades').DataTable().destroy();
         $scope.verBtn = true;
         unidadRepository.getUnidades($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
             if (result.data.length > 0) {
                 $scope.listUnidades = result.data;
-                $('#tblUnidades').DataTable().destroy();
+               
                 setTimeout(function() {
                     $scope.setTablePaging('tblUnidades');
                     $("#tblUnidades_length").removeClass("dataTables_info").addClass("hide-div");
                     $("#tblUnidades_filter").removeClass("dataTables_info").addClass("pull-left");
-                }, 1);
+                }, 100);
                 // LOCALSTORAGE SUCURSAL
                 if ($scope.sucursalActual.AGENCIA != 0) {
 
