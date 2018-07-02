@@ -151,7 +151,22 @@ registrationModule.controller('cotizacionesController', function($scope, $rootSc
 
                 $scope.disponible = $scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento - $scope.sucursalActual.importe
 
-                $('.chart').data('easyPieChart').update((($scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento) / $scope.sucursalActual.Con_LimCredito) * 100);
+                $('.chart').data('easyPieChart').update((($scope.sucursalActual.Con_LimCredito-$scope.sucursalActual.descuento-$scope.sucursalActual.importe)/$scope.sucursalActual.Con_LimCredito)*100);
+                // $scope.percent = (($scope.sucursalActual.Con_LimCredito-$scope.sucursalActual.descuento-$scope.sucursalActual.importe)/$scope.sucursalActual.Con_LimCredito)*100;
+                // $scope.options = {
+                //     animate: {
+                //         duration: 0,
+                //         enabled: false
+                //     },
+                //     barColor: '#2C3E50',
+                //     scaleColor: false,
+                //     lineWidth: 8,
+                //     lineCap: 'circle'
+                // };
+                // setTimeout(function() {
+                //     $('.chart').data('easyPieChart').update((($scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento) / $scope.sucursalActual.Con_LimCredito) * 100);
+                // }, 5000);
+                //$scope.porcentaje = (($scope.sucursalActual.Con_LimCredito - $scope.sucursalActual.descuento) / $scope.sucursalActual.Con_LimCredito) * 100;
             }
 
             $('#tblCotizacionFiltros').DataTable().destroy();

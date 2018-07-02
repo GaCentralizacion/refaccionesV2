@@ -10,7 +10,7 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
 
 
     $scope.getEmpresas = function() {
-        filterFactory.getEmpresas($scope.Usuario.idUsuario,  $scope.Usuario.rol).then(function(result) {
+        filterFactory.getEmpresas($scope.Usuario.idUsuario, $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
                 console.log(result.data, 'Soy las empresas ')
                 $scope.empresas = result.data;
@@ -72,8 +72,13 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
     };
 
     $scope.cambioSucursal = function(empresa, sucursal, fecha, fechaFin) {
-
-        $scope.consultaPedidos(empresa, sucursal, fecha, fechaFin);
+        var f = new Date();
+        $scope.fechaFin = ('0' + f.getDate()).slice(-2) + "/" + ('0' + (f.getMonth() + 1)).slice(-2) + "/" + f.getFullYear();
+        //Consigue 30 dias antes de la fecha actual
+        var fI = new Date();
+        fI.setDate(fI.getDate() - 30);
+        $scope.fecha = ('0' + fI.getDate()).slice(-2) + "/" + ('0' + (fI.getMonth() + 1)).slice(-2) + "/" + fI.getFullYear();
+        $scope.consultaPedidos(empresa, sucursal, $scope.fecha, $scope.fechaFin);
 
 
         console.log($scope.sucursalActual)
@@ -102,7 +107,7 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
 
 
     $scope.consultaSucursales = function() {
-        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa,  $scope.Usuario.rol).then(function(result) {
+        filterFactory.getSucursales($scope.Usuario.idUsuario, $scope.empresaActual.emp_idempresa, $scope.Usuario.rol).then(function(result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
                 $scope.sucursalActual = $scope.sucursales[0];
@@ -141,30 +146,30 @@ registrationModule.controller('historialController', function($sce, $scope, $roo
     $scope.consultaPedidos = function(empresa, sucursal, fecha, fechaFin) {
 
 
-      
+
         var modifechaInic = fecha.split('/') //'07/10/2016'.split('/');//nuevocontrato.fechaInicio.split('/');
         var newDateIni = modifechaInic[2] + modifechaInic[1] + modifechaInic[0] //modifechaInic[1] + '/' + modifechaInic[0] + '/' + modifechaInic[2];
         var modifechaTerm = fechaFin.split('/') //'10/10/2016'.split('/');//nuevocontrato.fechaTermino.split('/');
-        var newDateterm = modifechaTerm[2] + modifechaTerm[1] + modifechaTerm[0] 
+        var newDateterm = modifechaTerm[2] + modifechaTerm[1] + modifechaTerm[0]
 
-        pedidoRepository.busquedaPedido($scope.Usuario.idUsuario,2, empresa.emp_idempresa,sucursal.AGENCIA,newDateIni,newDateterm).then(function(result) {
-             if (result.data.length > 0) { 
-                     $scope.listaPedidos = result.data
-console.log(  $scope.listaPedidos )
-        $('#tblHistoricoFiltros').DataTable().destroy();
+        pedidoRepository.busquedaPedido($scope.Usuario.idUsuario, 2, empresa.emp_idempresa, sucursal.AGENCIA, newDateIni, newDateterm).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.listaPedidos = result.data
+                console.log($scope.listaPedidos)
+                $('#tblHistoricoFiltros').DataTable().destroy();
 
-        setTimeout(function() {
-            $scope.setTablePaging('tblHistoricoFiltros');
+                setTimeout(function() {
+                    $scope.setTablePaging('tblHistoricoFiltros');
 
-            $("#tblHistoricoFiltros_length").removeClass("dataTables_info").addClass("hide-div");
-            $("#tblHistoricoFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
+                    $("#tblHistoricoFiltros_length").removeClass("dataTables_info").addClass("hide-div");
+                    $("#tblHistoricoFiltros_filter").removeClass("dataTables_info").addClass("pull-left");
 
-        }, 1);
+                }, 1);
 
-             }else{
+            } else {
                 alertFactory.historial('No se encontraron resultados');
-                $scope.listaPedidos=[]; 
-                 $('#tblHistoricoFiltros').DataTable().destroy();
+                $scope.listaPedidos = [];
+                $('#tblHistoricoFiltros').DataTable().destroy();
             }
         });
     }; //fin consultaPedido
@@ -174,19 +179,18 @@ console.log(  $scope.listaPedidos )
     $scope.detalleHistorial = function(pedido) {
         console.log('Seleccionado');
         console.log($scope.Usuario);
-         $scope.color = pedido.color;
+        $scope.color = pedido.color;
         $scope.colorEstatus = {
             "background-color": pedido.color
         }
 
-         pedidoRepository.busquedaPedidoUsuarioDetalle(pedido.idPedidoRef,$scope.Usuario.idUsuario).then(function(result) {
-        //     console.log(result.data);
+        pedidoRepository.busquedaPedidoUsuarioDetalle(pedido.idPedidoRef, $scope.Usuario.idUsuario).then(function(result) {
+            //     console.log(result.data);
 
-            if(result.data.data.length>0)
-            {
+            if (result.data.data.length > 0) {
 
                 $scope.detalles = result.data.data;
-                $scope.empresa =result.data
+                $scope.empresa = result.data
 
                 console.log($scope.detalles);
                 console.log('-----------------------------------------')
@@ -199,7 +203,7 @@ console.log(  $scope.listaPedidos )
                     i++;
                 });
 
-               $scope.idpedido = pedido.idPedidoRef;
+                $scope.idpedido = pedido.idPedidoRef;
                 //console.log($scope.detalles.length);
 
                 $scope.totalPedido = 0;
@@ -227,10 +231,10 @@ console.log(  $scope.listaPedidos )
             // ];
 
 
-           $('#modalDetalleHistorial').modal('show');
+            $('#modalDetalleHistorial').modal('show');
 
 
-       });
+        });
     };
 
 
@@ -238,13 +242,24 @@ console.log(  $scope.listaPedidos )
     $scope.imprimir = function() {
 
         var rptStructure = {};
- rptStructure.refacciones = $scope.detalles;
+        rptStructure.refacciones = $scope.detalles;
 
-                rptStructure.empresa =[{ 'idpedido': $scope.idpedido,'FECHAPEDIDO':$scope.empresa.FECHAPEDIDO,'NOMBRE':$scope.empresa.NOMBRE,
-                                         'DIRECCION':$scope.empresa.DIRECCION,'name':$scope.Usuario.nombreUsuario,'TELEFONO': $scope.empresa.TELEFONO,
-                                         'DIRCLIENTE':$scope.empresa.DIRCLIENTE,'CORREOCLIENTE':$scope.empresa.CORREOCLIENTE,
-                                         'TELCLIENTE': $scope.empresa.TELCLIENTE,'subtotal': $scope.subtotal,'iva':($scope.subtotal * .16),
-                                         'total':$scope.totalPedido + ($scope.subtotal * .16),'colorEstatus': $scope.color,'estatus':'HISTORICO'}];
+        rptStructure.empresa = [{
+            'idpedido': $scope.idpedido,
+            'FECHAPEDIDO': $scope.empresa.FECHAPEDIDO,
+            'NOMBRE': $scope.empresa.NOMBRE,
+            'DIRECCION': $scope.empresa.DIRECCION,
+            'name': $scope.Usuario.nombreUsuario,
+            'TELEFONO': $scope.empresa.TELEFONO,
+            'DIRCLIENTE': $scope.empresa.DIRCLIENTE,
+            'CORREOCLIENTE': $scope.empresa.CORREOCLIENTE,
+            'TELCLIENTE': $scope.empresa.TELCLIENTE,
+            'subtotal': $scope.subtotal,
+            'iva': ($scope.subtotal * .16),
+            'total': $scope.totalPedido + ($scope.subtotal * .16),
+            'colorEstatus': $scope.color,
+            'estatus': 'HISTORICO'
+        }];
 
 
         var jsonData = {
