@@ -338,6 +338,8 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
         //     idEstatus: 1,
         //     role: $scope.Usuario.rol
         // }
+        $scope.listOperadores = [];
+        $('#tblOperadores').DataTable().destroy();
         operadorRepository.getOperadores($scope.empresaActual.emp_idempresa, $scope.sucursalActual.AGENCIA).then(function(result) {
             if (result.data.length > 0) {
                 $scope.listOperadores = result.data;
@@ -348,7 +350,7 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
                     $("#tblOperadores_length").removeClass("dataTables_info").addClass("hide-div");
                     $("#tblOperadores_filter").removeClass("dataTables_info").addClass("pull-left");
 
-                }, 1);
+                }, 100);
                 // LOCALSTORAGE SUCURSAL
                 if ($scope.sucursalActual.AGENCIA != 0) {
 

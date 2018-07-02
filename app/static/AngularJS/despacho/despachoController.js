@@ -536,7 +536,13 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
             localStorage.removeItem('cotSucursal');
             $scope.limpiaTemporalres();
             $scope.spanInfo = false;
+            $scope.btnNewDespacho = false;
             $scope.NDespachos = false;
+            $scope.gridDespachos = false;
+            $scope.btnVerDespacho = false;
+            $scope.dirForadd = [];
+            $('#tblpedidos').DataTable().clear();
+            $('#tblpedidos').DataTable().destroy();
         }
 
     };
@@ -607,6 +613,10 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
     };
 
     $scope.cambioSucursal = function(empresa, sucursal, fecha) {
+
+            $scope.spanInfo = false;
+            $scope.NDespachos = false;
+
         $scope.mostrarFormulario = true;
     
         $scope.OperadoresUnidadesRutas = [];
@@ -666,6 +676,9 @@ registrationModule.controller('despachoController', function($sce, $http, $scope
             $scope.NDespachos = false;
             $scope.gridDespachos = false;
             $scope.btnVerDespacho = false;
+             $scope.dirForadd = [];
+            $('#tblpedidos').DataTable().clear();
+            $('#tblpedidos').DataTable().destroy();
 
         }
         
