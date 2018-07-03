@@ -6,7 +6,7 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
     $scope.add = false;
     $scope.tipo = 1;
     $scope.texto = "";
-
+    $scope.pss=true;
     $scope.init = function() {
         $scope.Usuario = userFactory.getUserData();
         $scope.getEmpresas();
@@ -110,6 +110,7 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
                 var fechaInicio = $scope.vigencia.split('/');
                 var fechaVigencia = fechaInicio[2] + '/' + fechaInicio[1] + '/' + fechaInicio[0];
                 console.log(fechaVigencia, 'TOMATELA')
+                $scope.userPss = $scope.nombre.toUpperCase().substring(0,1) + $scope.apPaterno.toUpperCase().substring(0,1) + $scope.apMaterno.toUpperCase().substring(0,1);
                 var datos = {
                     nombre: $scope.nombre.toUpperCase(),
                     apPaterno: $scope.apPaterno.toUpperCase(),
@@ -128,7 +129,8 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
                     vigencia: fechaVigencia,
                     idEmpresa: $scope.empresaActual.emp_idempresa,
                     idUsuario: $scope.Usuario.idUsuario,
-                    idSucursal: $scope.sucursalActual.AGENCIA
+                    idSucursal: $scope.sucursalActual.AGENCIA,
+                    userPss: $scope.userPss
                 };
                 console.log(datos, 'HOLIS')
                 if ($scope.add == true) {
@@ -139,6 +141,7 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
                 } else {
                     datos.idOperador = $scope.idOperador;
                     datos.estatus = $scope.tipo;
+                    datos.userPss = $scope.contrasenia;
                     operadorRepository.postUpdate(datos).then(function(result) {
                         //    $scope.limpaValores();
                         resolve(result.data);
@@ -207,11 +210,13 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
             $scope.add = true;
             $scope.bloquea = false;
             $scope.texto = "Guardar ";
+            $scope.pss=true;
         }
         if (tipo == 2) {
             $scope.add = false;
             $scope.bloquea = false;
             $scope.texto = "Actualizar ";
+            $scope.pss=false;
         } else if (tipo == 3) {
             $scope.add = false;
             $scope.bloquea = true;
@@ -233,6 +238,8 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
             $scope.exterior = operador.numExterior;
             $scope.interior = operador.numInterior;
             $scope.cpActual = operador.cp.toString();
+            $scope.usuario =operador.usuario;
+            $scope.contrasenia = operador.contrasenia;
             console.log($scope.cpActual.length, 'PORFA')
             if ($scope.cpActual.length == 4) $scope.cpActual = '0' + $scope.cpActual;
             if ($scope.cpActual.length == 5) {
@@ -418,6 +425,8 @@ registrationModule.controller('operadorController', function($sce, $http, $scope
         $scope.nombre = '';
         $scope.apPaterno = '';
         $scope.apMaterno = '';
+        $scope.usuario =''
+        $scope.contrasenia='';
         //$scope.consultaEstado();
         $scope.clearEstado();
 

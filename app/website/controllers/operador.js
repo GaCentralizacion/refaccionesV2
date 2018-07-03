@@ -35,7 +35,8 @@ operador.prototype.post_create = function(req, res, next) {
         { name: 'cp', value: req.body.cp, type: self.model.types.STRING },
         { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.STRING },
         { name: 'idEmpresa', value: req.body.idEmpresa, type: self.model.types.INT },
-        { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT }
+        { name: 'idSucursal', value: req.body.idSucursal, type: self.model.types.INT },
+        { name: 'userPss', value: req.body.userPss, type: self.model.types.STRING },
     ];
     console.log(params);
     self.model.query('INS_OPERADOR_SP ', params, function(error, result) {
@@ -68,6 +69,7 @@ operador.prototype.post_update = function(req, res, next) {
         { name: 'estado', value: req.body.estado, type: self.model.types.STRING },
         { name: 'cp', value: req.body.cp, type: self.model.types.STRING },
         { name: 'estatu', value: req.body.estatus, type: self.model.types.INT },
+        { name: 'userPss', value: req.body.userPss, type: self.model.types.STRING }
     ];
     console.log(params);
     self.model.query('UPD_OPERADOR_SP ', params, function(error, result) {
