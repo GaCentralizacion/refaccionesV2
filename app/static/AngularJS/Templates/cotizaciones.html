@@ -56,7 +56,8 @@
                                                         <p>Disponible: <span class="pull-right  text-semibold"> {{disponible | currency }}</span></p>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <div class="chart"><span>{{((sucursalActual.Con_LimCredito-sucursalActual.descuento-sucursalActual.importe)/sucursalActual.Con_LimCredito)*100 | number:2}}%</span></div>
+                                                        <div class="chart" ><span>{{((sucursalActual.Con_LimCredito-sucursalActual.descuento-sucursalActual.importe)/sucursalActual.Con_LimCredito)*100 | number:2}}%</span></div>
+                                                        <!-- <div easypiechart options="options" percent="percent"></div> -->
                                                     </div>
                                                 </div>
                                             </div>

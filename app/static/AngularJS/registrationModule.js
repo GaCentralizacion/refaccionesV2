@@ -1,6 +1,6 @@
 var registrationModule = angular.module("registrationModule", ["ngRoute", "LocalStorageModule", 'ui.grid', 'ui.grid.selection', 'ui.grid.grouping', 'ui.grid.pinning', 'ui.grid.edit'])
     .config(function($routeProvider, $locationProvider) {
-
+        //, 'easypiechart'
         /*cheange the routes*/
         $routeProvider.when('/', {
             templateUrl: 'AngularJS/Templates/login.html',

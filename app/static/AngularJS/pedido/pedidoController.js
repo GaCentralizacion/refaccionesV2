@@ -110,7 +110,13 @@ registrationModule.controller('pedidoController', function($sce, $http, $scope, 
     };
 
     $scope.cambioSucursal = function(empresa, sucursal, fecha, fechaFin) {
-
+        //Consigue la fecha actual
+        var f = new Date();
+        $scope.fechaFin = ('0' + f.getDate()).slice(-2) + "/" + ('0' + (f.getMonth() + 1)).slice(-2) + "/" + f.getFullYear();
+        //Consigue 30 dias antes de la fecha actual
+        var fI = new Date();
+        fI.setDate(fI.getDate() - 30);
+        $scope.fecha = ('0' + fI.getDate()).slice(-2) + "/" + ('0' + (fI.getMonth() + 1)).slice(-2) + "/" + fI.getFullYear();
         $scope.consultaPedidos(empresa, sucursal, fecha, fechaFin);
 
         if ($scope.sucursalActual.AGENCIA != 0) {
