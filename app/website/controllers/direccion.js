@@ -572,6 +572,7 @@ direccion.prototype.get_direccionesRuta = function(req, res, next) {
 };
 // Update a Direccion in the DB
 direccion.prototype.post_updateDireccion = function(req, res, next) {
+    console.log('UPDATE****************************')
     var self = this;
     var params = [{ name: 'idDireccion', value: req.body.idDireccion, type: self.model.types.INT },
         { name: 'idUsuario', value: req.body.idUsuario, type: self.model.types.INT },
@@ -606,9 +607,11 @@ direccion.prototype.post_updateDireccion = function(req, res, next) {
         { name: 'comprobante', value: req.body.comprobante, type: self.model.types.INT }
     ];
 
-    //console.log('SEL_DIRECCION_CLIENTE_SP')
+    //console.log('UPD_DIRECCION_CLIENTE_SP')
     //console.log(params)
     self.model.query('UPD_DIRECCION_CLIENTE_SP', params, function(error, result) {
+        console.log(result)
+        console.log(error)
         self.view.expositor(res, {
             error: error,
             result: result
